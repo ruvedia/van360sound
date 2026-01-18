@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
+# Ensure script is executable
 set -o errexit
 
 # Install Python dependencies
