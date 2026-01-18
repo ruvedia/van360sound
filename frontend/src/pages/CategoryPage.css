@@ -1,0 +1,74 @@
+.ranking-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.ranking-grid-image {
+    width: 350px;
+    height: 350px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.ranking-scores-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* Tablet */
+@media (max-width: 968px) {
+    .ranking-grid {
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+    }
+
+    .ranking-grid-image {
+        width: 280px;
+        height: 280px;
+    }
+
+    .ranking-scores-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+    .ranking-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .ranking-grid-image {
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .ranking-scores-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Móvil pequeño */
+@media (max-width: 600px) {
+    .ranking-grid-image {
+        max-width: 280px;
+        height: 280px;
+    }
+}

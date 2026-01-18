@@ -1,0 +1,241 @@
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { headphoneService, categoryService } from '../services/api';
+import HeadphoneCard from '../components/HeadphoneCard';
+import ScoreBar from '../components/ScoreBar';
+import { rankings } from '../data/rankingData';
+import CommentsSection from '../components/CommentsSection';
+import './CategoryPage.css';
+
+function CategoryPage() {
+    const { slug } = useParams();
+    const [category, setCategory] = useState(null);
+    const [headphones, setHeadphones] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Comprobamos si tenemos datos locales para esta categoría (ranking)
+                const localRanking = rankings[slug];
+
+                if (localRanking) {
+                    setCategory({
+                        name: localRanking.title,
+                        description: localRanking.metaDescription // Usamos la description de SEO o intro
+                    });
+
+                    // Actualizar SEO (Título y Meta Description)
+                    document.title = localRanking.seoTitle || `${localRanking.title} - Van360Sound`;
+                    const metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc) {
+                        metaDesc.setAttribute('content', localRanking.metaDescription);
+                    }
+
+                    // Mapeamos los datos del archivo al formato que espera el componente
+                    const mappedHeadphones = localRanking.headphones.map(h => ({
+                        ...h,
+                        id: h.ranking_order,
+                        slug: `${h.brand.toLowerCase()}-${h.name.toLowerCase().replace(/\s+/g, '-')}`,
+                        // Convertimos los scores del objeto anidado a campos planos para el componente
+                        score_soundstage: h.scores.soundstage,
+                        score_comfort: h.scores.comfort,
+                        score_build: h.scores.build,
+                        score_treble: h.scores.treble,
+                        score_mids: h.scores.mids,
+                        score_bass: h.scores.bass,
+                        score_accuracy: h.scores.accuracy,
+                        score_value: h.scores.value,
+                        score_overall: h.scores.overall
+                    }));
+
+                    setHeadphones(mappedHeadphones);
+                    setLoading(false);
+                    return;
+                }
+
+                // Para categorías sin ranking local, usamos la API de Django
+                const [categoryRes, headphonesRes] = await Promise.all([
+                    categoryService.getBySlug(slug),
+                    headphoneService.getByCategory(slug)
+                ]);
+
+                setCategory(categoryRes.data);
+                document.title = `${categoryRes.data.name} - Van360Sound`;
+
+                // Ordenamos por ranking_order si existe, si no por fecha
+                const sorted = (headphonesRes.data.results || headphonesRes.data).sort((a, b) => {
+                    if (a.ranking_order && b.ranking_order) return a.ranking_order - b.ranking_order;
+                    return 0;
+                });
+                setHeadphones(sorted);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+
+        // Reset scroll on slug change
+        window.scrollTo(0, 0);
+    }, [slug]);
+
+    if (loading) {
+        return <div className="loading">Cargando...</div>;
+    }
+
+    if (!category) {
+        return <div className="loading">Categoría no encontrada</div>;
+    }
+
+    // Comprobamos si es una página de ranking local
+    const localRanking = rankings[slug];
+    const isRanking = localRanking || headphones.some(h => h.ranking_order > 0);
+    const introData = localRanking ? localRanking.introData : null;
+    const outroData = localRanking ? localRanking.outroData : null;
+
+    return (
+        <div>
+            <section className="hero">
+                <div className="container">
+                    <h1>{category.name}</h1>
+                    <p className="hero-subtitle">{category.description}</p>
+                </div>
+            </section>
+
+            <section className="section">
+                <div className="container">
+                    {/* Renderizado de la introducción si existe */}
+                    {introData && (
+                        <div className="category-intro" style={{ marginBottom: '4rem', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
+                            {introData.map((block, idx) => {
+                                if (block.type === 'title') return <h2 key={idx} style={{ fontSize: '2.5rem', marginBottom: '2rem', textAlign: 'center' }}>{block.content}</h2>;
+                                if (block.type === 'subtitle') return <h3 key={idx} style={{ fontSize: '1.8rem', marginTop: '2.5rem', marginBottom: '1.2rem' }}>{block.content}</h3>;
+                                if (block.type === 'paragraph') return <p key={idx} style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1.5rem', color: '#444' }} dangerouslySetInnerHTML={{ __html: block.content }} />;
+                                return null;
+                            })}
+                        </div>
+                    )}
+
+                    {headphones.length > 0 ? (
+                        isRanking ? (
+                            <div className="ranking-list">
+                                {headphones.map((headphone, index) => (
+                                    <article key={headphone.id} className="ranking-item" style={{ marginBottom: '4rem', paddingBottom: '4rem', borderBottom: index < headphones.length - 1 ? '1px solid #eee' : 'none' }}>
+                                        <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
+                                            {headphone.ranking_order}. {headphone.brand} {headphone.name}
+                                        </h2>
+
+                                        <div className="ranking-grid">
+                                            {/* Columna izquierda: Imagen + Botones */}
+                                            <div>
+                                                <img
+                                                    src={headphone.main_image || '/placeholder-headphone.jpg'}
+                                                    alt={headphone.name}
+                                                    className="ranking-grid-image"
+                                                    loading="lazy"
+                                                />
+
+                                                {/* Botones debajo de la imagen */}
+                                                <div className="ranking-buttons-container">
+                                                    <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                        Ver Análisis Detallado
+                                                    </Link>
+                                                    <a href={headphone.amazon_link || '#'} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#000', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                        Ver en Amazon
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            {/* Columna derecha: Contenido */}
+                                            <div>
+                                                {/* Descripción */}
+                                                <div className="description" style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2rem' }}>
+                                                    {headphone.description}
+                                                </div>
+
+                                                {/* Características Técnicas */}
+                                                <div className="specs-box" style={{ marginBottom: '2rem' }}>
+                                                    <h4 style={{ marginBottom: '1rem', fontSize: '1.3rem' }}>Características Técnicas:</h4>
+                                                    <ul style={{ paddingLeft: '1.2rem', lineHeight: '1.8' }}>
+                                                        {headphone.acoustic_design && <li><strong>Diseño Acústico:</strong> {headphone.acoustic_design}</li>}
+                                                        {headphone.driver_size && <li><strong>Tipo de Driver:</strong> {headphone.driver_size}</li>}
+                                                        {headphone.frequency_response && <li><strong>Respuesta de Frecuencia:</strong> {headphone.frequency_response}</li>}
+                                                        {headphone.impedance && <li><strong>Impedancia:</strong> {headphone.impedance}</li>}
+                                                        {headphone.connectivity && <li><strong>Conexión:</strong> {headphone.connectivity}</li>}
+                                                    </ul>
+                                                </div>
+
+                                                {/* Barras en 2 columnas dentro del mismo cuadro */}
+                                                <div style={{ padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '12px', marginTop: '2rem' }}>
+                                                    <h4 style={{ marginBottom: '1.5rem', borderBottom: '2px solid #333', paddingBottom: '0.5rem', display: 'inline-block' }}>Puntuación:</h4>
+
+                                                    <div className="ranking-scores-grid">
+                                                        {/* Columna izquierda: 5 barras */}
+                                                        <div>
+                                                            <ScoreBar label="Escenario Sonoro" score={headphone.score_soundstage} />
+                                                            <ScoreBar label="Confort" score={headphone.score_comfort} />
+                                                            <ScoreBar label="Calidad de Construcción" score={headphone.score_build} />
+                                                            <ScoreBar label="Tonos Agudos" score={headphone.score_treble} />
+                                                            <ScoreBar label="Tonos Medios" score={headphone.score_mids} />
+                                                        </div>
+
+                                                        {/* Columna derecha: 4 barras */}
+                                                        <div>
+                                                            <ScoreBar label="Tonos Graves" score={headphone.score_bass} />
+                                                            <ScoreBar label="Precisión Acústica" score={headphone.score_accuracy} />
+                                                            <ScoreBar label="Valor por el Precio" score={headphone.score_value} />
+                                                            <ScoreBar label="Puntuación Global" score={headphone.score_overall} color="#333" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="grid grid-3">
+                                {headphones.map(headphone => (
+                                    <HeadphoneCard key={headphone.id} headphone={headphone} />
+                                ))}
+                            </div>
+                        )
+                    ) : (
+                        <p className="text-center">No hay auriculares en esta categoría todavía.</p>
+                    )}
+
+                    {/* Renderizado de la conclusión si existe */}
+                    {outroData && (
+                        <div className="category-outro" style={{ marginTop: '4rem', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
+                            {outroData.map((block, idx) => {
+                                if (block.type === 'subtitle') return <h3 key={idx} style={{ fontSize: '1.8rem', marginTop: '2.5rem', marginBottom: '1.2rem' }}>{block.content}</h3>;
+                                if (block.type === 'paragraph') return <p key={idx} style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1.5rem', color: '#444' }} dangerouslySetInnerHTML={{ __html: block.content }} />;
+                                if (block.type === 'list') return (
+                                    <ul key={idx} style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1.5rem', paddingLeft: '2rem' }}>
+                                        {block.items.map((item, itemIdx) => (
+                                            <li key={itemIdx} style={{ marginBottom: '1rem' }} dangerouslySetInnerHTML={{ __html: item }} />
+                                        ))}
+                                    </ul>
+                                );
+                                return null;
+                            })}
+                        </div>
+                    )}
+
+                    {/* Sección de comentarios (para cualquier ranking) */}
+                    {isRanking && (
+                        <div style={{ maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
+                            <CommentsSection categorySlug={slug} />
+                        </div>
+                    )}
+                </div>
+            </section>
+        </div>
+    );
+}
+
+export default CategoryPage;
+
