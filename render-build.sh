@@ -3,7 +3,10 @@
 set -o errexit
 
 # Install Python dependencies
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 
-# Run migrations (optional if using SQLite on free tier, but good practice)
-python backend/manage.py migrate
+# Run migrations
+python manage.py migrate
+
+# Collect static files
+python manage.py collectstatic --no-input
