@@ -307,8 +307,8 @@ p {
 
 .card-image-sport {
   object-position: center 0%;
-  clip-path: inset(0 0 20% 0);
-  padding-top: 90px;
+  clip-path: inset(0 0 10% 0);
+  padding-top: 110px;
 }
 
 .card-content {
@@ -506,6 +506,11 @@ p {
 
   .footer-content {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Desktop padding for category images */
+  .card-image {
+    padding: var(--spacing-xl);
   }
 }
 
