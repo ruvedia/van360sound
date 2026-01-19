@@ -11,7 +11,8 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Todas las rutas deben servir index.html para SPA routing
-app.get('*', (req, res) => {
+// Express 5.x requiere sintaxis :0* en lugar de *
+app.get('/:0*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
