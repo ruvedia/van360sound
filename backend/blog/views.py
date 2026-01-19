@@ -80,6 +80,9 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 class ContactMessageViewSet(viewsets.ModelViewSet):
     """ViewSet para mensajes de contacto"""
     queryset = ContactMessage.objects.all()
@@ -90,6 +93,35 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        
+        # Enviar notificación por email
+        try:
+            contact = serializer.instance
+            subject = f"Nuevo mensaje de contacto Web: {contact.subject}"
+            message = f"""
+            Has recibido un nuevo mensaje desde el formulario de contacto de Van360Sound.
+            
+            Detalles del remitente:
+            -----------------------
+            Nombre: {contact.name}
+            Email: {contact.email}
+            Asunto: {contact.subject}
+            
+            Mensaje:
+            -----------------------
+            {contact.message}
+            """
+            
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.CONTACT_EMAIL_RECIPIENT],
+                fail_silently=True,
+            )
+        except Exception as e:
+            print(f"Error al enviar email de contacto: {e}")
+
         return Response(
             {'message': 'Mensaje enviado correctamente'},
             status=status.HTTP_201_CREATED
