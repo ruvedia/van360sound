@@ -1,10 +1,13 @@
 services:
   - type: web
     name: van360sound-frontend
-    env: static
+    runtime: node
+    region: oregon
+    plan: free
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: ./frontend/dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: NODE_ENV
+        value: production
