@@ -31,7 +31,15 @@ ALLOWED_HOSTS = ['*']
 
 # CORS & CSRF Configuration
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,https://www.van360sound.com,https://van360sound-frontend.onrender.com').split(',')
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,https://www.van360sound.com,https://van360sound-frontend.onrender.com').split(',')
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://www.van360sound.com',
+    'https://van360sound.com',
+    'https://van360sound-frontend.onrender.com',
+    'https://van360sound-backend.onrender.com',
+    'https://*.onrender.com',
+]
 
 
 # Application definition
