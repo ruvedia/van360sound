@@ -13,6 +13,16 @@ const app = express();
 app.use('/api', createProxyMiddleware({
     target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
     changeOrigin: true,
+    logger: console,
+    on: {
+        proxyReq: (proxyReq, req, res) => {
+            console.log(`[Proxy] Proxying ${req.method} request to: ${proxyReq.path}`);
+        },
+        error: (err, req, res) => {
+            console.error('[Proxy] Error:', err);
+            res.status(500).send('Proxy Error');
+        }
+    }
 }));
 
 // Proxy para archivos media
