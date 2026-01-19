@@ -114,15 +114,19 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
             {contact.message}
             """
             
+            print(f"Intentando enviar email a: {settings.CONTACT_EMAIL_RECIPIENT} desde {settings.DEFAULT_FROM_EMAIL}")
             send_mail(
                 subject,
                 message,
                 settings.DEFAULT_FROM_EMAIL,
                 [settings.CONTACT_EMAIL_RECIPIENT],
-                fail_silently=True,
+                fail_silently=False,  # Cambiado a False para ver el error
             )
+            print("Email enviado correctamente desde el servidor.")
         except Exception as e:
-            print(f"Error al enviar email de contacto: {e}")
+            print(f"❌ ERROR CRÍTICO al enviar email: {str(e)}")
+            # No relanzamos la excepción para no romper la respuesta al usuario (que vea 'Mensaje enviado')
+            # pero el admin podrá ver el error en los logs.
 
         return Response(
             {'message': 'Mensaje enviado correctamente'},
