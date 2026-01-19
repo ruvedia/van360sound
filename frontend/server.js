@@ -15,11 +15,11 @@ app.use((req, res, next) => {
     next();
 });
 
-// Proxy para API y Media usando pathFilter (compatible con v3 y evita path stripping)
+// Proxy para API, Media, Admin y Static files del backend
 app.use(createProxyMiddleware({
     target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
     changeOrigin: true,
-    pathFilter: ['/api', '/media'],
+    pathFilter: ['/api', '/media', '/admin', '/static'],
     logger: console,
     on: {
         proxyReq: (proxyReq, req, res) => {
