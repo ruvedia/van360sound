@@ -49,6 +49,9 @@ function Footer() {
 
                 <div className="footer-bottom">
                     <p>&copy; {new Date().getFullYear()} Van360Sound.com - Todos los derechos reservados</p>
+                    <p style={{ marginTop: '0.5rem', fontSize: '0.8rem', opacity: 0.8 }}>
+                        Página creada por <a href="https://www.ruvedia.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>ruvedia.com</a>
+                    </p>
                 </div>
             </div>
         </footer>
