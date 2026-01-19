@@ -2,15 +2,28 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { createProxyMiddleware } from 'http-proxy-middleware';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// Proxy para las peticiones API
+app.use('/api', createProxyMiddleware({
+    target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
+    changeOrigin: true,
+}));
+
+// Proxy para archivos media
+app.use('/media', createProxyMiddleware({
+    target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
+    changeOrigin: true,
+}));
+
 // Servir archivos estáticos desde la carpeta dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Todas las rutas deben servir index.html para SPA routing
 // Todas las rutas deben servir index.html para SPA routing
 // Usamos un middleware genérico al final para evitar problemas de sintaxis con path-to-regexp
 app.use((req, res) => {
