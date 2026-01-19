@@ -172,6 +172,53 @@ function CategoryPage() {
                                                 <div style={{ padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '12px', marginTop: '2rem' }}>
                                                     <h4 style={{ marginBottom: '1.5rem', borderBottom: '2px solid #333', paddingBottom: '0.5rem', display: 'inline-block' }}>Puntuación:</h4>
 
+                                                    {/* Puntuación Global - versión compacta con colores originales */}
+                                                    <div style={{
+                                                        backgroundColor: '#fff',
+                                                        padding: '1rem',
+                                                        borderRadius: '8px',
+                                                        marginBottom: '1.2rem',
+                                                        border: '1.5px solid #ddd',
+                                                        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                                                    }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                                                            <div style={{ flex: 1 }}>
+                                                                <div style={{
+                                                                    color: '#333',
+                                                                    fontSize: '0.85rem',
+                                                                    fontWeight: '600',
+                                                                    marginBottom: '0.5rem'
+                                                                }}>
+                                                                    Puntuación Global
+                                                                </div>
+                                                                <div style={{
+                                                                    backgroundColor: '#eee',
+                                                                    borderRadius: '4px',
+                                                                    height: '8px',
+                                                                    overflow: 'hidden'
+                                                                }}>
+                                                                    <div style={{
+                                                                        width: `${headphone.score_overall}%`,
+                                                                        height: '100%',
+                                                                        backgroundColor: headphone.score_overall >= 90 ? '#27ae60' : headphone.score_overall >= 80 ? '#2ecc71' : headphone.score_overall >= 70 ? '#f1c40f' : '#e67e22',
+                                                                        borderRadius: '4px',
+                                                                        transition: 'width 0.6s ease'
+                                                                    }} />
+                                                                </div>
+                                                            </div>
+                                                            <div style={{
+                                                                fontSize: '1.2rem',
+                                                                fontWeight: '700',
+                                                                color: headphone.score_overall >= 90 ? '#27ae60' : headphone.score_overall >= 80 ? '#2ecc71' : headphone.score_overall >= 70 ? '#f1c40f' : '#e67e22',
+                                                                minWidth: '50px',
+                                                                textAlign: 'right'
+                                                            }}>
+                                                                {headphone.score_overall}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Puntuaciones detalladas */}
                                                     <div className="ranking-scores-grid">
                                                         {/* Columna izquierda: 5 barras */}
                                                         <div>
@@ -182,12 +229,11 @@ function CategoryPage() {
                                                             <ScoreBar label="Tonos Medios" score={headphone.score_mids} />
                                                         </div>
 
-                                                        {/* Columna derecha: 4 barras */}
+                                                        {/* Columna derecha: 3 barras (sin la global) */}
                                                         <div>
                                                             <ScoreBar label="Tonos Graves" score={headphone.score_bass} />
                                                             <ScoreBar label="Precisión Acústica" score={headphone.score_accuracy} />
                                                             <ScoreBar label="Valor por el Precio" score={headphone.score_value} />
-                                                            <ScoreBar label="Puntuación Global" score={headphone.score_overall} color="#333" />
                                                         </div>
                                                     </div>
                                                 </div>

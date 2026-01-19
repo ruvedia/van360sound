@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import NuestroTop from './pages/NuestroTop';
 import CategoryPage from './pages/CategoryPage';
@@ -15,6 +16,7 @@ import ArticleDetail from './pages/ArticleDetail';
 function App() {
     return (
         <Router>
+            <ScrollToTop />
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <Header />
                 <main style={{ flex: 1 }}>
