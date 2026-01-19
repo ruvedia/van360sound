@@ -9,10 +9,17 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Proxy para las peticiones API
-app.use('/api', createProxyMiddleware({
+// Middleware global para logging de peticiones
+app.use((req, res, next) => {
+    console.log(`[Server] ${req.method} ${req.path}`);
+    next();
+});
+
+// Proxy para API y Media usando pathFilter (compatible con v3 y evita path stripping)
+app.use(createProxyMiddleware({
     target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
     changeOrigin: true,
+    pathFilter: ['/api', '/media'],
     logger: console,
     on: {
         proxyReq: (proxyReq, req, res) => {
@@ -23,12 +30,6 @@ app.use('/api', createProxyMiddleware({
             res.status(500).send('Proxy Error');
         }
     }
-}));
-
-// Proxy para archivos media
-app.use('/media', createProxyMiddleware({
-    target: process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com',
-    changeOrigin: true,
 }));
 
 // Servir archivos estáticos desde la carpeta dist
