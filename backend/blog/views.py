@@ -1,4 +1,4 @@
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, permissions, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
@@ -87,6 +87,8 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
     """ViewSet para mensajes de contacto"""
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
     http_method_names = ['post']  # Solo permitir POST
     
     def create(self, request, *args, **kwargs):
