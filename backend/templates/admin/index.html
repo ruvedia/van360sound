@@ -1,0 +1,21 @@
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module"
+        style="background: #fff; padding: 15px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;">
+        <h2>Gestión de Base de Datos</h2>
+        <p>Descarga la base de datos actual (SQLite) para hacer una copia de seguridad local.</p>
+        <a href="{% url 'download_db' %}" class="button"
+            style="display: block; text-align: center; padding: 10px; background: #417690; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">
+            ⬇️ Descargar Base de Datos
+        </a>
+        <a href="{% url 'download_media' %}" class="button"
+            style="display: block; text-align: center; padding: 10px; background: #79aec8; color: white; text-decoration: none; border-radius: 4px;">
+            📸 Descargar Imágenes (ZIP)
+        </a>
+    </div>
+
+    {{ block.super }}
+</div>
+{% endblock %}
