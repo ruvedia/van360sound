@@ -178,6 +178,7 @@ function CategoryPage() {
                                                         {headphone.driver_size && <li><strong>Tipo de Driver:</strong> {headphone.driver_size}</li>}
                                                         {headphone.frequency_response && <li><strong>Respuesta de Frecuencia:</strong> {headphone.frequency_response}</li>}
                                                         {headphone.impedance && <li><strong>Impedancia:</strong> {headphone.impedance}</li>}
+                                                        {headphone.battery_life && <li><strong>Batería:</strong> {headphone.battery_life}</li>}
                                                         {headphone.connectivity && <li><strong>Conexión:</strong> {headphone.connectivity}</li>}
                                                     </ul>
                                                 </div>
