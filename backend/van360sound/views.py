@@ -9,17 +9,24 @@ from datetime import datetime
 
 @staff_member_required
 def download_database(request):
-    date_str = datetime.now().strftime('%Y-%m-%d')
-    buffer = io.BytesIO()
-    
-    # Dump data to buffer using Django's dumpdata command
-    # Exclude contenttypes and auth.permissions to avoid issues when reloading
-    call_command('dumpdata', exclude=['contenttypes', 'auth.permission'], stdout=buffer)
-    
-    buffer.seek(0)
-    response = FileResponse(buffer, content_type='application/json')
-    response['Content-Disposition'] = f'attachment; filename="{date_str}-base_de_datos.json"'
-    return response
+    try:
+        date_str = datetime.now().strftime('%Y-%m-%d')
+        # dumpdata writes text, so we need StringIO
+        buffer = io.StringIO()
+        
+        # Dump data to buffer
+        call_command('dumpdata', exclude=['contenttypes', 'auth.permission'], stdout=buffer)
+        
+        # Convert string content to bytes for file response
+        buffer.seek(0)
+        json_content = buffer.getvalue().encode('utf-8')
+        byte_buffer = io.BytesIO(json_content)
+        
+        response = FileResponse(byte_buffer, content_type='application/json')
+        response['Content-Disposition'] = f'attachment; filename="{date_str}-base_de_datos.json"'
+        return response
+    except Exception as e:
+        return HttpResponse(f"Error generando backup: {str(e)}", status=500)
 
 @staff_member_required
 def download_media(request):
