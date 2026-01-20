@@ -61,7 +61,9 @@ function HeadphoneDetail() {
                     <span className="category-tag">{headphone.category_name}</span>
                     <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{headphone.brand} {headphone.name}</h1>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                        <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>€{headphone.price}</span>
+                        {headphone.show_price && headphone.price && (
+                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{headphone.price} €</span>
+                        )}
                         {headphone.rating > 0 && <span style={{ color: '#f39c12' }}>⭐ {headphone.rating}/5</span>}
                     </div>
 

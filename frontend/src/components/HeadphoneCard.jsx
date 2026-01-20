@@ -17,8 +17,8 @@ function HeadphoneCard({ headphone }) {
                     {headphone.description.substring(0, 100)}...
                 </p>
                 <div className="card-meta">
-                    {headphone.price && (
-                        <span>€{headphone.price}</span>
+                    {headphone.show_price && headphone.price && (
+                        <span>{headphone.price} €</span>
                     )}
                     {headphone.rating > 0 && (
                         <span>⭐ {headphone.rating}/5</span>
