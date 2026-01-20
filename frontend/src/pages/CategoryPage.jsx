@@ -166,7 +166,7 @@ function CategoryPage() {
                                             {/* Columna derecha: Contenido */}
                                             <div>
                                                 {/* Descripción */}
-                                                <div className="description" style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2rem' }}>
+                                                <div className="description" style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2rem', whiteSpace: 'pre-line' }}>
                                                     {headphone.description}
                                                 </div>
 
