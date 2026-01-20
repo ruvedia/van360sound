@@ -134,23 +134,10 @@ function CategoryPage() {
 
     return (
         <div>
-            <section
-                className="hero"
-                style={category.image ? {
-                    backgroundImage: `url("${heroImage}")`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    color: '#fff'
-                } : {}}
-            >
-                <div className="container" style={category.image ? {
-                    backgroundColor: 'rgba(0,0,0,0.6)',
-                    padding: '3rem',
-                    borderRadius: '12px',
-                    backdropFilter: 'blur(4px)'
-                } : {}}>
-                    <h1 style={category.image ? { color: '#fff' } : {}}>{category.name}</h1>
-                    <p className="hero-subtitle" style={category.image ? { color: '#eee' } : {}}>{category.description}</p>
+            <section className="hero">
+                <div className="container">
+                    <h1>{category.name}</h1>
+                    <p className="hero-subtitle">{category.description}</p>
                 </div>
             </section>
 
