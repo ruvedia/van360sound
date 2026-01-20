@@ -1,3 +1,4 @@
+from django.core.management import call_command
 from django.http import FileResponse, Http404, HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
@@ -8,13 +9,16 @@ from datetime import datetime
 
 @staff_member_required
 def download_database(request):
-    db_path = settings.BASE_DIR / 'db.sqlite3'
-    if not os.path.exists(db_path):
-        return HttpResponse("Base de datos no encontrada / Database not found", status=404)
-        
     date_str = datetime.now().strftime('%Y-%m-%d')
-    response = FileResponse(open(db_path, 'rb'))
-    response['Content-Disposition'] = f'attachment; filename="{date_str}-base_de_datos.sqlite3"'
+    buffer = io.BytesIO()
+    
+    # Dump data to buffer using Django's dumpdata command
+    # Exclude contenttypes and auth.permissions to avoid issues when reloading
+    call_command('dumpdata', exclude=['contenttypes', 'auth.permission'], stdout=buffer)
+    
+    buffer.seek(0)
+    response = FileResponse(buffer, content_type='application/json')
+    response['Content-Disposition'] = f'attachment; filename="{date_str}-base_de_datos.json"'
     return response
 
 @staff_member_required
