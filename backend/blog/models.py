@@ -35,6 +35,7 @@ class Headphone(models.Model):
     show_price = models.BooleanField(default=True, verbose_name='Mostrar Precio')
     
     # Especificaciones técnicas
+    acoustic_design = models.CharField(max_length=100, blank=True, verbose_name='Diseño Acústico')
     driver_size = models.CharField(max_length=50, blank=True, verbose_name='Tamaño del driver')
     frequency_response = models.CharField(max_length=100, blank=True, verbose_name='Respuesta de frecuencia')
     impedance = models.CharField(max_length=50, blank=True, verbose_name='Impedancia')

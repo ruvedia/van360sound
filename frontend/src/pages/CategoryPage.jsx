@@ -16,28 +16,63 @@ function CategoryPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Comprobamos si tenemos datos locales para esta categoría (ranking)
+                // Obtenemos datos locales para intro/outro y SEO
                 const localRanking = rankings[slug];
 
+                // Siempre intentamos obtener los datos del backend primero
+                const [categoryRes, headphonesRes] = await Promise.all([
+                    categoryService.getBySlug(slug),
+                    headphoneService.getByCategory(slug)
+                ]);
+
+                const categoryData = categoryRes.data;
+
+                // Si tenemos datos locales, los usamos para enriquecer (SEO, intro, outro)
+                // pero los productos (auriculares) vienen de la BD
                 if (localRanking) {
                     setCategory({
-                        name: localRanking.title,
-                        description: localRanking.metaDescription // Usamos la description de SEO o intro
+                        ...categoryData,
+                        description: localRanking.metaDescription || categoryData.description // Preferimos SEO meta del archivo local
                     });
 
-                    // Actualizar SEO (Título y Meta Description)
-                    document.title = localRanking.seoTitle || `${localRanking.title} - Van360Sound`;
+                    // SEO actualizado desde local si existe
+                    document.title = localRanking.seoTitle || `${categoryData.name} - Van360Sound`;
                     const metaDesc = document.querySelector('meta[name="description"]');
                     if (metaDesc) {
                         metaDesc.setAttribute('content', localRanking.metaDescription);
                     }
+                } else {
+                    setCategory(categoryData);
+                    document.title = `${categoryData.name} - Van360Sound`;
+                }
 
-                    // Mapeamos los datos del archivo al formato que espera el componente
+                // Procesamos los auriculares de la API
+                const apiHeadphones = headphonesRes.data.results || headphonesRes.data;
+                const sorted = apiHeadphones.sort((a, b) => {
+                    // Ordenar por ranking_order explícito
+                    if (a.ranking_order && b.ranking_order) return a.ranking_order - b.ranking_order;
+                    return new Date(b.created_at) - new Date(a.created_at);
+                });
+
+                setHeadphones(sorted);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+
+                // Fallback: Si falla la API pero tenemos localRanking, usamos eso
+                const localRanking = rankings[slug];
+                if (localRanking) {
+                    console.log('Falling back to local data');
+                    setCategory({
+                        name: localRanking.title,
+                        description: localRanking.metaDescription
+                    });
+
                     const mappedHeadphones = localRanking.headphones.map(h => ({
                         ...h,
-                        id: h.ranking_order,
+                        id: h.ranking_order, // Usamos ranking como ID temporal
                         slug: `${h.brand.toLowerCase()}-${h.name.toLowerCase().replace(/\s+/g, '-')}`,
-                        // Convertimos los scores del objeto anidado a campos planos para el componente
+                        // Mapeo de scores
                         score_soundstage: h.scores.soundstage,
                         score_comfort: h.scores.comfort,
                         score_build: h.scores.build,
@@ -48,29 +83,8 @@ function CategoryPage() {
                         score_value: h.scores.value,
                         score_overall: h.scores.overall
                     }));
-
                     setHeadphones(mappedHeadphones);
-                    setLoading(false);
-                    return;
                 }
-
-                // Para categorías sin ranking local, usamos la API de Django
-                const [categoryRes, headphonesRes] = await Promise.all([
-                    categoryService.getBySlug(slug),
-                    headphoneService.getByCategory(slug)
-                ]);
-
-                setCategory(categoryRes.data);
-                document.title = `${categoryRes.data.name} - Van360Sound`;
-
-                // Ordenamos por ranking_order si existe, si no por fecha
-                const sorted = (headphonesRes.data.results || headphonesRes.data).sort((a, b) => {
-                    if (a.ranking_order && b.ranking_order) return a.ranking_order - b.ranking_order;
-                    return 0;
-                });
-                setHeadphones(sorted);
-            } catch (error) {
-                console.error('Error fetching data:', error);
             } finally {
                 setLoading(false);
             }
