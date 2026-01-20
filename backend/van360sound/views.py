@@ -22,9 +22,12 @@ def download_database(request):
         json_content = buffer.getvalue().encode('utf-8')
         byte_buffer = io.BytesIO(json_content)
         
-        response = FileResponse(byte_buffer, content_type='application/json')
-        response['Content-Disposition'] = f'attachment; filename="{date_str}-base_de_datos.json"'
-        return response
+        return FileResponse(
+            byte_buffer,
+            as_attachment=True,
+            filename=f'{date_str}-base_de_datos.json',
+            content_type='application/json'
+        )
     except Exception as e:
         return HttpResponse(f"Error generando backup: {str(e)}", status=500)
 
@@ -51,5 +54,9 @@ def download_media(request):
                         print(f"Error zipping file {file}: {e}")
     
     buffer.seek(0)
-    response = FileResponse(buffer, as_attachment=True, filename=f'{date_str}-img.zip')
-    return response
+    return FileResponse(
+        buffer,
+        as_attachment=True,
+        filename=f'{date_str}-img.zip',
+        content_type='application/zip'
+    )
