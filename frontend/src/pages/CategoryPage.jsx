@@ -110,12 +110,34 @@ function CategoryPage() {
     const introData = localRanking ? localRanking.introData : null;
     const outroData = localRanking ? localRanking.outroData : null;
 
+    const getImageUrl = (imagePath) => {
+        if (!imagePath) return null;
+        if (imagePath.startsWith('http')) return imagePath;
+
+        // Si tenemos una URL de API definida en el entorno (.env), la usamos como base
+        const apiBase = import.meta.env.VITE_API_URL;
+
+        if (apiBase) {
+            // Si la base es ej: http://localhost:8000/api, le quitamos /api para tener la raíz
+            // y concatenamos la ruta de la imagen (ej: /media/...)
+            const rootUrl = apiBase.endsWith('/api') ? apiBase.slice(0, -4) : apiBase;
+            // Aseguramos que no haya doble slash //
+            const cleanRoot = rootUrl.endsWith('/') ? rootUrl.slice(0, -1) : rootUrl;
+            const cleanPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+            return `${cleanRoot}${cleanPath}`;
+        }
+
+        return imagePath; // Fallback: ruta relativa (confiando en proxy local)
+    };
+
+    const heroImage = getImageUrl(category.image);
+
     return (
         <div>
             <section
                 className="hero"
                 style={category.image ? {
-                    backgroundImage: `url(${category.image})`,
+                    backgroundImage: `url("${heroImage}")`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     color: '#fff'
