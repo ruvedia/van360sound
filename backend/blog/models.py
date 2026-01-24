@@ -33,6 +33,7 @@ class Headphone(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     show_price = models.BooleanField(default=True, verbose_name='Mostrar Precio')
+    show_review_button = models.BooleanField(default=True, verbose_name='Mostrar Botón de Análisis')
     
     # Especificaciones técnicas
     acoustic_design = models.CharField(max_length=100, blank=True, verbose_name='Diseño Acústico')

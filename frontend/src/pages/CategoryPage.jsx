@@ -135,6 +135,24 @@ function CategoryPage() {
 
     const heroImage = getImageUrl(category.image);
 
+    // Helpers para la distribución dinámica de scores
+    const getActiveScores = (headphone) => {
+        const potentialScores = [
+            { label: "Escenario Sonoro", value: headphone.score_soundstage },
+            { label: "Confort", value: headphone.score_comfort },
+            { label: "Calidad de Construcción", value: headphone.score_build },
+            { label: "Tonos Agudos", value: headphone.score_treble },
+            { label: "Tonos Medios", value: headphone.score_mids },
+            { label: "Tonos Graves", value: headphone.score_bass },
+            { label: "Precisión Acústica", value: headphone.score_accuracy },
+            { label: "Valor por el Precio", value: headphone.score_value },
+            { label: "Cancelación de Ruido", value: headphone.score_noise_cancelling },
+            { label: "Modo Transparencia", value: headphone.score_transparency },
+            { label: "Calidad de Llamadas", value: headphone.score_call_quality },
+        ];
+        return potentialScores.filter(s => s.value > 0);
+    };
+
     return (
         <div>
             <section className="hero">
@@ -179,12 +197,16 @@ function CategoryPage() {
 
                                                 {/* Botones debajo de la imagen */}
                                                 <div className="ranking-buttons-container">
-                                                    <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
-                                                        Ver Análisis Detallado
-                                                    </Link>
-                                                    <a href={headphone.amazon_link || '#'} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#000', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
-                                                        Ver en Amazon
-                                                    </a>
+                                                    {headphone.show_review_button && (
+                                                        <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                            Ver Análisis Detallado
+                                                        </Link>
+                                                    )}
+                                                    {headphone.amazon_link && (
+                                                        <a href={headphone.amazon_link} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#000', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                            Ver en Amazon
+                                                        </a>
+                                                    )}
                                                 </div>
                                             </div>
 
@@ -259,31 +281,29 @@ function CategoryPage() {
                                                     </div>
 
                                                     {/* Puntuaciones detalladas */}
+                                                    {/* Puntuaciones detalladas con distribución dinámica */}
                                                     <div className="ranking-scores-grid">
-                                                        {/* Columna izquierda: 5 barras */}
-                                                        <div>
-                                                            <ScoreBar label="Escenario Sonoro" score={headphone.score_soundstage} />
-                                                            <ScoreBar label="Confort" score={headphone.score_comfort} />
-                                                            <ScoreBar label="Calidad de Construcción" score={headphone.score_build} />
-                                                            <ScoreBar label="Tonos Agudos" score={headphone.score_treble} />
-                                                            <ScoreBar label="Tonos Medios" score={headphone.score_mids} />
-                                                            {headphone.score_noise_cancelling > 0 && (
-                                                                <ScoreBar label="Cancelación de Ruido" score={headphone.score_noise_cancelling} />
-                                                            )}
-                                                            {headphone.score_transparency > 0 && (
-                                                                <ScoreBar label="Modo Transparencia" score={headphone.score_transparency} />
-                                                            )}
-                                                            {headphone.score_call_quality > 0 && (
-                                                                <ScoreBar label="Calidad de Llamadas" score={headphone.score_call_quality} />
-                                                            )}
-                                                        </div>
+                                                        {(() => {
+                                                            const activeScores = getActiveScores(headphone);
+                                                            const midPoint = Math.ceil(activeScores.length / 2);
+                                                            const leftScores = activeScores.slice(0, midPoint);
+                                                            const rightScores = activeScores.slice(midPoint);
 
-                                                        {/* Columna derecha: 3 barras (sin la global) */}
-                                                        <div>
-                                                            <ScoreBar label="Tonos Graves" score={headphone.score_bass} />
-                                                            <ScoreBar label="Precisión Acústica" score={headphone.score_accuracy} />
-                                                            <ScoreBar label="Valor por el Precio" score={headphone.score_value} />
-                                                        </div>
+                                                            return (
+                                                                <>
+                                                                    <div>
+                                                                        {leftScores.map((score, i) => (
+                                                                            <ScoreBar key={i} label={score.label} score={score.value} />
+                                                                        ))}
+                                                                    </div>
+                                                                    <div>
+                                                                        {rightScores.map((score, i) => (
+                                                                            <ScoreBar key={i} label={score.label} score={score.value} />
+                                                                        ))}
+                                                                    </div>
+                                                                </>
+                                                            );
+                                                        })()}
                                                     </div>
                                                 </div>
                                             </div>
