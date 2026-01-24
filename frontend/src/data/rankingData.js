@@ -202,6 +202,7 @@ export const rankings = {
                     treble: 92,
                     mids: 94,
                     bass: 92,
+                    noise_cancelling: 99,
                     accuracy: 93,
                     value: 90,
                     overall: 98
@@ -227,6 +228,7 @@ export const rankings = {
                     treble: 88,
                     mids: 90,
                     bass: 94,
+                    noise_cancelling: 100,
                     accuracy: 91,
                     value: 85,
                     overall: 96
@@ -252,6 +254,7 @@ export const rankings = {
                     treble: 95,
                     mids: 95,
                     bass: 90,
+                    noise_cancelling: 95,
                     accuracy: 96,
                     value: 92,
                     overall: 94
@@ -277,6 +280,7 @@ export const rankings = {
                     treble: 88,
                     mids: 88,
                     bass: 90,
+                    noise_cancelling: 92,
                     accuracy: 89,
                     value: 98,
                     overall: 90
@@ -302,6 +306,7 @@ export const rankings = {
                     treble: 82,
                     mids: 84,
                     bass: 86,
+                    noise_cancelling: 85,
                     accuracy: 82,
                     value: 100,
                     overall: 85

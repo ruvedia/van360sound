@@ -29,7 +29,7 @@ class HeadphoneAdmin(admin.ModelAdmin):
             'fields': (
                 'score_soundstage', 'score_comfort', 'score_build', 
                 'score_treble', 'score_mids', 'score_bass', 
-                'score_accuracy', 'score_value', 'score_overall'
+                'score_noise_cancelling', 'score_accuracy', 'score_value', 'score_overall'
             )
         }),
         ('Multimedia', {

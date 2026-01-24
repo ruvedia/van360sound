@@ -79,6 +79,7 @@ function CategoryPage() {
                         score_treble: h.scores.treble,
                         score_mids: h.scores.mids,
                         score_bass: h.scores.bass,
+                        score_noise_cancelling: h.scores.noise_cancelling || 0,
                         score_accuracy: h.scores.accuracy,
                         score_value: h.scores.value,
                         score_overall: h.scores.overall
@@ -264,6 +265,9 @@ function CategoryPage() {
                                                             <ScoreBar label="Calidad de Construcción" score={headphone.score_build} />
                                                             <ScoreBar label="Tonos Agudos" score={headphone.score_treble} />
                                                             <ScoreBar label="Tonos Medios" score={headphone.score_mids} />
+                                                            {headphone.score_noise_cancelling > 0 && (
+                                                                <ScoreBar label="Cancelación de Ruido" score={headphone.score_noise_cancelling} />
+                                                            )}
                                                         </div>
 
                                                         {/* Columna derecha: 3 barras (sin la global) */}

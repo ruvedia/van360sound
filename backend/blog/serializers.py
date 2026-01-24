@@ -23,7 +23,7 @@ class HeadphoneSerializer(serializers.ModelSerializer):
             'main_image', 'image_2', 'image_3', 'rating', 'ranking_order',
             'is_featured', 'amazon_link', 'score_soundstage', 'score_comfort',
             'score_build', 'score_treble', 'score_mids', 'score_bass',
-            'score_accuracy', 'score_value', 'score_overall',
+            'score_noise_cancelling', 'score_accuracy', 'score_value', 'score_overall',
             'created_at', 'updated_at'
         ]
 
