@@ -80,6 +80,8 @@ function CategoryPage() {
                         score_mids: h.scores.mids,
                         score_bass: h.scores.bass,
                         score_noise_cancelling: h.scores.noise_cancelling || 0,
+                        score_transparency: h.scores.transparency || 0,
+                        score_call_quality: h.scores.call_quality || 0,
                         score_accuracy: h.scores.accuracy,
                         score_value: h.scores.value,
                         score_overall: h.scores.overall
@@ -267,6 +269,12 @@ function CategoryPage() {
                                                             <ScoreBar label="Tonos Medios" score={headphone.score_mids} />
                                                             {headphone.score_noise_cancelling > 0 && (
                                                                 <ScoreBar label="Cancelación de Ruido" score={headphone.score_noise_cancelling} />
+                                                            )}
+                                                            {headphone.score_transparency > 0 && (
+                                                                <ScoreBar label="Modo Transparencia" score={headphone.score_transparency} />
+                                                            )}
+                                                            {headphone.score_call_quality > 0 && (
+                                                                <ScoreBar label="Calidad de Llamadas" score={headphone.score_call_quality} />
                                                             )}
                                                         </div>
 

@@ -7,7 +7,9 @@ const SCORE_DEFINITIONS = [
     { title: "Graves", content: "Son las frecuencias bajas, responsables del impacto, la profundidad y la sensación de potencia. Un buen grave debe ser contundente pero controlado, sin tapar el resto del sonido." },
     { title: "Precisión Acústica", content: "Mide qué tan fiel es el sonido respecto a la grabación original. Cuanta más precisión acústica, menos coloración artificial y mayor sensación de audio realista y equilibrado." },
     { title: "Valor / Precio", content: "Relaciona el rendimiento general con el precio del producto. Un auricular con buen valor/precio ofrece muchas prestaciones y calidad por lo que cuesta, incluso frente a modelos más caros." },
-    { title: "Cancelación Activa de Ruido (ANC)", content: "Es la capacidad de los auriculares para reducir el ruido exterior mediante micrófonos y procesamiento digital. Un buen ANC atenúa sonidos como motores, tráfico o conversaciones, mejorando la experiencia en viajes y entornos ruidosos." }
+    { title: "Cancelación Activa de Ruido (ANC)", content: "Es la capacidad de los auriculares para reducir el ruido exterior mediante micrófonos y procesamiento digital. Un buen ANC atenúa sonidos como motores, tráfico o conversaciones, mejorando la experiencia en viajes y entornos ruidosos." },
+    { title: "Modo Transparencia", content: "Permite escuchar el entorno sin quitarse los auriculares, utilizando los micrófonos para amplificar los sonidos exteriores. Un buen modo transparencia suena natural, sin ruido de fondo excesivo ni voces robóticas." },
+    { title: "Calidad de Llamadas", content: "Evalúa la claridad con la que se transmite la voz en llamadas telefónicas o videollamadas. Tiene en cuenta la reducción de ruido ambiental, la nitidez de la voz y la estabilidad de la conexión." }
 ];
 
 export const rankings = {

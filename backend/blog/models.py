@@ -64,6 +64,8 @@ class Headphone(models.Model):
     score_accuracy = models.IntegerField(default=0, verbose_name='Precisión Acústica')
     score_value = models.IntegerField(default=0, verbose_name='Valor/Precio')
     score_noise_cancelling = models.IntegerField(default=0, verbose_name='Cancelación de Ruido')
+    score_transparency = models.IntegerField(default=0, verbose_name='Modo Transparencia')
+    score_call_quality = models.IntegerField(default=0, verbose_name='Calidad de Llamadas')
     score_overall = models.IntegerField(default=0, verbose_name='Puntuación Global')
     
     # Metadata
