@@ -294,6 +294,52 @@ function CategoryPage() {
                         <p className="text-center">No hay auriculares en esta categoría todavía.</p>
                     )}
 
+                    {/* Renderizado de las definiciones si existen */}
+                    {localRanking && localRanking.definitionsData && (
+                        <div className="score-definitions" style={{
+                            marginBottom: '4rem',
+                            maxWidth: '900px',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            backgroundColor: '#f8f9fa',
+                            padding: '2rem',
+                            borderRadius: '12px'
+                        }}>
+                            <h3 style={{
+                                fontSize: '1.8rem',
+                                marginBottom: '1.5rem',
+                                color: '#111',
+                                borderBottom: '2px solid #ddd',
+                                paddingBottom: '0.5rem',
+                                display: 'inline-block'
+                            }}>
+                                ¿Qué valoramos en nuestros análisis?
+                            </h3>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+                                {localRanking.definitionsData.map((def, idx) => (
+                                    <div key={idx} className="definition-item">
+                                        <h4 style={{
+                                            fontSize: '1.1rem',
+                                            fontWeight: '700',
+                                            marginBottom: '0.5rem',
+                                            color: '#2c3e50'
+                                        }}>
+                                            {def.title}
+                                        </h4>
+                                        <p style={{
+                                            fontSize: '0.95rem',
+                                            lineHeight: '1.6',
+                                            color: '#555',
+                                            margin: 0
+                                        }}>
+                                            {def.content}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Renderizado de la conclusión si existe */}
                     {outroData && (
                         <div className="category-outro" style={{ marginTop: '4rem', maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>

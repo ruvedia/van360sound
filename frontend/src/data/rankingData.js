@@ -1,3 +1,15 @@
+const SCORE_DEFINITIONS = [
+    { title: "Escenario Sonoro", content: "Se refiere a la sensación de espacio y amplitud del sonido. Un buen escenario sonoro hace que la música no suene “encerrada en la cabeza”, sino que los instrumentos parezcan colocados a distintas distancias y posiciones." },
+    { title: "Confort", content: "Indica qué tan cómodos son los auriculares durante sesiones largas. Depende del peso, la presión de la diadema, la forma de las almohadillas y los materiales en contacto con la cabeza y las orejas." },
+    { title: "Calidad de Construcción", content: "Evalúa los materiales y la robustez del producto. Incluye plásticos, metal, cuero, bisagras y la sensación general de durabilidad y acabado premium." },
+    { title: "Agudos", content: "Son las frecuencias altas del sonido, responsables del brillo, el detalle y la claridad. Unos buenos agudos aportan definición sin resultar estridentes ni cansar el oído." },
+    { title: "Medios", content: "Corresponden a las frecuencias centrales, donde se sitúan principalmente las voces e instrumentos como guitarras o pianos. Unos medios bien afinados hacen que las voces suenen naturales y realistas." },
+    { title: "Graves", content: "Son las frecuencias bajas, responsables del impacto, la profundidad y la sensación de potencia. Un buen grave debe ser contundente pero controlado, sin tapar el resto del sonido." },
+    { title: "Precisión Acústica", content: "Mide qué tan fiel es el sonido respecto a la grabación original. Cuanta más precisión acústica, menos coloración artificial y mayor sensación de audio realista y equilibrado." },
+    { title: "Valor / Precio", content: "Relaciona el rendimiento general con el precio del producto. Un auricular con buen valor/precio ofrece muchas prestaciones y calidad por lo que cuesta, incluso frente a modelos más caros." },
+    { title: "Cancelación Activa de Ruido (ANC)", content: "Es la capacidad de los auriculares para reducir el ruido exterior mediante micrófonos y procesamiento digital. Un buen ANC atenúa sonidos como motores, tráfico o conversaciones, mejorando la experiencia en viajes y entornos ruidosos." }
+];
+
 export const rankings = {
     hifi: {
         title: "HiFi",
@@ -14,6 +26,7 @@ export const rankings = {
             { type: 'subtitle', content: '¿Qué auriculares tienen mejor calidad de sonido?' },
             { type: 'paragraph', content: 'Responder a esta pregunta puede ser un desafío, ya que la calidad de sonido puede ser subjetiva y depender de las preferencias personales. Sin embargo, algunos auriculares han ganado reconocimiento por su sobresaliente rendimiento y alta calidad de sonido. Aquí te presentamos una selección de los mejores auriculares Hi-Fi del mercado:' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: '¿Qué considerar al elegir auriculares Hi-Fi?' },
             { type: 'paragraph', content: 'Al buscar los mejores auriculares Hi-Fi, hay varios factores clave a tener en cuenta para asegurarse de obtener el mejor producto para tus necesidades:' },
@@ -168,6 +181,7 @@ export const rankings = {
             { type: 'subtitle', content: '¿Cómo funciona la cancelación de ruido activa?' },
             { type: 'paragraph', content: 'La ANC funciona mediante micrófonos que captan el ruido ambiental y generan una "onda de sonido inversa" que lo anula antes de que llegue a tus oídos. En 2026, los procesadores dedicados permiten que este proceso sea más inteligente que nunca, adaptándose en tiempo real a cambios bruscos en tu entorno.' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: 'Factores clave al elegir auriculares ANC' },
             {
@@ -323,6 +337,7 @@ export const rankings = {
             { type: 'paragraph', content: 'Los <strong>auriculares True Wireless (TWS)</strong> han dejado de ser solo una cuestión de conveniencia para convertirse en dispositivos de audio de alta fidelidad. En 2026, la estabilidad de conexión, la calidad de los códecs y el tamaño compacto han alcanzado su punto álgido.' },
             { type: 'paragraph', content: 'Ya sea que busques la integración perfecta con tu ecosistema móvil o la máxima resolución sonora en formato bolsillo, este ranking recoge las opciones más punteras del año.' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: '¿Qué buscar en unos TWS en 2026?' },
             {
@@ -471,6 +486,7 @@ export const rankings = {
             { type: 'paragraph', content: 'En el deporte, la música no es solo acompañamiento, es motivación. Los <strong>auriculares deportivos</strong> de 2026 se centran en tres pilares: resistencia absoluta, ajuste inamovible y seguridad ambiental.' },
             { type: 'paragraph', content: 'Desde modelos de conducción ósea para corredores urbanos hasta in-ears con sellado extremo para el gimnasio, hemos seleccionado los que mejor soportan el sudor y la actividad intensa.' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: 'Qué debe tener un buen auricular deportivo' },
             {
@@ -619,6 +635,7 @@ export const rankings = {
             { type: 'paragraph', content: 'En el <strong>gaming</strong> competitivo o inmersivo, el audio es el 50% de la experiencia. Los auriculares de 2026 han perfeccionado el posicionamiento sonoro y la claridad de voz, permitiéndote detectar al enemigo antes de verlo.' },
             { type: 'paragraph', content: 'Desde drivers magnéticos planares para audiófilos hasta sistemas inalámbricos sin latencia, este ranking cubre todas las necesidades del jugador actual.' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: '¿Qué hace que un auricular sea bueno para jugar?' },
             {
@@ -767,6 +784,7 @@ export const rankings = {
             { type: 'paragraph', content: 'Los <strong>monitores intraurales (IEMs)</strong> han vivido una revolución gracias a la miniaturización de tecnologías antes exclusivas de grandes auriculares de diadema.' },
             { type: 'paragraph', content: 'En este ranking para 2026, nos centramos en modelos que ofrecen una fidelidad sonora sin concesiones, ya sea mediante sistemas de múltiples drivers o tecnologías híbridas innovadoras.' }
         ],
+        definitionsData: SCORE_DEFINITIONS,
         outroData: [
             { type: 'subtitle', content: '¿Por qué elegir unos In-Ear HiFi?' },
             {
