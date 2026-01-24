@@ -175,7 +175,7 @@ export const rankings = {
     'noise-cancelling': {
         title: "Noise Cancelling",
         seoTitle: "Mejores Auriculares Noise Cancelling 2026: Ranking Cancelación de Ruido | Van360Sound",
-        metaDescription: "Comparativa de los 5 mejores auriculares con cancelación de ruido activa (ANC) del 2026. Sony, Bose y más. ¡Encuentra el silencio perfecto!",
+        metaDescription: "Comparativa de los 5 mejores auriculares con cancelación de ruido activa (ANC) del 2026. ¡Encuentra el silencio perfecto!",
         introData: [
             { type: 'title', content: 'Mejores Auriculares con Cancelación de Ruido 2026: Tu Guía para el Silencio Perfecto' },
             { type: 'paragraph', content: 'En un mundo cada vez más ruidoso, los auriculares con <strong>cancelación activa de ruido (ANC)</strong> se han convertido en una herramienta indispensable. Ya sea para concentrarte en la oficina, disfrutar de un vuelo tranquilo o simplemente aislarte del bullicio urbano, la tecnología de 2026 ha alcanzado niveles de eficacia asombrosos.' },
