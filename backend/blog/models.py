@@ -23,6 +23,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+def headphone_directory_path(instance, filename):
+    # El archivo se subirá a MEDIA_ROOT/headphones/<category_slug>/<filename>
+    # Si la categoría tiene slug, lo usa, si no, usa 'uncategorized'
+    cat_path = instance.category.slug if instance.category and instance.category.slug else 'uncategorized'
+    return 'headphones/{0}/{1}'.format(cat_path, filename)
 
 class Headphone(models.Model):
     """Modelo de auriculares"""
@@ -45,9 +50,9 @@ class Headphone(models.Model):
     connectivity = models.CharField(max_length=100, blank=True, verbose_name='Conectividad')
     
     # Imágenes
-    main_image = models.ImageField(upload_to='headphones/', blank=True, null=True)
-    image_2 = models.ImageField(upload_to='headphones/', blank=True, null=True)
-    image_3 = models.ImageField(upload_to='headphones/', blank=True, null=True)
+    main_image = models.ImageField(upload_to=headphone_directory_path, blank=True, null=True, verbose_name='Imagen Principal')
+    image_2 = models.ImageField(upload_to=headphone_directory_path, blank=True, null=True, verbose_name='Imagen Secundaria 1')
+    image_3 = models.ImageField(upload_to=headphone_directory_path, blank=True, null=True, verbose_name='Imagen Secundaria 2')
     
     # Ratings y Ranking
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
