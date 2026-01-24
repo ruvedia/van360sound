@@ -11,24 +11,33 @@ from datetime import datetime
 def download_database(request):
     try:
         date_str = datetime.now().strftime('%Y-%m-%d')
-        # Use simple os.path to locate db.sqlite3
-        db_path = settings.DATABASES['default']['NAME']
         
-        # Check if it's a string path (SQLite local)
-        if hasattr(db_path, 'resolve'): # If it's a Path object
-             db_path = str(db_path)
+        # Intento 1: Usar la configuración de Django
+        db_name = settings.DATABASES['default']['NAME']
+        
+        # Intento 2: Construir ruta explícita al archivo db.sqlite3
+        # Esto soluciona problemas si settings.NAME es relativo o si se usa dj_database_url de forma extraña
+        explicit_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
 
-        if not os.path.exists(db_path):
-             return HttpResponse("Database file not found", status=404)
+        final_path = None
+        
+        if os.path.exists(str(db_name)) and os.path.isfile(str(db_name)):
+            final_path = str(db_name)
+        elif os.path.exists(explicit_path) and os.path.isfile(explicit_path):
+            final_path = explicit_path
+            
+        if not final_path:
+             engine = settings.DATABASES['default']['ENGINE']
+             return HttpResponse(f"Error: No se encuentra el archivo 'db.sqlite3'. \nMotor de base de datos actual: {engine}. \nSi usas PostgreSQL, esta opción no funciona (usa JSON).", status=404)
 
         return FileResponse(
-            open(db_path, 'rb'),
+            open(final_path, 'rb'),
             as_attachment=True,
             filename=f'{date_str}-db.sqlite3',
             content_type='application/x-sqlite3'
         )
     except Exception as e:
-        return HttpResponse(f"Error generando backup: {str(e)}", status=500)
+        return HttpResponse(f"Error interno generando descarga: {str(e)}", status=500)
 
 @staff_member_required
 def download_media(request):
