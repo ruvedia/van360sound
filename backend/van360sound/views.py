@@ -11,33 +11,27 @@ from datetime import datetime
 def download_database(request):
     try:
         date_str = datetime.now().strftime('%Y-%m-%d')
+        # dumpdata writes text, so we need StringIO
+        buffer = io.StringIO()
         
-        # Intento 1: Usar la configuración de Django
-        db_name = settings.DATABASES['default']['NAME']
+        # Dump data to buffer using the 'dumpdata' management command.
+        # We exclude 'contenttypes' and 'auth.permission' because they often cause 
+        # issues when loading data into a fresh database.
+        call_command('dumpdata', exclude=['contenttypes', 'auth.permission'], stdout=buffer)
         
-        # Intento 2: Construir ruta explícita al archivo db.sqlite3
-        # Esto soluciona problemas si settings.NAME es relativo o si se usa dj_database_url de forma extraña
-        explicit_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
-
-        final_path = None
+        # Convert string content to bytes for file response
+        buffer.seek(0)
+        json_content = buffer.getvalue().encode('utf-8')
+        byte_buffer = io.BytesIO(json_content)
         
-        if os.path.exists(str(db_name)) and os.path.isfile(str(db_name)):
-            final_path = str(db_name)
-        elif os.path.exists(explicit_path) and os.path.isfile(explicit_path):
-            final_path = explicit_path
-            
-        if not final_path:
-             engine = settings.DATABASES['default']['ENGINE']
-             return HttpResponse(f"Error: No se encuentra el archivo 'db.sqlite3'. \nMotor de base de datos actual: {engine}. \nSi usas PostgreSQL, esta opción no funciona (usa JSON).", status=404)
-
         return FileResponse(
-            open(final_path, 'rb'),
+            byte_buffer,
             as_attachment=True,
-            filename=f'{date_str}-db.sqlite3',
-            content_type='application/x-sqlite3'
+            filename=f'{date_str}-base_de_datos.json',
+            content_type='application/json'
         )
     except Exception as e:
-        return HttpResponse(f"Error interno generando descarga: {str(e)}", status=500)
+        return HttpResponse(f"Error generando backup: {str(e)}", status=500)
 
 @staff_member_required
 def download_media(request):
