@@ -11,22 +11,21 @@ from datetime import datetime
 def download_database(request):
     try:
         date_str = datetime.now().strftime('%Y-%m-%d')
-        # dumpdata writes text, so we need StringIO
-        buffer = io.StringIO()
+        # Use simple os.path to locate db.sqlite3
+        db_path = settings.DATABASES['default']['NAME']
         
-        # Dump data to buffer
-        call_command('dumpdata', exclude=['contenttypes', 'auth.permission'], stdout=buffer)
-        
-        # Convert string content to bytes for file response
-        buffer.seek(0)
-        json_content = buffer.getvalue().encode('utf-8')
-        byte_buffer = io.BytesIO(json_content)
-        
+        # Check if it's a string path (SQLite local)
+        if hasattr(db_path, 'resolve'): # If it's a Path object
+             db_path = str(db_path)
+
+        if not os.path.exists(db_path):
+             return HttpResponse("Database file not found", status=404)
+
         return FileResponse(
-            byte_buffer,
+            open(db_path, 'rb'),
             as_attachment=True,
-            filename=f'{date_str}-base_de_datos.json',
-            content_type='application/json'
+            filename=f'{date_str}-db.sqlite3',
+            content_type='application/x-sqlite3'
         )
     except Exception as e:
         return HttpResponse(f"Error generando backup: {str(e)}", status=500)
