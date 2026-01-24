@@ -17,7 +17,7 @@ class HeadphoneAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Información Básica', {
-            'fields': ('brand', 'name', 'slug', 'category', 'description', 'price', 'show_price', 'show_review_button', 'amazon_link')
+            'fields': ('brand', 'name', 'slug', 'category', 'description', 'price', 'show_price', 'show_review_button', 'amazon_link', 'official_link')
         }),
         ('Ranking y Destacados', {
             'fields': ('ranking_order', 'rating', 'is_featured')

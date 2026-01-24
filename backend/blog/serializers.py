@@ -21,7 +21,7 @@ class HeadphoneSerializer(serializers.ModelSerializer):
             'description', 'price', 'show_price', 'show_review_button', 'driver_size', 'frequency_response',
             'impedance', 'sensitivity', 'battery_life', 'connectivity',
             'main_image', 'image_2', 'image_3', 'rating', 'ranking_order',
-            'is_featured', 'amazon_link', 'score_soundstage', 'score_comfort',
+            'is_featured', 'amazon_link', 'official_link', 'score_soundstage', 'score_comfort',
             'score_build', 'score_treble', 'score_mids', 'score_bass',
             'score_noise_cancelling', 'score_transparency', 'score_call_quality',
             'score_accuracy', 'score_value', 'score_overall',

@@ -207,6 +207,11 @@ function CategoryPage() {
                                                             Ver en Amazon
                                                         </a>
                                                     )}
+                                                    {headphone.official_link && (
+                                                        <a href={headphone.official_link} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#555', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                            Web Oficial
+                                                        </a>
+                                                    )}
                                                 </div>
                                             </div>
 

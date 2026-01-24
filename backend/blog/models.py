@@ -54,6 +54,7 @@ class Headphone(models.Model):
     ranking_order = models.IntegerField(default=0, verbose_name='Orden en Ranking')
     is_featured = models.BooleanField(default=False, verbose_name='Destacado')
     amazon_link = models.URLField(blank=True, null=True, verbose_name='Enlace Amazon')
+    official_link = models.URLField(blank=True, null=True, verbose_name='Enlace Oficial')
 
     # Puntuaciones detalladas (0-100)
     score_soundstage = models.IntegerField(default=0, verbose_name='Escenario Sonoro')
