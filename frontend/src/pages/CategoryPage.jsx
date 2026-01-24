@@ -198,9 +198,21 @@ function CategoryPage() {
                                                 {/* Botones debajo de la imagen */}
                                                 <div className="ranking-buttons-container">
                                                     {headphone.show_review_button && (
-                                                        <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
-                                                            Ver Análisis Detallado
-                                                        </Link>
+                                                        headphone.custom_review_link ? (
+                                                            headphone.custom_review_link.startsWith('http') ? (
+                                                                <a href={headphone.custom_review_link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                                    Ver Análisis Detallado
+                                                                </a>
+                                                            ) : (
+                                                                <Link to={headphone.custom_review_link} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                                    Ver Análisis Detallado
+                                                                </Link>
+                                                            )
+                                                        ) : (
+                                                            <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                                Ver Análisis Detallado
+                                                            </Link>
+                                                        )
                                                     )}
                                                     {headphone.amazon_link && (
                                                         <a href={headphone.amazon_link} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#000', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
