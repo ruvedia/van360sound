@@ -4,7 +4,7 @@ set -o errexit
 
 pip install --upgrade pip
 pip install -r requirements.txt
-pip install psycopg2-binary
+pip install "psycopg[binary]"
 
 python manage.py collectstatic --no-input
 python manage.py migrate
