@@ -32,7 +32,7 @@ function CategoryPage() {
                 if (localRanking) {
                     setCategory({
                         ...categoryData,
-                        description: localRanking.metaDescription || categoryData.description // Preferimos SEO meta del archivo local
+                        description: categoryData.description || localRanking.metaDescription // Preferimos Backend, fallback a local
                     });
 
                     // Prioridad SEO: 1. Backend, 2. Local Ranking, 3. Generado
