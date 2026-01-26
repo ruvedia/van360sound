@@ -10,6 +10,12 @@ class Category(models.Model):
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     
+    # SEO Fields
+    seo_h1 = models.CharField(max_length=200, blank=True, null=True, verbose_name='Título H1 (SEO)', help_text="Si se deja vacío, se usa el nombre de la categoría.")
+    seo_h2 = models.CharField(max_length=200, blank=True, null=True, verbose_name='Título H2 (SEO)', help_text="Subtítulo opcional para SEO.")
+    meta_title = models.CharField(max_length=200, blank=True, null=True, verbose_name='Meta Title', help_text="Título que aparece en la pestaña del navegador y en Google.")
+    meta_description = models.TextField(blank=True, null=True, verbose_name='Meta Description', help_text="Descripción para motores de búsqueda.")
+    
     class Meta:
         verbose_name = 'Categoría'
         verbose_name_plural = 'Categorías'

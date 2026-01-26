@@ -35,15 +35,27 @@ function CategoryPage() {
                         description: localRanking.metaDescription || categoryData.description // Preferimos SEO meta del archivo local
                     });
 
-                    // SEO actualizado desde local si existe
-                    document.title = localRanking.seoTitle || `${categoryData.name} - Van360Sound`;
+                    // Prioridad SEO: 1. Backend, 2. Local Ranking, 3. Generado
+                    const seoTitle = categoryData.meta_title || localRanking.seoTitle || `${categoryData.name} - Van360Sound`;
+                    const seoDesc = categoryData.meta_description || localRanking.metaDescription;
+
+                    document.title = seoTitle;
                     const metaDesc = document.querySelector('meta[name="description"]');
-                    if (metaDesc) {
-                        metaDesc.setAttribute('content', localRanking.metaDescription);
+                    if (metaDesc && seoDesc) {
+                        metaDesc.setAttribute('content', seoDesc);
                     }
                 } else {
                     setCategory(categoryData);
-                    document.title = `${categoryData.name} - Van360Sound`;
+
+                    // Prioridad SEO: 1. Backend, 2. Generado
+                    const seoTitle = categoryData.meta_title || `${categoryData.name} - Van360Sound`;
+                    const seoDesc = categoryData.meta_description || categoryData.description;
+
+                    document.title = seoTitle;
+                    const metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc && seoDesc) {
+                        metaDesc.setAttribute('content', seoDesc);
+                    }
                 }
 
                 // Procesamos los auriculares de la API
@@ -157,7 +169,8 @@ function CategoryPage() {
         <div>
             <section className="hero">
                 <div className="container">
-                    <h1>{category.name}</h1>
+                    <h1>{category.seo_h1 || category.name}</h1>
+                    {category.seo_h2 && <h2 className="hero-subtitle-h2" style={{ fontSize: '1.5rem', marginTop: '0.5rem', fontWeight: '400' }}>{category.seo_h2}</h2>}
                     <p className="hero-subtitle">{category.description}</p>
                 </div>
             </section>

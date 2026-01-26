@@ -6,7 +6,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = ['id', 'name', 'slug', 'description', 'image', 'order', 'headphones_count']
+        fields = ['id', 'name', 'slug', 'description', 'image', 'order', 'headphones_count', 'seo_h1', 'seo_h2', 'meta_title', 'meta_description']
     
     def get_headphones_count(self, obj):
         return obj.headphones.count()
