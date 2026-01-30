@@ -55,7 +55,7 @@ function NuestroTop() {
                                 )}
                                 <div className="card-content">
                                     <h3 className="card-title">{category.name}</h3>
-                                    <p className="card-text">{category.description}</p>
+                                    <p className="card-text">{category.meta_description || category.description}</p>
                                     <div className="card-meta">
                                         <span>{category.headphones_count} auriculares</span>
                                     </div>
