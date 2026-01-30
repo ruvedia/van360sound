@@ -13,11 +13,13 @@ function CategoryPage() {
     const [headphones, setHeadphones] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    console.log('CategoryPage Render:', { slug });
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // Obtenemos datos locales para intro/outro y SEO
-                const localRanking = rankings[slug];
+                const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
 
                 // Siempre intentamos obtener los datos del backend primero
                 const [categoryRes, headphonesRes] = await Promise.all([
@@ -29,6 +31,7 @@ function CategoryPage() {
 
                 // Si tenemos datos locales, los usamos para enriquecer (SEO, intro, outro)
                 // pero los productos (auriculares) vienen de la BD
+                console.log('CategoryPage fetchData:', { slug, localRanking, categoryRes: categoryRes.data });
                 if (localRanking) {
                     setCategory({
                         ...categoryData,
@@ -72,7 +75,7 @@ function CategoryPage() {
                 console.error('Error fetching data:', error);
 
                 // Fallback: Si falla la API pero tenemos localRanking, usamos eso
-                const localRanking = rankings[slug];
+                const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
                 if (localRanking) {
                     console.log('Falling back to local data');
                     setCategory({
@@ -120,7 +123,8 @@ function CategoryPage() {
     }
 
     // Comprobamos si es una página de ranking local
-    const localRanking = rankings[slug];
+    const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
+    console.log('CategoryPage Render Scope:', { slug, localRanking, hasDefinitions: !!(localRanking && localRanking.definitionsData) });
     const isRanking = localRanking || headphones.some(h => h.ranking_order > 0);
     const introData = localRanking ? localRanking.introData : null;
     const outroData = localRanking ? localRanking.outroData : null;
