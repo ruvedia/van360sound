@@ -225,7 +225,7 @@ function CategoryPage() {
                 </div>
             </section>
 
-            <section className="section">
+            <section className="section" style={{ paddingTop: '0' }}>
                 <div className="container">
                     {/* Renderizado de la introducción si existe */}
                     {introData && (

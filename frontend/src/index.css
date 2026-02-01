@@ -433,7 +433,7 @@ p {
 .hero-subtitle {
   font-size: var(--font-size-xl);
   color: var(--color-text-secondary);
-  max-width: 900px;
+  /* max-width removed to match title width */
   text-align: left;
   margin: 0 auto var(--spacing-md);
 }
