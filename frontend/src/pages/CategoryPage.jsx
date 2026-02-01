@@ -18,8 +18,22 @@ function CategoryPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Obtenemos datos locales para intro/outro y SEO
-                const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
+                // Helper para buscar datos locales de forma flexible (e.g. 'hi-fi' vs 'hifi')
+                const getLocalRanking = (currentSlug) => {
+                    if (!currentSlug) return null;
+                    // Intento directo
+                    if (rankings[currentSlug]) return rankings[currentSlug];
+                    if (rankings[currentSlug.toLowerCase()]) return rankings[currentSlug.toLowerCase()];
+
+                    // Intento normalizado (sin guiones, todo minúsculas)
+                    const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const target = normalize(currentSlug);
+
+                    const matchingKey = Object.keys(rankings).find(key => normalize(key) === target);
+                    return matchingKey ? rankings[matchingKey] : null;
+                };
+
+                const localRanking = getLocalRanking(slug);
 
                 // Siempre intentamos obtener los datos del backend primero
                 const [categoryRes, headphonesRes] = await Promise.all([
@@ -75,7 +89,22 @@ function CategoryPage() {
                 console.error('Error fetching data:', error);
 
                 // Fallback: Si falla la API pero tenemos localRanking, usamos eso
-                const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
+                // Nota: 'localRanking' ya fue calculado arriba con getLocalRanking(slug)
+                // pero si falló el try, necesitamos recalcularlo o asegurarnos que esté disponible.
+                // Como está definido dentro del try, aquí no es visible si usamos const dentro del try.
+                // Sin embargo, para mantener la lógica simple y evitar scope issues, lo recalculamos:
+
+                const getLocalRanking = (currentSlug) => {
+                    if (!currentSlug) return null;
+                    if (rankings[currentSlug]) return rankings[currentSlug];
+                    if (rankings[currentSlug.toLowerCase()]) return rankings[currentSlug.toLowerCase()];
+                    const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const target = normalize(currentSlug);
+                    const matchingKey = Object.keys(rankings).find(key => normalize(key) === target);
+                    return matchingKey ? rankings[matchingKey] : null;
+                };
+
+                const localRanking = getLocalRanking(slug);
                 if (localRanking) {
                     console.log('Falling back to local data');
                     setCategory({
@@ -83,25 +112,32 @@ function CategoryPage() {
                         description: localRanking.metaDescription
                     });
 
-                    const mappedHeadphones = localRanking.headphones.map(h => ({
-                        ...h,
-                        id: h.ranking_order, // Usamos ranking como ID temporal
-                        slug: `${h.brand.toLowerCase()}-${h.name.toLowerCase().replace(/\s+/g, '-')}`,
-                        // Mapeo de scores
-                        score_soundstage: h.scores.soundstage,
-                        score_comfort: h.scores.comfort,
-                        score_build: h.scores.build,
-                        score_treble: h.scores.treble,
-                        score_mids: h.scores.mids,
-                        score_bass: h.scores.bass,
-                        score_noise_cancelling: h.scores.noise_cancelling || 0,
-                        score_transparency: h.scores.transparency || 0,
-                        score_call_quality: h.scores.call_quality || 0,
-                        score_accuracy: h.scores.accuracy,
-                        score_value: h.scores.value,
-                        score_overall: h.scores.overall
-                    }));
-                    setHeadphones(mappedHeadphones);
+                    if (localRanking.headphones) {
+                        const mappedHeadphones = localRanking.headphones.map(h => ({
+                            ...h,
+                            id: h.ranking_order, // Usamos ranking como ID temporal
+                            slug: `${h.brand.toLowerCase()}-${h.name.toLowerCase().replace(/\s+/g, '-')}`,
+                            // Mapeo de scores
+                            score_soundstage: h.scores.soundstage,
+                            score_comfort: h.scores.comfort,
+                            score_build: h.scores.build,
+                            score_treble: h.scores.treble,
+                            score_mids: h.scores.mids,
+                            score_bass: h.scores.bass,
+                            score_noise_cancelling: h.scores.noise_cancelling || 0,
+                            score_transparency: h.scores.transparency || 0,
+                            score_call_quality: h.scores.call_quality || 0,
+                            score_accuracy: h.scores.accuracy,
+                            score_value: h.scores.value,
+                            score_overall: h.scores.overall
+                        }));
+                        setHeadphones(mappedHeadphones);
+                    } else {
+                        // Si no hay datos locales de auriculares, dejamos la lista vacía
+                        // o podríamos mostrar un mensaje de error más específico si quisiéramos.
+                        console.log('No local headphones data available to fallback.');
+                        setHeadphones([]);
+                    }
                 }
             } finally {
                 setLoading(false);
@@ -123,7 +159,17 @@ function CategoryPage() {
     }
 
     // Comprobamos si es una página de ranking local
-    const localRanking = rankings[slug] || rankings[slug.toLowerCase()];
+    const getLocalRankingStrict = (currentSlug) => {
+        if (!currentSlug) return null;
+        if (rankings[currentSlug]) return rankings[currentSlug];
+        if (rankings[currentSlug.toLowerCase()]) return rankings[currentSlug.toLowerCase()];
+        const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const target = normalize(currentSlug);
+        const matchingKey = Object.keys(rankings).find(key => normalize(key) === target);
+        return matchingKey ? rankings[matchingKey] : null;
+    };
+
+    const localRanking = getLocalRankingStrict(slug);
     console.log('CategoryPage Render Scope:', { slug, localRanking, hasDefinitions: !!(localRanking && localRanking.definitionsData) });
     const isRanking = localRanking || headphones.some(h => h.ranking_order > 0);
     const introData = localRanking ? localRanking.introData : null;
