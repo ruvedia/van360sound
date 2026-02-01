@@ -16,8 +16,6 @@ const HIFI_DATA = {
     seoTitle: "Mejores Auriculares Hi-Fi 2026: Ranking para Audiófilos | Van360Sound",
     metaDescription: "Descubre el ranking definitivo de los mejores auriculares de alta fidelidad (Hi-Fi) del 2026. Análisis detallado, especificaciones técnicas y comparativas para audiófilos.",
     introData: [
-        { type: 'paragraph', content: 'Bienvenido al <strong>ranking más esperado</strong>. Cada año, la tecnología <strong>Hi-Fi</strong> avanza, y en 2026 hemos presenciado saltos impresionantes en <strong>calidad de sonido</strong> y rendimiento. Hemos seleccionado solo los <strong>auriculares de alta fidelidad</strong> que realmente marcan la diferencia. Si buscas la reproducción más <strong>nítida</strong>, la escena sonora más amplia y la ingeniería más precisa, esta es tu guía. Descubre cuáles son los modelos que dominan la cima del mercado, qué los hace especiales y por qué merecen ser tu próxima inversión en audio.' },
-        { type: 'paragraph', content: '¿Alguna vez te has preguntado cuáles son los mejores auriculares Hi-Fi del mercado? Si es así, estás en el lugar correcto. En este artículo, vamos a desglosar todo lo que necesitas saber sobre los auriculares Hi-Fi, desde qué son hasta cuáles tienen la mejor calidad de sonido. ¡Vamos a sumergirnos en el mundo del audio de alta fidelidad!' },
         { type: 'subtitle', content: '¿Qué son los auriculares Hi-Fi?' },
         { type: 'paragraph', content: 'Los auriculares Hi-Fi (High Fidelity o Alta Fidelidad) son aquellos diseñados para reproducir el sonido con la mayor calidad posible. El objetivo es ofrecer una experiencia auditiva que se acerque lo más posible a cómo el sonido fue originalmente grabado. Esto significa una reproducción clara, detallada y precisa de la música, sin distorsiones ni pérdidas de calidad.' },
         { type: 'subtitle', content: '¿Qué es la calidad de audio Hi-Fi?' },
@@ -47,8 +45,6 @@ const NOISE_CANCELLING_DATA = {
     seoTitle: "Mejores Auriculares Noise Cancelling 2026: Ranking Cancelación de Ruido | Van360Sound",
     metaDescription: "Comparativa de los 5 mejores auriculares con cancelación de ruido activa (ANC) del 2026. ¡Encuentra el silencio perfecto!",
     introData: [
-        { type: 'paragraph', content: 'En un mundo cada vez más ruidoso, los auriculares con <strong>cancelación activa de ruido (ANC)</strong> se han convertido en una herramienta indispensable. Ya sea para concentrarte en la oficina, disfrutar de un vuelo tranquilo o simplemente aislarte del bullicio urbano, la tecnología de 2026 ha alcanzado niveles de eficacia asombrosos.' },
-        { type: 'paragraph', content: 'Hemos analizado y comparado los modelos más avanzados del mercado para traerte este ranking exclusivo. No solo nos fijamos en la capacidad de silencio, sino también en cómo esta tecnología afecta a la <strong>calidad musical</strong> y la comodidad durante largos periodos de uso.' },
         { type: 'subtitle', content: '¿Cómo funciona la cancelación de ruido activa?' },
         { type: 'paragraph', content: 'La ANC funciona mediante micrófonos que captan el ruido ambiental y generan una "onda de sonido inversa" que lo anula antes de que llegue a tus oídos. En 2026, los procesadores dedicados permiten que este proceso sea más inteligente que nunca, adaptándose en tiempo real a cambios bruscos en tu entorno.' }
     ],
@@ -71,10 +67,7 @@ const NOISE_CANCELLING_DATA = {
 const TRUE_WIRELESS_DATA = {
     seoTitle: "Mejores Auriculares True Wireless 2026: Ranking TWS e Inalámbricos | Van360Sound",
     metaDescription: "Ranking Top 5 de los mejores auriculares True Wireless (TWS) del 2026. Sony, Apple, Bose y Samsung analizados por expertos en audio.",
-    introData: [
-        { type: 'paragraph', content: 'Los <strong>auriculares True Wireless (TWS)</strong> han dejado de ser solo una cuestión de conveniencia para convertirse en dispositivos de audio de alta fidelidad. En 2026, la estabilidad de conexión, la calidad de los códecs y el tamaño compacto han alcanzado su punto álgido.' },
-        { type: 'paragraph', content: 'Ya sea que busques la integración perfecta con tu ecosistema móvil o la máxima resolución sonora en formato bolsillo, este ranking recoge las opciones más punteras del año.' }
-    ],
+    introData: [],
     definitionsData: SCORE_DEFINITIONS,
     outroData: [
         { type: 'subtitle', content: '¿Qué buscar en unos TWS en 2026?' },
@@ -92,10 +85,7 @@ const TRUE_WIRELESS_DATA = {
 const SPORT_DATA = {
     seoTitle: "Mejores Auriculares Deportivos 2026: Ranking Auriculares Running y Gym | Van360Sound",
     metaDescription: "¿Buscas auriculares para correr o entrenar? Ranking de los 5 mejores auriculares deportivos del 2026. Resistentes al sudor y ajuste seguro.",
-    introData: [
-        { type: 'paragraph', content: 'En el deporte, la música no es solo acompañamiento, es motivación. Los <strong>auriculares deportivos</strong> de 2026 se centran en tres pilares: resistencia absoluta, ajuste inamovible y seguridad ambiental.' },
-        { type: 'paragraph', content: 'Desde modelos de conducción ósea para corredores urbanos hasta in-ears con sellado extremo para el gimnasio, hemos seleccionado los que mejor soportan el sudor y la actividad intensa.' }
-    ],
+    introData: [],
     definitionsData: SCORE_DEFINITIONS,
     outroData: [
         { type: 'subtitle', content: 'Qué debe tener un buen auricular deportivo' },
@@ -113,10 +103,7 @@ const SPORT_DATA = {
 const GAMING_DATA = {
     seoTitle: "Mejores Auriculares Gaming 2026: Ranking Headsets PC, PS5 y Xbox | Van360Sound",
     metaDescription: "Ranking Top 5 auriculares gaming del 2026. Audio espacial, micrófonos cristalinos y la mejor latencia para ganar tus partidas.",
-    introData: [
-        { type: 'paragraph', content: 'En el <strong>gaming</strong> competitivo o inmersivo, el audio es el 50% de la experiencia. Los auriculares de 2026 han perfeccionado el posicionamiento sonoro y la claridad de voz, permitiéndote detectar al enemigo antes de verlo.' },
-        { type: 'paragraph', content: 'Desde drivers magnéticos planares para audiófilos hasta sistemas inalámbricos sin latencia, este ranking cubre todas las necesidades del jugador actual.' }
-    ],
+    introData: [],
     definitionsData: SCORE_DEFINITIONS,
     outroData: [
         { type: 'subtitle', content: '¿Qué hace que un auricular sea bueno para jugar?' },
@@ -134,10 +121,7 @@ const GAMING_DATA = {
 const IN_EAR_DATA = {
     seoTitle: "Mejores Auriculares In-Ear (IEMs) 2026: Ranking Audiófilo | Van360Sound",
     metaDescription: "Guía de los mejores monitores intraurales (IEMs) del 2026. Calidad de estudio en tus oídos. Ranking detallado por expertos.",
-    introData: [
-        { type: 'paragraph', content: 'Los <strong>monitores intraurales (IEMs)</strong> han vivido una revolución gracias a la miniaturización de tecnologías antes exclusivas de grandes auriculares de diadema.' },
-        { type: 'paragraph', content: 'En este ranking para 2026, nos centramos en modelos que ofrecen una fidelidad sonora sin concesiones, ya sea mediante sistemas de múltiples drivers o tecnologías híbridas innovadoras.' }
-    ],
+    introData: [],
     definitionsData: SCORE_DEFINITIONS,
     outroData: [
         { type: 'subtitle', content: '¿Por qué elegir unos In-Ear HiFi?' },
