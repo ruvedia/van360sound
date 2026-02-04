@@ -187,5 +187,6 @@ export const rankings = {
     'headphones-anc-hi-fi': HIFI_DATA,
     'true-wireless-anc-hi-fi': HIFI_DATA, // Combinación, priorizamos HIFI por calidad
     'true-wireless-sport': SPORT_DATA,
-    'true-wireless-gaming': GAMING_DATA
+    'true-wireless-gaming': GAMING_DATA,
+    'auriculares-deportivos-true-wireless-cerrados': SPORT_DATA
 };
