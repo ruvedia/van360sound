@@ -54,7 +54,7 @@ class Headphone(models.Model):
     sensitivity = models.CharField(max_length=50, blank=True, verbose_name='Sensibilidad')
     battery_life = models.CharField(max_length=100, blank=True, verbose_name='Duración de batería')
     connectivity = models.CharField(max_length=100, blank=True, verbose_name='Conectividad')
-    protection_rating = models.CharField(max_length=50, blank=True, verbose_name='Grado de Protección (IP)')
+    protection_rating = models.CharField(max_length=50, blank=True, default='', verbose_name='Grado de Protección (IP)')
     
     # Imágenes
     main_image = models.ImageField(upload_to=headphone_directory_path, blank=True, null=True, verbose_name='Imagen Principal')
