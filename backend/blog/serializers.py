@@ -19,7 +19,7 @@ class HeadphoneSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'slug', 'brand', 'category', 'category_name',
             'description', 'price', 'show_price', 'show_review_button', 'driver_size', 'frequency_response',
-            'impedance', 'sensitivity', 'battery_life', 'connectivity',
+            'impedance', 'sensitivity', 'battery_life', 'connectivity', 'protection_rating',
             'main_image', 'image_2', 'image_3', 'rating', 'ranking_order',
             'is_featured', 'amazon_link', 'official_link', 'custom_review_link', 'score_soundstage', 'score_comfort',
             'score_build', 'score_treble', 'score_mids', 'score_bass',

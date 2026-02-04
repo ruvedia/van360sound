@@ -23,7 +23,7 @@ class HeadphoneAdmin(admin.ModelAdmin):
             'fields': ('ranking_order', 'rating', 'is_featured')
         }),
         ('Especificaciones Técnicas', {
-            'fields': ('driver_size', 'frequency_response', 'impedance', 'sensitivity', 'battery_life', 'connectivity')
+            'fields': ('driver_size', 'frequency_response', 'impedance', 'sensitivity', 'battery_life', 'connectivity', 'protection_rating')
         }),
         ('Puntuaciones (Barras 0-100)', {
             'fields': (

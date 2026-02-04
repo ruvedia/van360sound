@@ -99,6 +99,12 @@ function HeadphoneDetail() {
                                         <td style={{ padding: '0.5rem 0', textAlign: 'right' }}>{headphone.battery_life}</td>
                                     </tr>
                                 )}
+                                {headphone.protection_rating && (
+                                    <tr style={{ borderBottom: '1px solid #ddd' }}>
+                                        <td style={{ padding: '0.5rem 0', fontWeight: '600' }}>Protección</td>
+                                        <td style={{ padding: '0.5rem 0', textAlign: 'right' }}>{headphone.protection_rating}</td>
+                                    </tr>
+                                )}
                                 {headphone.connectivity && (
                                     <tr>
                                         <td style={{ padding: '0.5rem 0', fontWeight: '600' }}>Conectividad</td>
