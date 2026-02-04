@@ -188,5 +188,18 @@ export const rankings = {
     'true-wireless-anc-hi-fi': HIFI_DATA, // Combinación, priorizamos HIFI por calidad
     'true-wireless-sport': SPORT_DATA,
     'true-wireless-gaming': GAMING_DATA,
-    'auriculares-deportivos-true-wireless-cerrados': SPORT_DATA
+    'auriculares-deportivos-true-wireless-cerrados': SPORT_DATA,
+
+    // Nuevos Mapeos (2026-02-04)
+    'auriculares-deportivos-abiertos': SPORT_DATA,
+    'auriculares-gaming': GAMING_DATA,
+    'auricualres-con-cancelacion-de-ruido': NOISE_CANCELLING_DATA, // Typo handling
+    'auriculares-con-cancelacion-de-ruido': NOISE_CANCELLING_DATA,
+    'true-wireless-con-cancelacion-de-ruido': NOISE_CANCELLING_DATA,
+    'auricualres-hi-fi-con-cancelacion-de-ruido': HIFI_DATA, // Typo handling
+    'auriculares-hi-fi-con-cancelacion-de-ruido': HIFI_DATA,
+    'true-wireless-hi-fi-con-cancelacion-de-ruido': HIFI_DATA,
+    'auricualres-in-ear-hifi': IN_EAR_DATA, // Typo handling
+    'auriculares-in-ear-hifi': IN_EAR_DATA,
+    'auriculares-over-ear-hifi': HIFI_DATA
 };
