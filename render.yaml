@@ -11,3 +11,25 @@ services:
         value: 18
       - key: NODE_ENV
         value: production
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: van360sound-backend
+          property: url
+
+  - type: web
+    name: van360sound-backend
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: ./backend/render-build.sh
+    startCommand: cd backend && gunicorn van360sound.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DJANGO_SETTINGS_MODULE
+        value: van360sound.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
