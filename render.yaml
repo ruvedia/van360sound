@@ -16,6 +16,11 @@ services:
           type: web
           name: van360sound-backend
           property: url
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: van360sound-backend
+          property: url
 
   - type: web
     name: van360sound-backend
