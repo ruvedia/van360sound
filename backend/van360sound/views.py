@@ -62,3 +62,17 @@ def download_media(request):
         filename=f'{date_str}-img.zip',
         content_type='application/zip'
     )
+@staff_member_required
+def restore_database(request):
+    try:
+        dump_path = settings.BASE_DIR / 'db_dump.json'
+        if not dump_path.exists():
+             return HttpResponse(f"Error: No se encuentra el archivo db_dump.json en {dump_path}", status=404)
+        
+        # Run loaddata
+        out = io.StringIO()
+        call_command('loaddata', 'db_dump.json', stdout=out)
+        
+        return HttpResponse(f"¡Restauración Completada! Salida: {out.getvalue()}", status=200)
+    except Exception as e:
+        return HttpResponse(f"Error restaurando base de datos: {str(e)}", status=500)
