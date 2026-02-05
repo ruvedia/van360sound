@@ -27,7 +27,7 @@ services:
     runtime: python
     region: oregon
     plan: free
-    buildCommand: ./backend/render-build.sh
+    buildCommand: bash ./backend/render-build.sh
     startCommand: cd backend && gunicorn van360sound.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
