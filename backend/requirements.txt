@@ -7,6 +7,6 @@ djangorestframework
 gunicorn
 packaging
 pillow
-
+psycopg2-binary
 sqlparse
 whitenoise
