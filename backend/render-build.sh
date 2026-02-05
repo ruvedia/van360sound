@@ -8,3 +8,4 @@ python -m pip install psycopg2-binary
 
 python manage.py collectstatic --no-input
 python manage.py migrate
+python manage.py loaddata db_dump.json
