@@ -18,10 +18,20 @@ app.use((req, res, next) => {
 // Proxy para API, Media, Admin y Static files del backend
 // Proxy Configuration
 const backendUrl = process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com';
-const proxyOptions = {
+// Proxy Configuration
+const backendUrl = process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com';
+
+const proxyMiddleware = createProxyMiddleware({
     target: backendUrl,
     changeOrigin: true,
     logger: console,
+    pathFilter: [
+        '/api',
+        '/media',
+        '/admin',
+        '/static',
+        '/ckeditor'
+    ],
     on: {
         proxyReq: (proxyReq, req, res) => {
             console.log(`[Proxy] Proxying ${req.method} request to: ${proxyReq.path} -> ${backendUrl}`);
@@ -31,14 +41,10 @@ const proxyOptions = {
             res.status(500).send('Proxy Error');
         }
     }
-};
+});
 
-// Mount proxies explicitly
-app.use('/api', createProxyMiddleware(proxyOptions));
-app.use('/media', createProxyMiddleware(proxyOptions));
-app.use('/admin', createProxyMiddleware(proxyOptions));
-app.use('/static', createProxyMiddleware(proxyOptions));
-app.use('/ckeditor', createProxyMiddleware(proxyOptions));
+// Mount proxy at root to preserve paths (Express strips path if mounted on specific route)
+app.use(proxyMiddleware);
 
 // Servir archivos estáticos desde la carpeta dist
 app.use(express.static(path.join(__dirname, 'dist')));
