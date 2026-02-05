@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const ENV_URL = import.meta.env.VITE_API_URL;
+// Si tenemos una URL completa (http...), añadimos '/api'. Si no, usamos el relativo '/api' (proxy)
+const API_BASE_URL = ENV_URL ? `${ENV_URL}/api` : '/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,

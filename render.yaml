@@ -11,6 +11,11 @@ services:
         value: 18
       - key: NODE_ENV
         value: production
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: van360sound-backend
+          property: url
       - key: BACKEND_URL
         fromService:
           type: web
