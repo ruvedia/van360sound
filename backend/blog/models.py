@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Category(models.Model):
     """Categorías de auriculares"""
@@ -113,8 +114,8 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     article_type = models.CharField(max_length=20, choices=ARTICLE_TYPES, default='analisis')
-    excerpt = models.TextField(max_length=300, verbose_name='Extracto')
-    content = models.TextField(verbose_name='Contenido')
+    excerpt = models.TextField(max_length=300, verbose_name='Resumen Breve', help_text="Breve introducción de 1-2 frases que aparecerá en el listado del blog.")
+    content = RichTextUploadingField(verbose_name='Contenido')
     
     # Relación con auriculares
     headphone = models.ForeignKey(Headphone, on_delete=models.SET_NULL, null=True, blank=True, related_name='articles')

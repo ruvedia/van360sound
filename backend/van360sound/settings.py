@@ -62,7 +62,26 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'blog',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+# CKEditor Configuration
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source', 'Maximize'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['Format', 'Styles'],
+        ],
+        'width': '100%',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

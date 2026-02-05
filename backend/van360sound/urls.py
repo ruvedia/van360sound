@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/download-media/', views.download_media, name='download_media'),
     path('admin/', admin.site.urls),
     path('api/', include('blog.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 from django.views.static import serve
