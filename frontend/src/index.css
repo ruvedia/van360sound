@@ -476,6 +476,64 @@ p {
 }
 
 /* ========================================
+   Article Content (Rich Text)
+   ======================================== */
+
+.article-content h2 {
+  font-size: var(--font-size-2xl);
+  margin-top: var(--spacing-2xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+}
+
+.article-content h3 {
+  font-size: var(--font-size-xl);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-secondary);
+}
+
+.article-content p {
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+.article-content ul,
+.article-content ol {
+  margin-bottom: var(--spacing-lg);
+  padding-left: var(--spacing-xl);
+  /* Fix for reset stripping indentation */
+}
+
+.article-content li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.article-content img {
+  border-radius: 12px;
+  margin: var(--spacing-xl) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.article-content blockquote {
+  border-left: 4px solid var(--color-accent);
+  padding-left: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  padding: var(--spacing-md);
+  border-radius: 0 8px 8px 0;
+}
+
+.article-content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ========================================
    Responsive Design
    ======================================== */
 
