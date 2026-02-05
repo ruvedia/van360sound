@@ -28,12 +28,14 @@ services:
     region: oregon
     plan: free
     buildCommand: ./backend/render-build.sh
-    startCommand: cd backend && gunicorn van360sound.wsgi:application
+    startCommand: cd backend && gunicorn van360sound.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: DJANGO_SETTINGS_MODULE
         value: van360sound.settings
+      - key: DJANGO_DEBUG
+        value: 'False'
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
