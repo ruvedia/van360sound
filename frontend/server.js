@@ -18,8 +18,6 @@ app.use((req, res, next) => {
 // Proxy para API, Media, Admin y Static files del backend
 // Proxy Configuration
 const backendUrl = process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com';
-// Proxy Configuration
-const backendUrl = process.env.BACKEND_URL || 'https://van360sound-backend.onrender.com';
 
 const proxyMiddleware = createProxyMiddleware({
     target: backendUrl,
