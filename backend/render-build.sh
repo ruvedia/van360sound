@@ -9,5 +9,5 @@ python -m pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 python manage.py migrate
-python manage.py loaddata db_dump.json
-python build_admin.py
+# python manage.py loaddata db_dump.json
+# python build_admin.py
