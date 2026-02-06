@@ -93,6 +93,12 @@ function HeadphoneDetail() {
                                         <td style={{ padding: '0.5rem 0', textAlign: 'right' }}>{headphone.impedance}</td>
                                     </tr>
                                 )}
+                                {headphone.sensitivity && (
+                                    <tr style={{ borderBottom: '1px solid #ddd' }}>
+                                        <td style={{ padding: '0.5rem 0', fontWeight: '600' }}>Sensibilidad</td>
+                                        <td style={{ padding: '0.5rem 0', textAlign: 'right' }}>{headphone.sensitivity}</td>
+                                    </tr>
+                                )}
                                 {headphone.battery_life && (
                                     <tr style={{ borderBottom: '1px solid #ddd' }}>
                                         <td style={{ padding: '0.5rem 0', fontWeight: '600' }}>Batería</td>

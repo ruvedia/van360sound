@@ -78,7 +78,7 @@ CKEDITOR_CONFIGS = {
             ['Link', 'Unlink'],
             ['RemoveFormat', 'Source', 'Maximize'],
             ['Image', 'Table', 'HorizontalRule'],
-            ['Format', 'Styles'],
+            ['Format', 'Styles', 'FontSize'],
         ],
         'width': '100%',
     },
