@@ -15,7 +15,7 @@ python manage.py collectstatic --no-input || echo "COLLECTSTATIC FAILED"
 
 echo "LOADING DATA..."
 echo "LOADING DATA..."
-python manage.py loaddata db_dump.json || echo "WARNING: loaddata failed (maybe duplicate data) but continuing"
+# python manage.py loaddata db_dump.json || echo "WARNING: loaddata failed (maybe duplicate data) but continuing"
 
 echo "BUILDING ADMIN..."
 python build_admin.py || echo "WARNING: build_admin failed but continuing"
