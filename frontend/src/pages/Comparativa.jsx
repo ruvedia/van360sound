@@ -113,29 +113,6 @@ function Comparativa() {
                                             {selectedHeadphones[colIndex].description || ''}
                                         </p>
                                         <div className="specs-list">
-                                            {selectedHeadphones[colIndex].price && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Precio</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].price} €</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].rating > 0 && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Puntuación</span>
-                                                    <span className="spec-value" style={{ color: '#f39c12', fontWeight: 'bold' }}>
-                                                        ⭐ {selectedHeadphones[colIndex].rating}/5
-                                                    </span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].type && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Tipo</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].type}</span>
-                                                </div>
-                                            )}
-
                                             {selectedHeadphones[colIndex].driver_size && (
                                                 <div className="spec-item">
                                                     <span className="spec-label">Driver</span>
@@ -178,27 +155,6 @@ function Comparativa() {
                                                         {selectedHeadphones[colIndex].battery_life ||
                                                             `${selectedHeadphones[colIndex].battery_life_hours}h`}
                                                     </span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].noise_cancelling && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Cancelación de Ruido</span>
-                                                    <span className="spec-value">Sí</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].microphone && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Micrófono</span>
-                                                    <span className="spec-value">Sí</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].water_resistant && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Resistente al agua</span>
-                                                    <span className="spec-value">Sí</span>
                                                 </div>
                                             )}
 
