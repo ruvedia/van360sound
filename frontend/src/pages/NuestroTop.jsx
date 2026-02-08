@@ -33,6 +33,18 @@ function NuestroTop() {
                     <p className="hero-subtitle">
                         Explora las mejores categorías de auriculares seleccionadas por expertos
                     </p>
+
+                    <div className="category-quick-nav">
+                        {categories.map(category => (
+                            <Link
+                                key={category.id}
+                                to={`/categoria/${category.slug}`}
+                                className="category-pill"
+                            >
+                                {category.name}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </section>
 

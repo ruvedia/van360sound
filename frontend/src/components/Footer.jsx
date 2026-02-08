@@ -20,6 +20,8 @@ function Footer() {
                             <li><Link to="/novedades">Novedades</Link></li>
                             <li><Link to="/analisis">Análisis</Link></li>
                             <li><Link to="/contacto">Contacto</Link></li>
+                            <li><Link to="/guia">Guía</Link></li>
+                            <li><Link to="/comparativa">Comparativa</Link></li>
                             <li><Link to="/sobre-nosotros">Sobre Nosotros</Link></li>
                         </ul>
                     </div>

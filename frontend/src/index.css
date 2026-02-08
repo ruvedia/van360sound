@@ -410,6 +410,40 @@ p {
   letter-spacing: 0.05em;
 }
 
+.category-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+}
+
+.category-pill:hover {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
 /* ========================================
    Hero Section
    ======================================== */
@@ -434,7 +468,7 @@ p {
   font-size: var(--font-size-xl);
   color: var(--color-text-secondary);
   /* max-width removed to match title width */
-  text-align: left;
+  text-align: center;
   margin: 0 auto var(--spacing-md);
 }
 

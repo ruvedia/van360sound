@@ -62,7 +62,7 @@ function ArticleDetail() {
                 src={featuredImage}
                 alt={article.title}
                 className="card-image"
-                style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', height: '400px', objectFit: 'cover' }}
+                style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', height: 'auto', maxHeight: '600px', objectFit: 'contain', backgroundColor: 'transparent' }}
             />
 
             <div
