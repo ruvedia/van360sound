@@ -263,27 +263,37 @@ function CategoryPage() {
                                                     {headphone.show_review_button && (
                                                         headphone.custom_review_link ? (
                                                             headphone.custom_review_link.startsWith('http') ? (
-                                                                <a href={headphone.custom_review_link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                                <a href={headphone.custom_review_link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                                                                     Ver Análisis Detallado
                                                                 </a>
                                                             ) : (
-                                                                <Link to={headphone.custom_review_link} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                                <Link to={headphone.custom_review_link} className="btn btn-primary">
                                                                     Ver Análisis Detallado
                                                                 </Link>
                                                             )
                                                         ) : (
-                                                            <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary" style={{ padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                            <Link to={`/auricular/${headphone.slug}`} className="btn btn-primary">
                                                                 Ver Análisis Detallado
                                                             </Link>
                                                         )
                                                     )}
                                                     {headphone.amazon_link && (
-                                                        <a href={headphone.amazon_link} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#000', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                        <a href={headphone.amazon_link} target="_blank" rel="noopener noreferrer" className="btn btn-amazon">
+                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <circle cx="9" cy="21" r="1"></circle>
+                                                                <circle cx="20" cy="21" r="1"></circle>
+                                                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                                            </svg>
                                                             Ver en Amazon
                                                         </a>
                                                     )}
                                                     {headphone.official_link && (
-                                                        <a href={headphone.official_link} target="_blank" rel="noopener noreferrer" className="btn" style={{ backgroundColor: '#555', color: '#fff', padding: '0.9rem 1.5rem', fontSize: '0.95rem', textAlign: 'center', display: 'block' }}>
+                                                        <a href={headphone.official_link} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                                            </svg>
                                                             Web Oficial
                                                         </a>
                                                     )}
