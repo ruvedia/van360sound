@@ -185,7 +185,7 @@ p {
 
 .nav {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: 3rem;
   align-items: center;
 }
 
@@ -577,73 +577,7 @@ p {
     padding: 0 var(--spacing-lg);
   }
 
-  .nav {
-    gap: var(--spacing-lg);
-  }
-
-  .nav-link {
-    font-size: 0.8rem;
-  }
-
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-4 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .footer-content {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Desktop padding for category images */
-  .card-image {
-    padding: var(--spacing-xl);
-  }
-}
-
-/* Medium Tablet */
-@media (max-width: 900px) {
-  .logo {
-    font-size: var(--font-size-lg);
-  }
-
-  .nav {
-    gap: var(--spacing-md);
-  }
-
-  .nav-link {
-    font-size: 0.75rem;
-    letter-spacing: 0.03em;
-  }
-
-  .search-btn {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.75rem;
-  }
-
-  .grid-3,
-  .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  h1,
-  .hero-title {
-    font-size: var(--font-size-3xl);
-  }
-
-  h2 {
-    font-size: var(--font-size-2xl);
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
+  /* Mobile Menu Logic - Now starts at Tablet */
   :root {
     --header-height: 70px;
   }
@@ -686,6 +620,55 @@ p {
     padding: var(--spacing-md) var(--spacing-lg);
     font-size: var(--font-size-sm);
   }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Desktop padding for category images */
+  .card-image {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Medium Tablet */
+@media (max-width: 900px) {
+  .logo {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Nav styles removed - using mobile drawer from 1024px */
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1,
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  /* Navigation styles moved to 1024px breakpoint */
 
   h1,
   .hero-title {
