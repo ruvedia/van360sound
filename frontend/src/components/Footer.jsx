@@ -1,6 +1,23 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { categoryService } from '../services/api';
 
 function Footer() {
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await categoryService.getAll();
+                setCategories(response.data);
+            } catch (error) {
+                console.error("Error fetching categories for footer:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
     return (
         <footer className="footer">
             <div className="container">
@@ -29,12 +46,13 @@ function Footer() {
                     <div className="footer-section">
                         <h4>Categorías</h4>
                         <ul className="footer-links">
-                            <li><Link to="/categoria/noise-cancelling">Noise Cancelling</Link></li>
-                            <li><Link to="/categoria/true-wireless">True Wireless</Link></li>
-                            <li><Link to="/categoria/sport">Sport</Link></li>
-                            <li><Link to="/categoria/gaming">Gaming</Link></li>
-                            <li><Link to="/categoria/in-ear">In-Ear</Link></li>
-                            <li><Link to="/categoria/hifi">HiFi</Link></li>
+                            {categories.map((category) => (
+                                <li key={category.id}>
+                                    <Link to={`/categoria/${category.slug}`}>
+                                        {category.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
