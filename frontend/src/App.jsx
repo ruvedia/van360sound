@@ -12,6 +12,7 @@ import SobreNosotros from './pages/SobreNosotros';
 import Buscar from './pages/Buscar';
 import HeadphoneDetail from './pages/HeadphoneDetail';
 import ArticleDetail from './pages/ArticleDetail';
+import Comparativa from './pages/Comparativa';
 
 function App() {
     return (
@@ -22,10 +23,12 @@ function App() {
                 <main style={{ flex: 1 }}>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/nuestro-top" element={<NuestroTop />} />
+                        <Route path="/top" element={<NuestroTop />} />
                         <Route path="/categoria/:slug" element={<CategoryPage />} />
                         <Route path="/novedades" element={<Novedades />} />
                         <Route path="/analisis" element={<Analisis />} />
+                        <Route path="/comparativa" element={<Comparativa />} />
+                        <Route path="/nuestro-top" element={<NuestroTop />} />
                         <Route path="/contacto" element={<Contacto />} />
                         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
                         <Route path="/buscar" element={<Buscar />} />
