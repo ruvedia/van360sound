@@ -14,6 +14,7 @@ import Buscar from './pages/Buscar';
 import HeadphoneDetail from './pages/HeadphoneDetail';
 import ArticleDetail from './pages/ArticleDetail';
 import Comparativa from './pages/Comparativa';
+import Guia from './pages/Guia';
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/categoria/:slug" element={<CategoryPage />} />
                             <Route path="/novedades" element={<Novedades />} />
                             <Route path="/analisis" element={<Analisis />} />
+                            <Route path="/guia" element={<Guia />} />
                             <Route path="/comparativa" element={<Comparativa />} />
                             <Route path="/nuestro-top" element={<NuestroTop />} />
                             <Route path="/contacto" element={<Contacto />} />
