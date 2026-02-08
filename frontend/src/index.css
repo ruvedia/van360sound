@@ -916,55 +916,8 @@ p {
   position: absolute;
   top: var(--spacing-sm);
   right: var(--spacing-sm);
-
-  /* Action Buttons */
-  .action-buttons {
-    display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-    flex-wrap: wrap;
-  }
-
-  .btn-amazon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    background-color: #FF9900;
-    color: #111;
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: background-color var(--transition-fast);
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-amazon:hover {
-    background-color: #e68a00;
-  }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 1.5rem;
-    background-color: transparent;
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: all var(--transition-fast);
-    cursor: pointer;
-  }
-
-  .btn-outline:hover {
-    border-color: var(--color-text);
-    background-color: var(--color-surface);
-  }
-
   height: 32px;
+  width: 32px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.05);
   color: var(--color-text-secondary);
@@ -972,6 +925,68 @@ p {
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 2;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.btn-amazon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to bottom, #FF9900, #FF6600);
+  color: white;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.btn-amazon:hover {
+  background: linear-gradient(to bottom, #ffad33, #ff7a00);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: rgba(52, 152, 219, 0.05);
+  transform: translateY(-2px);
 }
 
 .remove-btn:hover {
