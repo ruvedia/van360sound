@@ -9,7 +9,15 @@ function Footer() {
         const fetchCategories = async () => {
             try {
                 const response = await categoryService.getAll();
-                setCategories(response.data);
+                // Handle pagination (Django REST Framework default)
+                if (response.data.results) {
+                    setCategories(response.data.results);
+                } else if (Array.isArray(response.data)) {
+                    setCategories(response.data);
+                } else {
+                    console.error("Unexpected API response format:", response.data);
+                    setCategories([]);
+                }
             } catch (error) {
                 console.error("Error fetching categories for footer:", error);
             }
