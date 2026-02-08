@@ -5,6 +5,7 @@ import HeadphoneCard from '../components/HeadphoneCard';
 import ScoreBar from '../components/ScoreBar';
 import { rankings } from '../data/rankingData';
 import CommentsSection from '../components/CommentsSection';
+import SEO from '../components/SEO';
 import './CategoryPage.css';
 
 function CategoryPage() {
@@ -56,11 +57,7 @@ function CategoryPage() {
                     const seoTitle = categoryData.meta_title || localRanking.seoTitle || `${categoryData.name} - Van360Sound`;
                     const seoDesc = categoryData.meta_description || localRanking.metaDescription;
 
-                    document.title = seoTitle;
-                    const metaDesc = document.querySelector('meta[name="description"]');
-                    if (metaDesc && seoDesc) {
-                        metaDesc.setAttribute('content', seoDesc);
-                    }
+
                 } else {
                     setCategory(categoryData);
 
@@ -68,11 +65,7 @@ function CategoryPage() {
                     const seoTitle = categoryData.meta_title || `${categoryData.name} - Van360Sound`;
                     const seoDesc = categoryData.meta_description || categoryData.description;
 
-                    document.title = seoTitle;
-                    const metaDesc = document.querySelector('meta[name="description"]');
-                    if (metaDesc && seoDesc) {
-                        metaDesc.setAttribute('content', seoDesc);
-                    }
+
                 }
 
                 // Procesamos los auriculares de la API
@@ -215,8 +208,22 @@ function CategoryPage() {
         return potentialScores.filter(s => s.value > 0);
     };
 
+    // Calculate SEO
+    const seoTitle = category.meta_title || (localRanking && localRanking.seoTitle) || `${category.name} - Van360Sound`;
+    const seoDescription = category.meta_description || (localRanking && localRanking.metaDescription) || category.description;
+
+
+
     return (
         <div>
+            <SEO
+                title={seoTitle.replace(' - Van360Sound', '')} // SEO component adds suffix
+                description={seoDescription}
+                image={heroImage}
+                url={`/categoria/${category.slug}`}
+                type="website"
+            />
+
             <section className="hero">
                 <div className="container">
                     <h1>{category.seo_h1 || category.name}</h1>

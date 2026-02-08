@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { articleService } from '../services/api';
+import SEO from '../components/SEO';
 
 function ArticleDetail() {
     const { slug } = useParams();
@@ -29,6 +30,7 @@ function ArticleDetail() {
     if (!article) {
         return (
             <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>
+                <SEO title="Artículo no encontrado" />
                 <h2>Artículo no encontrado</h2>
                 <Link to="/" className="btn btn-primary" style={{ marginTop: '1rem' }}>Volver al inicio</Link>
             </div>
@@ -44,6 +46,13 @@ function ArticleDetail() {
 
     return (
         <article className="container" style={{ padding: '2rem 1rem', maxWidth: '800px' }}>
+            <SEO
+                title={article.title}
+                description={article.excerpt}
+                image={featuredImage}
+                url={`/articulo/${article.slug}`}
+                type="article"
+            />
             <div style={{ marginBottom: '2rem' }}>
                 <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>← Volver</Link>
             </div>

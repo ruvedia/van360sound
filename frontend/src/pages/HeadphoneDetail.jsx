@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { headphoneService } from '../services/api';
+import SEO from '../components/SEO';
 
 function HeadphoneDetail() {
     const { slug } = useParams();
@@ -29,6 +30,7 @@ function HeadphoneDetail() {
     if (!headphone) {
         return (
             <div className="container" style={{ padding: '4rem 1rem', textAlign: 'center' }}>
+                <SEO title="Auricular no encontrado" />
                 <h2>Auricular no encontrado</h2>
                 <Link to="/" className="btn btn-primary" style={{ marginTop: '1rem' }}>Volver al inicio</Link>
             </div>
@@ -39,6 +41,13 @@ function HeadphoneDetail() {
 
     return (
         <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1400px' }}>
+            <SEO
+                title={`${headphone.brand} ${headphone.name}`}
+                description={headphone.description}
+                image={mainImage}
+                url={`/auricular/${headphone.slug}`}
+                type="product"
+            />
             <div style={{ marginBottom: '2rem' }}>
                 <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>← Volver</Link>
             </div>
