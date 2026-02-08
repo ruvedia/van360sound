@@ -113,83 +113,99 @@ function Comparativa() {
                                             {selectedHeadphones[colIndex].description || ''}
                                         </p>
                                         <div className="specs-list">
-                                            <div className="spec-item">
-                                                <span className="spec-label">Precio</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].price} €</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Puntuación</span>
-                                                <span className="spec-value" style={{ color: '#f39c12', fontWeight: 'bold' }}>
-                                                    {selectedHeadphones[colIndex].rating > 0 ? `⭐ ${selectedHeadphones[colIndex].rating}/5` : '-'}
-                                                </span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Tipo</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].type}</span>
-                                            </div>
-
-                                            {selectedHeadphones.some(h => h?.driver_size) && (
+                                            {selectedHeadphones[colIndex].price && (
                                                 <div className="spec-item">
-                                                    <span className="spec-label">Driver</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].driver_size || '-'}</span>
+                                                    <span className="spec-label">Precio</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].price} €</span>
                                                 </div>
                                             )}
 
-                                            {selectedHeadphones.some(h => h?.frequency_response) && (
+                                            {selectedHeadphones[colIndex].rating > 0 && (
                                                 <div className="spec-item">
-                                                    <span className="spec-label">Frecuencia</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].frequency_response || '-'}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones.some(h => h?.impedance) && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Impedancia</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].impedance || '-'}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones.some(h => h?.sensitivity) && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Sensibilidad</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].sensitivity || '-'}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones.some(h => h?.connectivity) && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Conectividad</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].connectivity || '-'}</span>
-                                                </div>
-                                            )}
-
-                                            {(selectedHeadphones.some(h => h?.battery_life) || selectedHeadphones.some(h => h?.battery_life_hours)) && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Batería</span>
-                                                    <span className="spec-value">
-                                                        {selectedHeadphones[colIndex].battery_life ||
-                                                            (selectedHeadphones[colIndex].battery_life_hours ? `${selectedHeadphones[colIndex].battery_life_hours}h` : '-')}
+                                                    <span className="spec-label">Puntuación</span>
+                                                    <span className="spec-value" style={{ color: '#f39c12', fontWeight: 'bold' }}>
+                                                        ⭐ {selectedHeadphones[colIndex].rating}/5
                                                     </span>
                                                 </div>
                                             )}
 
-                                            <div className="spec-item">
-                                                <span className="spec-label">Cancelación de Ruido</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].noise_cancelling ? 'Sí' : 'No'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Micrófono</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].microphone ? 'Sí' : 'No'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Resistente al agua</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].water_resistant ? 'Sí' : 'No'}</span>
-                                            </div>
+                                            {selectedHeadphones[colIndex].type && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Tipo</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].type}</span>
+                                                </div>
+                                            )}
 
-                                            {selectedHeadphones.some(h => h?.protection_rating) && (
+                                            {selectedHeadphones[colIndex].driver_size && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Driver</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].driver_size}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].frequency_response && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Frecuencia</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].frequency_response}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].impedance && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Impedancia</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].impedance}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].sensitivity && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Sensibilidad</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].sensitivity}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].connectivity && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Conectividad</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].connectivity}</span>
+                                                </div>
+                                            )}
+
+                                            {(selectedHeadphones[colIndex].battery_life || selectedHeadphones[colIndex].battery_life_hours) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Batería</span>
+                                                    <span className="spec-value">
+                                                        {selectedHeadphones[colIndex].battery_life ||
+                                                            `${selectedHeadphones[colIndex].battery_life_hours}h`}
+                                                    </span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].noise_cancelling && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Cancelación de Ruido</span>
+                                                    <span className="spec-value">Sí</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].microphone && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Micrófono</span>
+                                                    <span className="spec-value">Sí</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].water_resistant && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Resistente al agua</span>
+                                                    <span className="spec-value">Sí</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones[colIndex].protection_rating && (
                                                 <div className="spec-item">
                                                     <span className="spec-label">Protección</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].protection_rating || '-'}</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].protection_rating}</span>
                                                 </div>
                                             )}
                                         </div>
