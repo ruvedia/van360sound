@@ -12,6 +12,7 @@ function SEO({ title, description, image, url, type = 'article' }) {
             {/* Standard metadata tags */}
             <title>{finalTitle}</title>
             <meta name='description' content={finalDescription} />
+            <link rel="canonical" href={finalUrl} />
 
             {/* Facebook tags */}
             <meta property="og:type" content={type} />
