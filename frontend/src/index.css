@@ -910,9 +910,6 @@ p {
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-lg);
   line-height: 1.5;
-  height: 4.5em;
-  /* Limit height to approx 3 lines */
-  overflow: hidden;
 }
 
 .remove-btn {

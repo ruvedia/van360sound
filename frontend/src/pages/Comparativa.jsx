@@ -109,10 +109,8 @@ function Comparativa() {
                                                 {selectedHeadphones[colIndex].name}
                                             </Link>
                                         </h3>
-                                        <p className="comparison-desc" title={selectedHeadphones[colIndex].description}>
-                                            {selectedHeadphones[colIndex].description && selectedHeadphones[colIndex].description.length > 120
-                                                ? `${selectedHeadphones[colIndex].description.substring(0, 120)}...`
-                                                : selectedHeadphones[colIndex].description}
+                                        <p className="comparison-desc">
+                                            {selectedHeadphones[colIndex].description || ''}
                                         </p>
                                         <div className="specs-list">
                                             <div className="spec-item">
@@ -129,30 +127,52 @@ function Comparativa() {
                                                 <span className="spec-label">Tipo</span>
                                                 <span className="spec-value">{selectedHeadphones[colIndex].type}</span>
                                             </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Driver</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].driver_size || '-'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Frecuencia</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].frequency_response || '-'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Impedancia</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].impedance || '-'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Sensibilidad</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].sensitivity || '-'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Conectividad</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].connectivity || '-'}</span>
-                                            </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Batería</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].battery_life || selectedHeadphones[colIndex].battery_life_hours ? `${selectedHeadphones[colIndex].battery_life_hours}h` : '-'}</span>
-                                            </div>
+
+                                            {selectedHeadphones.some(h => h?.driver_size) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Driver</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].driver_size || '-'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones.some(h => h?.frequency_response) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Frecuencia</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].frequency_response || '-'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones.some(h => h?.impedance) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Impedancia</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].impedance || '-'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones.some(h => h?.sensitivity) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Sensibilidad</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].sensitivity || '-'}</span>
+                                                </div>
+                                            )}
+
+                                            {selectedHeadphones.some(h => h?.connectivity) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Conectividad</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].connectivity || '-'}</span>
+                                                </div>
+                                            )}
+
+                                            {(selectedHeadphones.some(h => h?.battery_life) || selectedHeadphones.some(h => h?.battery_life_hours)) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Batería</span>
+                                                    <span className="spec-value">
+                                                        {selectedHeadphones[colIndex].battery_life ||
+                                                            (selectedHeadphones[colIndex].battery_life_hours ? `${selectedHeadphones[colIndex].battery_life_hours}h` : '-')}
+                                                    </span>
+                                                </div>
+                                            )}
+
                                             <div className="spec-item">
                                                 <span className="spec-label">Cancelación de Ruido</span>
                                                 <span className="spec-value">{selectedHeadphones[colIndex].noise_cancelling ? 'Sí' : 'No'}</span>
@@ -165,10 +185,13 @@ function Comparativa() {
                                                 <span className="spec-label">Resistente al agua</span>
                                                 <span className="spec-value">{selectedHeadphones[colIndex].water_resistant ? 'Sí' : 'No'}</span>
                                             </div>
-                                            <div className="spec-item">
-                                                <span className="spec-label">Protección</span>
-                                                <span className="spec-value">{selectedHeadphones[colIndex].protection_rating || '-'}</span>
-                                            </div>
+
+                                            {selectedHeadphones.some(h => h?.protection_rating) && (
+                                                <div className="spec-item">
+                                                    <span className="spec-label">Protección</span>
+                                                    <span className="spec-value">{selectedHeadphones[colIndex].protection_rating || '-'}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ) : (
