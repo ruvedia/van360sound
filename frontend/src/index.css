@@ -37,7 +37,7 @@
 
   /* Layout */
   --max-width: 1280px;
-  --header-height: 60px;
+  --header-height: 80px;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -185,12 +185,12 @@ p {
 
 .nav {
   display: flex;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
   align-items: center;
 }
 
 .nav-link {
-  font-size: var(--font-size-sm);
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -901,8 +901,18 @@ p {
 
 .comparison-name {
   font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
   color: var(--color-primary);
+}
+
+.comparison-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.5;
+  height: 4.5em;
+  /* Limit height to approx 3 lines */
+  overflow: hidden;
 }
 
 .remove-btn {
