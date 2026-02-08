@@ -12,7 +12,7 @@ function Comparativa() {
     useEffect(() => {
         const fetchHeadphones = async () => {
             try {
-                const response = await headphoneService.getAll();
+                const response = await headphoneService.getAll({ page_size: 1000 });
                 setAllHeadphones(response.data.results || response.data);
             } catch (error) {
                 console.error('Error getting headphones:', error);
@@ -100,7 +100,7 @@ function Comparativa() {
                                             ✕
                                         </button>
                                         <img
-                                            src={selectedHeadphones[colIndex].image}
+                                            src={selectedHeadphones[colIndex].main_image || selectedHeadphones[colIndex].image}
                                             alt={selectedHeadphones[colIndex].name}
                                             className="comparison-img"
                                         />
@@ -163,7 +163,7 @@ function Comparativa() {
                                                                 key={headphone.id}
                                                                 onClick={() => handleSelectHeadphone(colIndex, headphone)}
                                                             >
-                                                                <img src={headphone.image} alt={headphone.name} className="dropdown-thumb" />
+                                                                <img src={headphone.main_image || headphone.image} alt={headphone.name} className="dropdown-thumb" />
                                                                 <span>{headphone.name}</span>
                                                             </li>
                                                         ))
