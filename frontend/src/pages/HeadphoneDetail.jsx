@@ -38,12 +38,12 @@ function HeadphoneDetail() {
     const mainImage = headphone.main_image || '/placeholder-headphone.jpg';
 
     return (
-        <div className="container" style={{ padding: '2rem 1rem' }}>
+        <div className="container" style={{ padding: '2rem 1rem', maxWidth: '1400px' }}>
             <div style={{ marginBottom: '2rem' }}>
                 <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>← Volver</Link>
             </div>
 
-            <div className="grid grid-2" style={{ gap: '3rem', alignItems: 'start' }}>
+            <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 400px) 1fr', gap: '3rem', alignItems: 'start' }}>
                 <div>
                     <img
                         src={mainImage}
@@ -65,6 +65,24 @@ function HeadphoneDetail() {
                             <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{headphone.price} €</span>
                         )}
                         {headphone.rating > 0 && <span style={{ color: '#f39c12' }}>⭐ {headphone.rating}/5</span>}
+                    </div>
+
+                    <div className="action-buttons">
+                        {headphone.amazon_link && (
+                            <a href={headphone.amazon_link} target="_blank" rel="noopener noreferrer" className="btn btn-amazon">
+                                Ver en Amazon
+                            </a>
+                        )}
+                        {headphone.official_link && (
+                            <a href={headphone.official_link} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                                Web Oficial
+                            </a>
+                        )}
+                        {headphone.custom_review_link && (
+                            <Link to={headphone.custom_review_link.startsWith('http') ? headphone.custom_review_link : `/analisis/${headphone.slug}`} className="btn btn-primary">
+                                Leer Análisis
+                            </Link>
+                        )}
                     </div>
 
                     <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: '#555' }}>
