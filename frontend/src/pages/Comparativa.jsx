@@ -195,9 +195,9 @@ function Comparativa() {
                                         return (
                                             <td key={`${spec.label}-${colIndex}`} style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>
                                                 {selectedHeadphones[colIndex] ? (
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem' }}>
-                                                        <span style={{ color: '#999', fontSize: '0.85rem' }}>{spec.label}</span>
-                                                        <span style={{ fontWeight: '500' }}>{value || '-'}</span>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', fontSize: '0.95rem' }}>
+                                                        <span style={{ color: '#999', fontSize: '0.85rem', flexShrink: 0 }}>{spec.label}</span>
+                                                        <span style={{ fontWeight: '500', textAlign: 'right' }}>{value || '-'}</span>
                                                     </div>
                                                 ) : null}
                                             </td>
@@ -231,15 +231,16 @@ function Comparativa() {
                                         return (
                                             <td key={`${score.label}-${colIndex}`} style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'middle' }}>
                                                 {headphone ? (
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <span style={{ color: '#555', fontSize: '0.9rem' }}>{score.label}</span>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+                                                        <span style={{ color: '#555', fontSize: '0.9rem', flexShrink: 0 }}>{score.label}</span>
                                                         <span style={{
                                                             fontWeight: score.bold ? '800' : '600',
                                                             color: score.color || '#333',
                                                             background: score.bold ? '#e7f1ff' : '#f5f5f5',
                                                             padding: '2px 8px',
                                                             borderRadius: '12px',
-                                                            fontSize: '0.85rem'
+                                                            fontSize: '0.85rem',
+                                                            whiteSpace: 'nowrap'
                                                         }}>
                                                             {value > 0 ? value : '-'}
                                                         </span>
