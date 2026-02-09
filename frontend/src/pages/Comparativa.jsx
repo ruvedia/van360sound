@@ -113,85 +113,62 @@ function Comparativa() {
                                             {selectedHeadphones[colIndex].description || ''}
                                         </p>
                                         <div className="specs-list">
-                                            {selectedHeadphones[colIndex].driver_size && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Driver</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].driver_size}</span>
-                                                </div>
-                                            )}
+                                            {[
+                                                { label: 'Driver', key: 'driver_size' },
+                                                { label: 'Frecuencia', key: 'frequency_response' },
+                                                { label: 'Impedancia', key: 'impedance' },
+                                                { label: 'Sensibilidad', key: 'sensitivity' },
+                                                { label: 'Conectividad', key: 'connectivity' },
+                                                { label: 'Batería', key: 'battery_life', altKey: 'battery_life_hours', suffix: 'h' },
+                                                { label: 'Protección', key: 'protection_rating' }
+                                            ].map(spec => {
+                                                let value = selectedHeadphones[colIndex][spec.key];
+                                                if (!value && spec.altKey) {
+                                                    value = selectedHeadphones[colIndex][spec.altKey];
+                                                    if (value && spec.suffix) value = `${value}${spec.suffix}`;
+                                                }
 
-                                            {selectedHeadphones[colIndex].frequency_response && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Frecuencia</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].frequency_response}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].impedance && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Impedancia</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].impedance}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].sensitivity && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Sensibilidad</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].sensitivity}</span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].connectivity && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Conectividad</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].connectivity}</span>
-                                                </div>
-                                            )}
-
-                                            {(selectedHeadphones[colIndex].battery_life || selectedHeadphones[colIndex].battery_life_hours) && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Batería</span>
-                                                    <span className="spec-value">
-                                                        {selectedHeadphones[colIndex].battery_life ||
-                                                            `${selectedHeadphones[colIndex].battery_life_hours}h`}
-                                                    </span>
-                                                </div>
-                                            )}
-
-                                            {selectedHeadphones[colIndex].protection_rating && (
-                                                <div className="spec-item">
-                                                    <span className="spec-label">Protección</span>
-                                                    <span className="spec-value">{selectedHeadphones[colIndex].protection_rating}</span>
-                                                </div>
-                                            )}
+                                                return (
+                                                    <div key={spec.label} className="spec-item" style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                        <span className="spec-label">{spec.label}</span>
+                                                        <span className="spec-value" style={{ textAlign: 'right', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '60%' }}>
+                                                            {value || '-'}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
 
                                         <div className="specs-list" style={{ marginTop: '1.5rem' }}>
                                             <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.25rem' }}>Puntuaciones</h4>
 
                                             {[
-                                                { label: 'Global', value: selectedHeadphones[colIndex].score_overall, color: '#007bff' },
-                                                { label: 'Escenario Sonoro', value: selectedHeadphones[colIndex].score_soundstage },
-                                                { label: 'Confort', value: selectedHeadphones[colIndex].score_comfort },
-                                                { label: 'Construcción', value: selectedHeadphones[colIndex].score_build },
-                                                { label: 'Agudos', value: selectedHeadphones[colIndex].score_treble },
-                                                { label: 'Medios', value: selectedHeadphones[colIndex].score_mids },
-                                                { label: 'Graves', value: selectedHeadphones[colIndex].score_bass },
-                                                { label: 'Precisión', value: selectedHeadphones[colIndex].score_accuracy },
-                                                { label: 'Valor/Precio', value: selectedHeadphones[colIndex].score_value },
-                                                { label: 'ANC', value: selectedHeadphones[colIndex].score_noise_cancelling },
-                                                { label: 'Transparencia', value: selectedHeadphones[colIndex].score_transparency },
-                                                { label: 'Llamadas', value: selectedHeadphones[colIndex].score_call_quality },
-                                            ].map(score => (
-                                                score.value > 0 && (
-                                                    <div key={score.label} className="spec-item" style={{ justifyContent: 'space-between' }}>
+                                                { label: 'Global', key: 'score_overall', color: '#007bff', bold: true },
+                                                { label: 'Escenario', key: 'score_soundstage' },
+                                                { label: 'Confort', key: 'score_comfort' },
+                                                { label: 'Construcción', key: 'score_build' },
+                                                { label: 'Agudos', key: 'score_treble' },
+                                                { label: 'Medios', key: 'score_mids' },
+                                                { label: 'Graves', key: 'score_bass' },
+                                                { label: 'Precisión', key: 'score_accuracy' },
+                                                { label: 'Valor/Precio', key: 'score_value' },
+                                                { label: 'ANC', key: 'score_noise_cancelling' },
+                                                { label: 'Transparencia', key: 'score_transparency' },
+                                                { label: 'Llamadas', key: 'score_call_quality' },
+                                            ].map(score => {
+                                                const value = selectedHeadphones[colIndex][score.key];
+                                                return (
+                                                    <div key={score.label} className="spec-item" style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                                         <span className="spec-label">{score.label}</span>
-                                                        <span className="spec-value" style={{ fontWeight: 'bold', color: score.color || 'inherit' }}>
-                                                            {score.value}/100
+                                                        <span className="spec-value" style={{
+                                                            fontWeight: score.bold ? 'bold' : 'normal',
+                                                            color: score.color || 'inherit'
+                                                        }}>
+                                                            {value > 0 ? `${value}/100` : '-'}
                                                         </span>
                                                     </div>
-                                                )
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 ) : (
