@@ -1055,8 +1055,20 @@ p {
   text-align: right;
 }
 
-@media (max-width: 768px) {
-  .comparison-grid {
-    grid-template-columns: 1fr;
+.comparison-grid {
+  grid-template-columns: 1fr;
+}
+}
+
+.comparison-description {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .comparison-description {
+    font-size: 1rem;
   }
 }

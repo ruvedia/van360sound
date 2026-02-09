@@ -161,7 +161,7 @@ function Comparativa() {
                                 {[0, 1].map(colIndex => (
                                     <td key={`desc-${colIndex}`} style={{ padding: '0.5rem', verticalAlign: 'top', borderBottom: '1px solid #eee' }}>
                                         {selectedHeadphones[colIndex] ? (
-                                            <p style={{ fontSize: '0.8rem', color: '#666', lineHeight: '1.4', margin: 0 }}>
+                                            <p className="comparison-description">
                                                 {selectedHeadphones[colIndex].description || ''}
                                             </p>
                                         ) : null}
