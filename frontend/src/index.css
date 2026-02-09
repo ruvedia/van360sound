@@ -1072,3 +1072,29 @@ p {
     font-size: 1.2rem;
   }
 }
+
+.spec-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+}
+
+.spec-label {
+  color: #999;
+  font-size: 0.75rem;
+}
+
+.spec-value {
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .spec-container {
+    font-size: 1.1rem;
+  }
+
+  .spec-label {
+    font-size: 0.95rem;
+  }
+}

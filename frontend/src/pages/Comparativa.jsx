@@ -195,9 +195,9 @@ function Comparativa() {
                                         return (
                                             <td key={`${spec.label}-${colIndex}`} style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>
                                                 {selectedHeadphones[colIndex] ? (
-                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem', fontSize: '0.85rem' }}>
-                                                        <span style={{ color: '#999', fontSize: '0.75rem' }}>{spec.label}</span>
-                                                        <span style={{ fontWeight: '500' }}>{value || '-'}</span>
+                                                    <div className="spec-container">
+                                                        <span className="spec-label">{spec.label}</span>
+                                                        <span className="spec-value">{value || '-'}</span>
                                                     </div>
                                                 ) : null}
                                             </td>
