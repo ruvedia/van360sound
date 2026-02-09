@@ -165,6 +165,34 @@ function Comparativa() {
                                                 </div>
                                             )}
                                         </div>
+
+                                        <div className="specs-list" style={{ marginTop: '1.5rem' }}>
+                                            <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.25rem' }}>Puntuaciones</h4>
+
+                                            {[
+                                                { label: 'Global', value: selectedHeadphones[colIndex].score_overall, color: '#007bff' },
+                                                { label: 'Escenario Sonoro', value: selectedHeadphones[colIndex].score_soundstage },
+                                                { label: 'Confort', value: selectedHeadphones[colIndex].score_comfort },
+                                                { label: 'Construcción', value: selectedHeadphones[colIndex].score_build },
+                                                { label: 'Agudos', value: selectedHeadphones[colIndex].score_treble },
+                                                { label: 'Medios', value: selectedHeadphones[colIndex].score_mids },
+                                                { label: 'Graves', value: selectedHeadphones[colIndex].score_bass },
+                                                { label: 'Precisión', value: selectedHeadphones[colIndex].score_accuracy },
+                                                { label: 'Valor/Precio', value: selectedHeadphones[colIndex].score_value },
+                                                { label: 'ANC', value: selectedHeadphones[colIndex].score_noise_cancelling },
+                                                { label: 'Transparencia', value: selectedHeadphones[colIndex].score_transparency },
+                                                { label: 'Llamadas', value: selectedHeadphones[colIndex].score_call_quality },
+                                            ].map(score => (
+                                                score.value > 0 && (
+                                                    <div key={score.label} className="spec-item" style={{ justifyContent: 'space-between' }}>
+                                                        <span className="spec-label">{score.label}</span>
+                                                        <span className="spec-value" style={{ fontWeight: 'bold', color: score.color || 'inherit' }}>
+                                                            {score.value}/100
+                                                        </span>
+                                                    </div>
+                                                )
+                                            ))}
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className="empty-slot">
