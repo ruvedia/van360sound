@@ -86,130 +86,172 @@ function Comparativa() {
             </section>
 
             <section className="section">
-                <div className="container">
-                    <div className="comparison-grid">
-                        {[0, 1, 2].map((colIndex) => (
-                            <div key={colIndex} className="comparison-col">
-                                {selectedHeadphones[colIndex] ? (
-                                    <div className="selected-headphone-card">
-                                        <button
-                                            className="remove-btn"
-                                            onClick={() => handleRemoveHeadphone(colIndex)}
-                                            aria-label="Eliminar"
-                                        >
-                                            ✕
-                                        </button>
-                                        <img
-                                            src={selectedHeadphones[colIndex].main_image || selectedHeadphones[colIndex].image}
-                                            alt={selectedHeadphones[colIndex].name}
-                                            className="comparison-img"
-                                        />
-                                        <h3 className="comparison-name">
-                                            <Link to={`/auricular/${selectedHeadphones[colIndex].slug}`}>
-                                                {selectedHeadphones[colIndex].name}
-                                            </Link>
-                                        </h3>
-                                        <p className="comparison-desc">
-                                            {selectedHeadphones[colIndex].description || ''}
-                                        </p>
-                                        <div className="specs-list">
-                                            {[
-                                                { label: 'Driver', key: 'driver_size' },
-                                                { label: 'Frecuencia', key: 'frequency_response' },
-                                                { label: 'Impedancia', key: 'impedance' },
-                                                { label: 'Sensibilidad', key: 'sensitivity' },
-                                                { label: 'Conectividad', key: 'connectivity' },
-                                                { label: 'Batería', key: 'battery_life', altKey: 'battery_life_hours', suffix: 'h' },
-                                                { label: 'Protección', key: 'protection_rating' }
-                                            ].map(spec => {
-                                                let value = selectedHeadphones[colIndex][spec.key];
-                                                if (!value && spec.altKey) {
-                                                    value = selectedHeadphones[colIndex][spec.altKey];
-                                                    if (value && spec.suffix) value = `${value}${spec.suffix}`;
-                                                }
-
-                                                return (
-                                                    <div key={spec.label} className="spec-item" style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                        <span className="spec-label">{spec.label}</span>
-                                                        <span className="spec-value" style={{ textAlign: 'right', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '60%' }}>
-                                                            {value || '-'}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-
-                                        <div className="specs-list" style={{ marginTop: '1.5rem' }}>
-                                            <h4 style={{ fontSize: '1rem', marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.25rem' }}>Puntuaciones</h4>
-
-                                            {[
-                                                { label: 'Global', key: 'score_overall', color: '#007bff', bold: true },
-                                                { label: 'Escenario', key: 'score_soundstage' },
-                                                { label: 'Confort', key: 'score_comfort' },
-                                                { label: 'Construcción', key: 'score_build' },
-                                                { label: 'Agudos', key: 'score_treble' },
-                                                { label: 'Medios', key: 'score_mids' },
-                                                { label: 'Graves', key: 'score_bass' },
-                                                { label: 'Precisión', key: 'score_accuracy' },
-                                                { label: 'Valor/Precio', key: 'score_value' },
-                                                { label: 'ANC', key: 'score_noise_cancelling' },
-                                                { label: 'Transparencia', key: 'score_transparency' },
-                                                { label: 'Llamadas', key: 'score_call_quality' },
-                                            ].map(score => {
-                                                const value = selectedHeadphones[colIndex][score.key];
-                                                return (
-                                                    <div key={score.label} className="spec-item" style={{ height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                        <span className="spec-label">{score.label}</span>
-                                                        <span className="spec-value" style={{
-                                                            fontWeight: score.bold ? 'bold' : 'normal',
-                                                            color: score.color || 'inherit'
-                                                        }}>
-                                                            {value > 0 ? `${value}/100` : '-'}
-                                                        </span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="empty-slot">
-                                        <div className="search-container">
-                                            <input
-                                                type="text"
-                                                className="form-input search-input"
-                                                placeholder="Buscar auricular..."
-                                                value={searchQuery[colIndex]}
-                                                onChange={(e) => handleSearch(colIndex, e.target.value)}
-                                                onFocus={() => {
-                                                    const newOpen = [...openDropdown];
-                                                    newOpen[colIndex] = true;
-                                                    setOpenDropdown(newOpen);
-                                                }}
-                                            />
-                                            {openDropdown[colIndex] && (
-                                                <ul className="search-dropdown">
-                                                    {getFilteredHeadphones(colIndex).length > 0 ? (
-                                                        getFilteredHeadphones(colIndex).map(headphone => (
-                                                            <li
-                                                                key={headphone.id}
-                                                                onClick={() => handleSelectHeadphone(colIndex, headphone)}
-                                                            >
-                                                                <img src={headphone.main_image || headphone.image} alt={headphone.name} className="dropdown-thumb" />
-                                                                <span>{headphone.name}</span>
-                                                            </li>
-                                                        ))
-                                                    ) : (
-                                                        <li className="no-results">No se encontraron resultados</li>
+                <div className="container" style={{ overflowX: 'auto' }}>
+                    <table className="comparison-table" style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+                        <thead>
+                            <tr>
+                                {[0, 1, 2].map((colIndex) => (
+                                    <th key={colIndex} style={{ padding: '1rem', verticalAlign: 'top', borderBottom: '2px solid #eee', width: '33.33%' }}>
+                                        {selectedHeadphones[colIndex] ? (
+                                            <div className="selected-header" style={{ position: 'relative' }}>
+                                                <button
+                                                    className="remove-btn"
+                                                    onClick={() => handleRemoveHeadphone(colIndex)}
+                                                    style={{ position: 'absolute', top: 0, right: 0, background: '#ff4444', color: 'white', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: 'none' }}
+                                                    aria-label="Eliminar"
+                                                >
+                                                    ✕
+                                                </button>
+                                                <img
+                                                    src={selectedHeadphones[colIndex].main_image || selectedHeadphones[colIndex].image}
+                                                    alt={selectedHeadphones[colIndex].name}
+                                                    style={{ width: '100%', height: '200px', objectFit: 'contain', marginBottom: '1rem' }}
+                                                />
+                                                <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>
+                                                    <Link to={`/auricular/${selectedHeadphones[colIndex].slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                                                        {selectedHeadphones[colIndex].name}
+                                                    </Link>
+                                                </h3>
+                                            </div>
+                                        ) : (
+                                            <div className="empty-slot" style={{ padding: '2rem 0', textAlign: 'center' }}>
+                                                <div className="search-container" style={{ position: 'relative' }}>
+                                                    <input
+                                                        type="text"
+                                                        className="form-input"
+                                                        placeholder="Buscar auricular..."
+                                                        value={searchQuery[colIndex]}
+                                                        onChange={(e) => handleSearch(colIndex, e.target.value)}
+                                                        onFocus={() => {
+                                                            const newOpen = [...openDropdown];
+                                                            newOpen[colIndex] = true;
+                                                            setOpenDropdown(newOpen);
+                                                        }}
+                                                        style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ddd' }}
+                                                    />
+                                                    {openDropdown[colIndex] && (
+                                                        <ul className="search-dropdown" style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'white', border: '1px solid #ddd', borderRadius: '0 0 4px 4px', maxHeight: '200px', overflowY: 'auto', zIndex: 10, listStyle: 'none', padding: 0, margin: 0, textAlign: 'left' }}>
+                                                            {getFilteredHeadphones(colIndex).length > 0 ? (
+                                                                getFilteredHeadphones(colIndex).map(headphone => (
+                                                                    <li
+                                                                        key={headphone.id}
+                                                                        onClick={() => handleSelectHeadphone(colIndex, headphone)}
+                                                                        style={{ padding: '0.5rem', cursor: 'pointer', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                                                                    >
+                                                                        <img src={headphone.main_image || headphone.image} alt={headphone.name} style={{ width: '30px', height: '30px', objectFit: 'contain' }} />
+                                                                        <span style={{ fontSize: '0.9rem' }}>{headphone.name}</span>
+                                                                    </li>
+                                                                ))
+                                                            ) : (
+                                                                <li style={{ padding: '0.5rem', color: '#999', fontSize: '0.9rem' }}>No se encontraron resultados</li>
+                                                            )}
+                                                        </ul>
                                                     )}
-                                                </ul>
-                                            )}
-                                        </div>
-                                        <p className="empty-text">Selecciona un auricular</p>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                                                </div>
+                                                <p style={{ marginTop: '1rem', color: '#666', fontSize: '0.9rem' }}>Selecciona un modelo</p>
+                                            </div>
+                                        )}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* Description Row */}
+                            <tr>
+                                {[0, 1, 2].map(colIndex => (
+                                    <td key={`desc-${colIndex}`} style={{ padding: '1rem', verticalAlign: 'top', borderBottom: '1px solid #eee' }}>
+                                        {selectedHeadphones[colIndex] ? (
+                                            <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: '1.5' }}>
+                                                {selectedHeadphones[colIndex].description || ''}
+                                            </p>
+                                        ) : null}
+                                    </td>
+                                ))}
+                            </tr>
+
+                            {/* Technical Specs Rows */}
+                            <tr style={{ background: '#f8f9fa' }}>
+                                <td colSpan={3} style={{ padding: '0.5rem 1rem', fontWeight: 'bold', fontSize: '0.9rem', textTransform: 'uppercase', color: '#666' }}>Especificaciones Técnicas</td>
+                            </tr>
+                            {[
+                                { label: 'Driver', key: 'driver_size' },
+                                { label: 'Frecuencia', key: 'frequency_response' },
+                                { label: 'Impedancia', key: 'impedance' },
+                                { label: 'Sensibilidad', key: 'sensitivity' },
+                                { label: 'Conectividad', key: 'connectivity' },
+                                { label: 'Batería', key: 'battery_life', altKey: 'battery_life_hours', suffix: 'h' },
+                                { label: 'Protección', key: 'protection_rating' }
+                            ].map(spec => (
+                                <tr key={spec.label}>
+                                    {[0, 1, 2].map(colIndex => {
+                                        let value = '-';
+                                        if (selectedHeadphones[colIndex]) {
+                                            value = selectedHeadphones[colIndex][spec.key];
+                                            if (!value && spec.altKey) {
+                                                value = selectedHeadphones[colIndex][spec.altKey];
+                                                if (value && spec.suffix) value = `${value}${spec.suffix}`;
+                                            }
+                                        }
+                                        return (
+                                            <td key={`${spec.label}-${colIndex}`} style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'top' }}>
+                                                {selectedHeadphones[colIndex] ? (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.95rem' }}>
+                                                        <span style={{ color: '#999', fontSize: '0.85rem' }}>{spec.label}</span>
+                                                        <span style={{ fontWeight: '500' }}>{value || '-'}</span>
+                                                    </div>
+                                                ) : null}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+
+                            {/* Scores Rows */}
+                            <tr style={{ background: '#f8f9fa' }}>
+                                <td colSpan={3} style={{ padding: '0.5rem 1rem', fontWeight: 'bold', fontSize: '0.9rem', textTransform: 'uppercase', color: '#666' }}>Puntuaciones</td>
+                            </tr>
+                            {[
+                                { label: 'Global', key: 'score_overall', color: '#007bff', bold: true },
+                                { label: 'Escenario', key: 'score_soundstage' },
+                                { label: 'Confort', key: 'score_comfort' },
+                                { label: 'Construcción', key: 'score_build' },
+                                { label: 'Agudos', key: 'score_treble' },
+                                { label: 'Medios', key: 'score_mids' },
+                                { label: 'Graves', key: 'score_bass' },
+                                { label: 'Precisión', key: 'score_accuracy' },
+                                { label: 'Valor/Precio', key: 'score_value' },
+                                { label: 'ANC', key: 'score_noise_cancelling' },
+                                { label: 'Transparencia', key: 'score_transparency' },
+                                { label: 'Llamadas', key: 'score_call_quality' },
+                            ].map(score => (
+                                <tr key={score.label}>
+                                    {[0, 1, 2].map(colIndex => {
+                                        const headphone = selectedHeadphones[colIndex];
+                                        const value = headphone ? headphone[score.key] : 0;
+                                        return (
+                                            <td key={`${score.label}-${colIndex}`} style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'middle' }}>
+                                                {headphone ? (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                        <span style={{ color: '#555', fontSize: '0.9rem' }}>{score.label}</span>
+                                                        <span style={{
+                                                            fontWeight: score.bold ? '800' : '600',
+                                                            color: score.color || '#333',
+                                                            background: score.bold ? '#e7f1ff' : '#f5f5f5',
+                                                            padding: '2px 8px',
+                                                            borderRadius: '12px',
+                                                            fontSize: '0.85rem'
+                                                        }}>
+                                                            {value > 0 ? value : '-'}
+                                                        </span>
+                                                    </div>
+                                                ) : null}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </div>
