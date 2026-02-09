@@ -231,16 +231,12 @@ function Comparativa() {
                                         return (
                                             <td key={`${score.label}-${colIndex}`} style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', verticalAlign: 'middle' }}>
                                                 {headphone ? (
-                                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-                                                        <span style={{ color: '#555', fontSize: '0.8rem' }}>{score.label}</span>
-                                                        <span style={{
+                                                    <div className="score-container">
+                                                        <span className="score-label">{score.label}</span>
+                                                        <span className="score-value" style={{
                                                             fontWeight: score.bold ? '800' : '600',
                                                             color: score.color || '#333',
                                                             background: score.bold ? '#e7f1ff' : '#f5f5f5',
-                                                            padding: '2px 6px',
-                                                            borderRadius: '8px',
-                                                            fontSize: '0.8rem',
-                                                            whiteSpace: 'nowrap'
                                                         }}>
                                                             {value > 0 ? value : '-'}
                                                         </span>
