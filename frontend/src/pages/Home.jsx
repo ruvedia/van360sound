@@ -64,7 +64,7 @@ function Home() {
                 <div className="container">
                     <h2 className="section-title">Últimos Artículos</h2>
                     <div className="grid grid-3">
-                        {latestArticles.slice(0, 3).map(article => (
+                        {latestArticles.slice(0, 6).map(article => (
                             <ArticleCard key={article.id} article={article} />
                         ))}
                     </div>
