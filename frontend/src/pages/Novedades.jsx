@@ -36,7 +36,7 @@ function Novedades() {
                 </div>
             </section>
 
-            <section className="section">
+            <section className="section" style={{ paddingTop: 'var(--spacing-lg)' }}>
                 <div className="container">
                     {articles.length > 0 ? (
                         <div className="grid grid-3">

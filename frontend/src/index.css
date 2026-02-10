@@ -344,7 +344,7 @@ p {
 }
 
 .card-title {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   font-weight: 700;
   margin-bottom: var(--spacing-sm);
   color: var(--color-text-primary);
@@ -1058,7 +1058,7 @@ p {
 .comparison-grid {
   grid-template-columns: 1fr;
 }
-}
+
 
 .comparison-description {
   font-size: 0.85rem;
