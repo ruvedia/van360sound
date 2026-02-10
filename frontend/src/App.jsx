@@ -15,6 +15,7 @@ import HeadphoneDetail from './pages/HeadphoneDetail';
 import ArticleDetail from './pages/ArticleDetail';
 import Comparativa from './pages/Comparativa';
 import Guia from './pages/Guia';
+import NotFound from './pages/NotFound';
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
                             <Route path="/buscar" element={<Buscar />} />
                             <Route path="/auricular/:slug" element={<HeadphoneDetail />} />
                             <Route path="/articulo/:slug" element={<ArticleDetail />} />
+                            <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
                     <Footer />
