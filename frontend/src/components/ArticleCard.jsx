@@ -9,7 +9,7 @@ function ArticleCard({ article }) {
     });
 
     return (
-        <Link to={`/articulo/${article.slug}`} className="card">
+        <Link to={`/articulo/${article.slug}`} className="card article-card">
             <img
                 src={imageUrl}
                 alt={article.title}
