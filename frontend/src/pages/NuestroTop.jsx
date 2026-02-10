@@ -66,7 +66,7 @@ function NuestroTop() {
                                     />
                                 )}
                                 <div className="card-content">
-                                    <h3 className="card-title" style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{category.name}</h3>
+                                    <h3 className="card-title">{category.name}</h3>
                                     <p className="card-text">
                                         {category.meta_description || category.description}
                                     </p>
