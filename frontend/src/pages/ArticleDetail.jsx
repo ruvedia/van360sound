@@ -59,7 +59,7 @@ function ArticleDetail() {
 
             <header style={{ marginBottom: '2rem' }}>
                 <span className="category-tag">{article.article_type}</span>
-                <h1 style={{ fontSize: '2.5rem', marginTop: '0.5rem', marginBottom: '1rem' }}>{article.title}</h1>
+                <h1 className="article-detail-title">{article.title}</h1>
                 <div style={{ color: '#666', fontSize: '0.9rem', display: 'flex', gap: '1.5rem' }}>
                     <span>Por {article.author}</span>
                     <span>{date}</span>

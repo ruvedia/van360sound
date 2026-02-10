@@ -558,6 +558,19 @@ p {
   line-height: 1.8;
 }
 
+.article-detail-title {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .article-detail-title {
+    font-size: 1.5rem;
+  }
+}
+
 .article-content ul,
 .article-content ol {
   margin-bottom: var(--spacing-lg);
