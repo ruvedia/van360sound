@@ -50,29 +50,27 @@ function NuestroTop() {
             </section>
 
             <section className="section" style={{ padding: 'var(--spacing-xl) 0' }}>
-                <div className="container">
-                    <div className="grid grid-4" style={{ gap: 'var(--spacing-lg)' }}>
+                <div className="container" style={{ maxWidth: '1000px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                         {categories.map(category => (
                             <Link
                                 key={category.id}
                                 to={`/categoria/${category.slug}`}
-                                className="card"
-                                style={{ textAlign: 'center' }}
+                                className="card card-horizontal"
                             >
                                 {category.image && (
                                     <img
                                         src={category.image}
                                         alt={category.name}
                                         className={`card-image card-image-${category.slug}`}
-                                        style={{ height: '180px' }}
                                     />
                                 )}
-                                <div className="card-content" style={{ padding: 'var(--spacing-md)' }}>
-                                    <h3 className="card-title" style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{category.name}</h3>
-                                    <p className="card-text" style={{ fontSize: '0.85rem', marginBottom: '0.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                <div className="card-content">
+                                    <h3 className="card-title" style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{category.name}</h3>
+                                    <p className="card-text">
                                         {category.meta_description || category.description}
                                     </p>
-                                    <div className="card-meta" style={{ marginTop: '0', fontSize: '0.75rem' }}>
+                                    <div className="card-meta">
                                         <span>{category.headphones_count} auriculares</span>
                                     </div>
                                 </div>

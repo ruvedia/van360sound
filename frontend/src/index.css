@@ -361,6 +361,38 @@ p {
   margin-top: var(--spacing-md);
 }
 
+.card-horizontal {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .card-horizontal {
+    flex-direction: row;
+    align-items: center;
+    height: 220px;
+    text-align: left;
+  }
+
+  .card-horizontal .card-image {
+    width: 300px;
+    min-width: 300px;
+    height: 100%;
+    object-fit: cover;
+    padding: 0;
+  }
+
+  .card-horizontal .card-content {
+    flex: 1;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  .card-horizontal .card-text {
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
 /* ========================================
    Grid Layouts
    ======================================== */
