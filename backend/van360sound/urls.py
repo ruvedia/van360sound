@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from blog.sitemaps import sitemap_view
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('admin/download-media/', views.download_media, name='download_media'),
     path('admin/', admin.site.urls),
     path('api/', include('blog.urls')),
+    path('sitemap.xml', views.sitemap_view, name='sitemap'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
