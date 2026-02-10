@@ -2,22 +2,36 @@
 # exit on error
 set -o errexit
 
-cd backend
+echo "Current directory: $(pwd)"
+ls -la
+
+# Check if we are in the root and need to cd into backend
+if [ -d "backend" ]; then
+  echo "Changing directory to backend..."
+  cd backend
+fi
+
+echo "New directory: $(pwd)"
+ls -la
 
 echo "STARTING BUILD..."
 
+echo "UPGRADING PIP..."
 python -m pip install --upgrade pip
+
 echo "INSTALLING REQUIREMENTS..."
-python -m pip install -r requirements.txt || echo "PIP INSTALL FAILED"
+# Remove || echo ... so it actually fails if installation fails
+python -m pip install -r requirements.txt
 
 echo "COLLECTING STATIC..."
-python manage.py collectstatic --no-input || echo "COLLECTSTATIC FAILED"
-
-echo "LOADING DATA..."
-echo "LOADING DATA..."
-# python manage.py loaddata db_dump.json || echo "WARNING: loaddata failed (maybe duplicate data) but continuing"
+python manage.py collectstatic --no-input
 
 echo "BUILDING ADMIN..."
-python build_admin.py || echo "WARNING: build_admin failed but continuing"
+# Check if build_admin.py exists before running
+if [ -f "build_admin.py" ]; then
+    python build_admin.py
+else
+    echo "WARNING: build_admin.py not found, skipping."
+fi
 
 echo "BUILD FINISHED"
