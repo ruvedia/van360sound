@@ -28,6 +28,11 @@ export const articleService = {
     getAll: (params) => api.get('/articles/', { params }),
     getBySlug: (slug) => api.get(`/articles/${slug}/`),
     getByType: (type) => api.get('/articles/', { params: { type } }),
+    search: (query, type = null) => {
+        const params = { search: query };
+        if (type) params.type = type;
+        return api.get('/articles/', { params });
+    },
 };
 
 export const contactService = {
