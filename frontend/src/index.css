@@ -888,7 +888,7 @@ p {
   }
 
   .article-card .category-tag {
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--spacing-sm);
     padding: 2px 8px;
     font-size: 0.65rem;
     align-self: flex-start;
