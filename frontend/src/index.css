@@ -861,7 +861,7 @@ p {
 @media (max-width: 1024px) {
   .article-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: stretch;
     text-align: left;
     height: auto;
@@ -870,9 +870,10 @@ p {
   }
 
   .article-card .card-image {
-    width: 140px;
-    min-width: 140px;
-    height: auto;
+    width: 100%;
+    min-width: 100%;
+    height: 200px;
+    /* Fixed height to keep cards consistent, but contain ensures full image */
     object-fit: contain;
     padding: var(--spacing-xs);
     background-color: white;
