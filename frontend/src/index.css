@@ -872,8 +872,8 @@ p {
     width: 140px;
     min-width: 140px;
     height: 100%;
-    object-fit: contain;
-    padding: var(--spacing-xs);
+    object-fit: cover;
+    padding: 0;
     background-color: white;
   }
 
