@@ -23,9 +23,9 @@ function RecommendedSection({ currentArticleSlug }) {
                     allArticles = allArticles.filter(article => article.slug !== currentArticleSlug);
                 }
 
-                // Usaremos un método simple: tomar hasta 6 al azar garantizando variedad visual
+                // Usaremos un método simple: tomar hasta 9 al azar garantizando variedad visual
                 const shuffled = [...allArticles].sort(() => 0.5 - Math.random());
-                const selected = shuffled.slice(0, 6);
+                const selected = shuffled.slice(0, 9);
 
                 setArticles(selected);
             } catch (error) {
