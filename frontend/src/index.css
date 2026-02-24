@@ -621,7 +621,8 @@ p {
   font-size: var(--font-size-2xl);
   margin-top: var(--spacing-2xl);
   margin-bottom: var(--spacing-md);
-  color: var(--color-accent);
+  color: #0b1d3a;
+  /* Azul marino oscuro */
 }
 
 .article-content h3 {
