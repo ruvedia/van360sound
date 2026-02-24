@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { articleService } from '../services/api';
 import ArticleCard from './ArticleCard';
 
 function RecommendedSection({ currentArticleSlug }) {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const scrollRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
 
     useEffect(() => {
         const fetchRecommended = async () => {
@@ -33,6 +37,28 @@ function RecommendedSection({ currentArticleSlug }) {
         fetchRecommended();
     }, [currentArticleSlug]);
 
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - scrollRef.current.offsetLeft);
+        setScrollLeft(scrollRef.current.scrollLeft);
+    };
+
+    const handleMouseLeave = () => {
+        setIsDragging(false);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - scrollRef.current.offsetLeft;
+        const walk = (x - startX) * 2; // Multiplicador para la velocidad de scroll
+        scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
+
     if (loading || articles.length === 0) {
         return null; // Si no hay recomendaciones o está cargando, no mostramos nada para no entorpecer visualmente
     }
@@ -42,9 +68,8 @@ function RecommendedSection({ currentArticleSlug }) {
             marginTop: '5rem',
             paddingTop: '3rem',
             borderTop: '2px dashed #eaeaea',
-            maxWidth: '1200px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            width: '100%',
+            maxWidth: '100%', // Ocupa todo el ancho posible
             overflow: 'hidden' // Evitar scrolleo falso por fuera
         }}>
             <h2 style={{
@@ -53,38 +78,39 @@ function RecommendedSection({ currentArticleSlug }) {
                 textAlign: 'left', // Mejor alineado a la izquierda para un carrusel
                 color: '#1e3a8a',
                 fontFamily: 'var(--font-heading)',
-                paddingLeft: '1rem'
+                paddingLeft: '5%', // Margen fluido para que no pegue a los bordes
+                maxWidth: '1200px',
+                margin: '0 auto 2rem auto'
             }}>
-                🎵 Quizás también te interese...
+                Quizás te interese...
             </h2>
 
             {/* Carrusel con scroll horizontal */}
-            <div className="recommended-carousel" style={{
-                display: 'flex',
-                gap: '1.5rem',
-                overflowX: 'auto',
-                padding: '1rem',
-                scrollSnapType: 'x mandatory',
-                WebkitOverflowScrolling: 'touch', // Scroll suave en iOS
-                scrollbarWidth: 'thin', // Firefox
-                scrollbarColor: '#ccc transparent',
-            }}>
-                {/* Scrollbar styles para Webkit insertados globalmente vía class o directamente aquí si lo soporta (preferible usar archivo externo o etiqueta style por compatibilidad) */}
+            <div
+                ref={scrollRef}
+                className={`recommended-carousel ${isDragging ? 'dragging' : ''}`}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                style={{
+                    display: 'flex',
+                    gap: '1.5rem',
+                    overflowX: 'auto',
+                    padding: '1rem 5%', // Padding fluido para asomar los lados
+                    scrollSnapType: isDragging ? 'none' : 'x mandatory', // Desactivar snap si arrastramos
+                    WebkitOverflowScrolling: 'touch', // Scroll suave en iOS
+                    scrollbarWidth: 'none', // Ocultar scrollbar estándar (usamos CSS abajo para Webkit)
+                    cursor: isDragging ? 'grabbing' : 'grab', // Cursor de mano
+                    msOverflowStyle: 'none' // IE and Edge
+                }}>
                 <style>
                     {`
                     .recommended-carousel::-webkit-scrollbar {
-                        height: 8px;
+                        display: none; // Ocultar scrollbar completamente para feeling táctil
                     }
-                    .recommended-carousel::-webkit-scrollbar-track {
-                        background: transparent;
-                        border-radius: 10px;
-                    }
-                    .recommended-carousel::-webkit-scrollbar-thumb {
-                        background: #ccc;
-                        border-radius: 10px;
-                    }
-                    .recommended-carousel::-webkit-scrollbar-thumb:hover {
-                        background: #a8a8a8;
+                    .recommended-carousel {
+                        user-select: none; /* Prevenir selección de texto al arrastrar */
                     }
                     .recommended-carousel > * {
                         scroll-snap-align: start;
@@ -97,9 +123,13 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     @media (min-width: 1024px) {
                         .recommended-carousel > * {
-                            flex: 0 0 calc(30vw - 2rem); /* ~3 items en desktop */
-                            max-width: 350px;
+                            flex: 0 0 calc(25vw - 2rem); /* 4 items en desktop para forzar scroll */
+                            max-width: 320px;
                         }
+                    }
+                    /* Desactivar click en links internos si estábamos arrastrando */
+                    .dragging a {
+                        pointer-events: none;
                     }
                     `}
                 </style>
