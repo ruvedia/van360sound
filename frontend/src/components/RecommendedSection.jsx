@@ -93,15 +93,30 @@ function RecommendedSection({ currentArticleSlug }) {
             marginLeft: 'calc(-47.5vw + 50%)', // TRUCO CSS: Romper el contenedor pequeño del padre (el artículo tiene 800px de máximo) para expandirse al 95% de la pantalla
             overflow: 'hidden'
         }}>
-            <h2 style={{
-                fontSize: '2rem',
-                marginBottom: '2rem',
-                textAlign: 'left',
-                color: '#1e3a8a',
-                fontFamily: 'var(--font-heading)',
-            }}>
-                Quizás te interese...
-            </h2>
+            <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
+                <h2 style={{
+                    fontSize: '2rem',
+                    color: '#1e3a8a',
+                    fontFamily: 'var(--font-heading)',
+                    margin: '0 0 0.5rem 0'
+                }}>
+                    Quizás te interese...
+                </h2>
+                <div className="scroll-hint" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    color: '#64748b',
+                    fontSize: '0.9rem',
+                    fontWeight: '500',
+                    backgroundColor: '#e2e8f0',
+                    padding: '0.4rem 1rem',
+                    borderRadius: '20px',
+                }}>
+                    <span className="scroll-arrows">← →</span>
+                    <span>Desliza para ver más</span>
+                </div>
+            </div>
 
             {/* Carrusel con scroll horizontal */}
             <div
@@ -140,6 +155,16 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     .recommended-carousel::-webkit-scrollbar-thumb:hover {
                         background: #64748b;
+                    }
+
+                    @keyframes pulseArrows {
+                        0%, 100% { transform: translateX(0); }
+                        50% { transform: translateX(3px); }
+                    }
+                    .scroll-arrows {
+                        display: inline-block;
+                        animation: pulseArrows 1.5s infinite ease-in-out;
+                        letter-spacing: -2px;
                     }
 
                     .recommended-carousel {
