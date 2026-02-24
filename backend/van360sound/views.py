@@ -62,7 +62,9 @@ def download_media(request):
         filename=f'{date_str}-img.zip',
         content_type='application/zip'
     )
-# @staff_member_required  <-- REMOVED to allow bootstrapping
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def restore_database(request):
     # Security check: Simple token to prevent random people from resetting the DB
     if request.GET.get('key') != 'van360_emergency_restore':
@@ -73,8 +75,10 @@ def restore_database(request):
         if not dump_path.exists():
              return HttpResponse(f"Error: No se encuentra el archivo db_dump.json en {dump_path}", status=404)
         
-        # Run loaddata
         out = io.StringIO()
+        # Limpiamos la BD para evitar conflictos de Unique IDs
+        call_command('flush', interactive=False, stdout=out)
+        # Run loaddata
         call_command('loaddata', 'db_dump.json', stdout=out)
         
         return HttpResponse(f"¡Restauración Completada! Salida: {out.getvalue()}", status=200)
