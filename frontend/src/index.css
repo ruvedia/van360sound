@@ -621,8 +621,12 @@ p {
   font-size: var(--font-size-2xl);
   margin-top: var(--spacing-2xl);
   margin-bottom: var(--spacing-md);
-  color: #0b1d3a;
-  /* Azul marino oscuro */
+  color: #1e3a8a;
+  /* Azul marino más vivo y elegante */
+  border-bottom: 1px solid #e2e8f0;
+  /* Línea divisoria gris claro suave */
+  padding-bottom: 0.5rem;
+  /* Espacio para que la línea no pegue al texto */
 }
 
 .article-content h3 {
