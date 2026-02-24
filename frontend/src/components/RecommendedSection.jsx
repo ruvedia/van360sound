@@ -7,6 +7,7 @@ function RecommendedSection({ currentArticleSlug }) {
     const [loading, setLoading] = useState(true);
     const scrollRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [dragged, setDragged] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
 
@@ -39,6 +40,7 @@ function RecommendedSection({ currentArticleSlug }) {
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
+        setDragged(false); // Reiniciamos estado dragged
         setStartX(e.pageX - scrollRef.current.offsetLeft);
         setScrollLeft(scrollRef.current.scrollLeft);
     };
@@ -56,7 +58,22 @@ function RecommendedSection({ currentArticleSlug }) {
         e.preventDefault();
         const x = e.pageX - scrollRef.current.offsetLeft;
         const walk = (x - startX) * 2; // Multiplicador para la velocidad de scroll
+
+        // Si el usuario se ha movido más de 5 pixels, lo consideramos un drag y no un clic
+        if (Math.abs(walk) > 10) {
+            setDragged(true);
+        }
+
         scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    // Interceptar el clic nativo. Si venimos de un arrastre, anulamos el clic de los links.
+    const handleClickCapture = (e) => {
+        if (dragged) {
+            e.preventDefault();
+            e.stopPropagation();
+            setDragged(false);
+        }
     };
 
     if (loading || articles.length === 0) {
@@ -68,8 +85,12 @@ function RecommendedSection({ currentArticleSlug }) {
             marginTop: '5rem',
             paddingTop: '3rem',
             borderTop: '2px dashed #eaeaea',
-            width: '100%',
-            maxWidth: '100%', // Ocupa todo el ancho posible
+            width: '100vw', // Forzar a ocupar ancho de ventana completo
+            position: 'relative',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw', // Romper el contenedor padre hacia la izq
+            marginRight: '-50vw', // Romper el contenedor padre hacia la der
             overflow: 'hidden' // Evitar scrolleo falso por fuera
         }}>
             <h2 style={{
@@ -93,6 +114,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 onMouseLeave={handleMouseLeave}
                 onMouseUp={handleMouseUp}
                 onMouseMove={handleMouseMove}
+                onClickCapture={handleClickCapture}
                 style={{
                     display: 'flex',
                     gap: '1.5rem',
@@ -126,10 +148,6 @@ function RecommendedSection({ currentArticleSlug }) {
                             flex: 0 0 calc(25vw - 2rem); /* 4 items en desktop para forzar scroll */
                             max-width: 320px;
                         }
-                    }
-                    /* Desactivar click en links internos si estábamos arrastrando */
-                    .dragging a {
-                        pointer-events: none;
                     }
                     `}
                 </style>
