@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { articleService } from '../services/api';
 import SEO from '../components/SEO';
+import CommentsSection from '../components/CommentsSection';
 
 function ArticleDetail() {
     const { slug } = useParams();
@@ -87,6 +88,10 @@ function ArticleDetail() {
                     </div>
                 </div>
             )}
+
+            {/* Sección de Comentarios para Artículos */}
+            <CommentsSection type="article" slug={slug} />
+
         </article>
     );
 }

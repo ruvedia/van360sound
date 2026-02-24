@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { commentService } from '../services/api';
 
-function CommentsSection({ categorySlug }) {
+function CommentsSection({ type = 'category', slug }) {
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
@@ -11,11 +11,13 @@ function CommentsSection({ categorySlug }) {
     // Cargar comentarios al montar el componente
     useEffect(() => {
         loadComments();
-    }, [categorySlug]);
+    }, [type, slug]);
 
     const loadComments = async () => {
         try {
-            const response = await commentService.getByCategory(categorySlug);
+            const response = type === 'article'
+                ? await commentService.getByArticle(slug)
+                : await commentService.getByCategory(slug);
             // La API devuelve los datos paginados en 'results'
             setComments(response.data.results || response.data || []);
         } catch (error) {
@@ -38,13 +40,19 @@ function CommentsSection({ categorySlug }) {
         setMessage({ type: '', text: '' });
 
         try {
-            // Enviar comentario con category_slug
-            const response = await commentService.create({
-                category_slug: categorySlug,
+            // Enviar comentario con slug dinámico
+            const payload = {
                 author_name: newComment.author_name,
                 author_email: newComment.author_email || null,
                 content: newComment.content
-            });
+            };
+            if (type === 'article') {
+                payload.article_slug = slug;
+            } else {
+                payload.category_slug = slug;
+            }
+
+            await commentService.create(payload);
 
             setMessage({ type: 'success', text: '¡Comentario publicado correctamente!' });
             setNewComment({ author_name: '', author_email: '', content: '' });

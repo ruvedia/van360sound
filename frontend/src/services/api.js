@@ -41,6 +41,7 @@ export const contactService = {
 
 export const commentService = {
     getByCategory: (categorySlug) => api.get('/comments/', { params: { category: categorySlug } }),
+    getByArticle: (articleSlug) => api.get('/comments/', { params: { article: articleSlug } }),
     create: (data) => api.post('/comments/', data),
 };
 
