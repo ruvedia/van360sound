@@ -5,6 +5,7 @@ import HeadphoneCard from '../components/HeadphoneCard';
 import ScoreBar from '../components/ScoreBar';
 import { rankings } from '../data/rankingData';
 import CommentsSection from '../components/CommentsSection';
+import RecommendedSection from '../components/RecommendedSection';
 import SEO from '../components/SEO';
 import './CategoryPage.css';
 

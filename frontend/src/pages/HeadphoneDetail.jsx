@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { headphoneService } from '../services/api';
 import SEO from '../components/SEO';
+import RecommendedSection from '../components/RecommendedSection';
 
 function HeadphoneDetail() {
     const { slug } = useParams();
@@ -159,6 +160,10 @@ function HeadphoneDetail() {
                     </div>
                 </div>
             </div>
+
+            {/* Artículos Recomendados ("Quizás te interese...") */}
+            <RecommendedSection />
+
         </div>
     );
 }
