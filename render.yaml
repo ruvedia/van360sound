@@ -28,7 +28,7 @@ services:
     region: oregon
     plan: free
     buildCommand: bash ./backend/render-build.sh
-    startCommand: cd backend && gunicorn van360sound.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: cd backend && gunicorn van360sound.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --log-level debug --access-logfile -
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -39,4 +39,4 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
-        value: 4
+        value: 1
