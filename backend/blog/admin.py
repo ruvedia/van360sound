@@ -61,8 +61,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['author_name', 'category', 'content_preview', 'created_at', 'is_approved']
-    list_filter = ['category', 'is_approved', 'created_at']
+    list_display = ['author_name', 'category', 'article', 'content_preview', 'created_at', 'is_approved']
+    list_filter = ['category', 'article', 'is_approved', 'created_at']
     search_fields = ['author_name', 'author_email', 'content']
     list_editable = ['is_approved']
     readonly_fields = ['created_at']
