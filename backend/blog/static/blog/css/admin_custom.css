@@ -1,0 +1,16 @@
+/* Custom CKEditor Source mode styles 
+ * Prevents white text on white background in Django Admin's dark/light modes.
+ */
+textarea.cke_source {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+    font-family: Consolas, Monaco, "Courier New", monospace !important;
+    padding: 10px !important;
+}
+
+@media (prefers-color-scheme: light) {
+    textarea.cke_source {
+        background-color: #ffffff !important;
+        color: #333333 !important;
+    }
+}

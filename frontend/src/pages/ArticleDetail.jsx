@@ -63,7 +63,6 @@ function ArticleDetail() {
                 <div style={{ color: '#666', fontSize: '0.9rem', display: 'flex', gap: '1.5rem' }}>
                     <span>Por {article.author}</span>
                     <span>{date}</span>
-                    {article.views > 0 && <span>👁 {article.views} lecturas</span>}
                 </div>
             </header>
 

@@ -46,6 +46,11 @@ class ArticleAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_published']
 
+    class Media:
+        css = {
+            'all': ('blog/css/admin_custom.css',)
+        }
+
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'subject', 'created_at', 'is_read']

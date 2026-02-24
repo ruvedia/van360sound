@@ -22,7 +22,6 @@ function ArticleCard({ article }) {
                 <div className="card-meta">
                     <span>{date}</span>
                     <span>Por {article.author}</span>
-                    {article.views > 0 && <span>👁 {article.views} vistas</span>}
                 </div>
             </div>
         </Link>
