@@ -59,8 +59,8 @@ function RecommendedSection({ currentArticleSlug }) {
         const x = e.pageX - scrollRef.current.offsetLeft;
         const walk = (x - startX) * 2; // Multiplicador para la velocidad de scroll
 
-        // Si el usuario se ha movido más de 5 pixels, lo consideramos un drag y no un clic
-        if (Math.abs(walk) > 10) {
+        // Si el usuario se ha movido más de 15 pixels, lo consideramos un drag y no un clic
+        if (Math.abs(walk) > 15) {
             setDragged(true);
         }
 
@@ -83,25 +83,23 @@ function RecommendedSection({ currentArticleSlug }) {
     return (
         <section style={{
             marginTop: '5rem',
-            paddingTop: '3rem',
-            borderTop: '2px dashed #eaeaea',
-            width: '100vw', // Forzar a ocupar ancho de ventana completo
-            position: 'relative',
-            left: '50%',
-            right: '50%',
-            marginLeft: '-50vw', // Romper el contenedor padre hacia la izq
-            marginRight: '-50vw', // Romper el contenedor padre hacia la der
-            overflow: 'hidden' // Evitar scrolleo falso por fuera
+            padding: '3rem 2rem', // Padding interno
+            backgroundColor: '#f8f9fa', // Fondo suave para hacer efecto caja
+            borderRadius: '24px', // Bordes redondeados
+            border: '1px solid #eaeaea',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+            width: '100%',
+            maxWidth: '1200px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            overflow: 'hidden'
         }}>
             <h2 style={{
                 fontSize: '2rem',
                 marginBottom: '2rem',
-                textAlign: 'left', // Mejor alineado a la izquierda para un carrusel
+                textAlign: 'left',
                 color: '#1e3a8a',
                 fontFamily: 'var(--font-heading)',
-                paddingLeft: '5%', // Margen fluido para que no pegue a los bordes
-                maxWidth: '1200px',
-                margin: '0 auto 2rem auto'
             }}>
                 Quizás te interese...
             </h2>
@@ -119,34 +117,47 @@ function RecommendedSection({ currentArticleSlug }) {
                     display: 'flex',
                     gap: '1.5rem',
                     overflowX: 'auto',
-                    padding: '1rem 5%', // Padding fluido para asomar los lados
-                    scrollSnapType: isDragging ? 'none' : 'x mandatory', // Desactivar snap si arrastramos
-                    WebkitOverflowScrolling: 'touch', // Scroll suave en iOS
-                    scrollbarWidth: 'none', // Ocultar scrollbar estándar (usamos CSS abajo para Webkit)
-                    cursor: isDragging ? 'grabbing' : 'grab', // Cursor de mano
-                    msOverflowStyle: 'none' // IE and Edge
+                    paddingBottom: '1.5rem', // Espacio para el scrollbar
+                    scrollSnapType: isDragging ? 'none' : 'x mandatory',
+                    WebkitOverflowScrolling: 'touch',
+                    scrollbarWidth: 'auto', // Firefox: auto para que sea visible
+                    scrollbarColor: '#94a3b8 #e2e8f0', // Firefox colors
+                    cursor: isDragging ? 'grabbing' : 'grab',
                 }}>
                 <style>
                     {`
+                    /* Scrollbar grande y cómoda para navegadores Webkit (Chrome, Safari, Edge) */
                     .recommended-carousel::-webkit-scrollbar {
-                        display: none; // Ocultar scrollbar completamente para feeling táctil
+                        height: 12px; /* Más gruesa */
                     }
+                    .recommended-carousel::-webkit-scrollbar-track {
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                    }
+                    .recommended-carousel::-webkit-scrollbar-thumb {
+                        background: #94a3b8;
+                        border-radius: 10px;
+                        border: 2px solid #e2e8f0; /* Espaciado interno visual */
+                    }
+                    .recommended-carousel::-webkit-scrollbar-thumb:hover {
+                        background: #64748b;
+                    }
+
                     .recommended-carousel {
-                        user-select: none; /* Prevenir selección de texto al arrastrar */
+                        user-select: none;
                     }
                     .recommended-carousel > * {
                         scroll-snap-align: start;
-                        flex: 0 0 calc(85vw - 2rem); /* Muy ancho en móvil */
+                        flex: 0 0 calc(85vw - 4rem); /* Ancho en móvil compensando el padding */
                     }
                     @media (min-width: 640px) {
                         .recommended-carousel > * {
-                            flex: 0 0 calc(45vw - 2rem); /* 2 items en tablet */
+                            flex: 0 0 calc(45vw - 4rem);
                         }
                     }
                     @media (min-width: 1024px) {
                         .recommended-carousel > * {
-                            flex: 0 0 calc(25vw - 2rem); /* 4 items en desktop para forzar scroll */
-                            max-width: 320px;
+                            flex: 0 0 320px; /* Tamaño fijo en desktop para mantener homogeneidad */
                         }
                     }
                     `}
