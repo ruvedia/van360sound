@@ -140,13 +140,17 @@ class CommentViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post']  # Solo GET y POST
     
     def get_queryset(self):
-        """Filtrar comentarios por categoría si se proporciona"""
+        """Filtrar comentarios por categoría o artículo si se proporciona"""
         queryset = Comment.objects.filter(is_approved=True)
         category_slug = self.request.query_params.get('category', None)
+        article_slug = self.request.query_params.get('article', None)
         
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
         
+        if article_slug:
+            queryset = queryset.filter(article__slug=article_slug)
+            
         return queryset.order_by('-created_at')
     
     def create(self, request, *args, **kwargs):

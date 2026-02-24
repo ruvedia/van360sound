@@ -168,7 +168,15 @@ class Comment(models.Model):
         Category, 
         on_delete=models.CASCADE, 
         related_name='comments',
-        verbose_name='Categoría'
+        verbose_name='Categoría',
+        null=True, blank=True
+    )
+    article = models.ForeignKey(
+        'Article', 
+        on_delete=models.CASCADE, 
+        related_name='comments',
+        verbose_name='Artículo',
+        null=True, blank=True
     )
     author_name = models.CharField(max_length=100, verbose_name='Nombre del autor')
     author_email = models.EmailField(blank=True, null=True, verbose_name='Email del autor')

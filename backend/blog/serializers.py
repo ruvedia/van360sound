@@ -60,17 +60,36 @@ class ContactMessageSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
     category_slug = serializers.SlugField(write_only=True, required=False)
+    article_name = serializers.CharField(source='article.title', read_only=True)
+    article_slug = serializers.SlugField(write_only=True, required=False)
     
     class Meta:
         model = Comment
-        fields = ['id', 'category', 'category_slug', 'category_name', 'author_name', 'author_email', 'content', 'created_at', 'is_approved']
-        read_only_fields = ['created_at', 'is_approved', 'category']
-        extra_kwargs = {'category': {'required': False}}
+        fields = ['id', 'category', 'category_slug', 'category_name', 'article', 'article_slug', 'article_name', 'author_name', 'author_email', 'content', 'created_at', 'is_approved']
+        read_only_fields = ['created_at', 'is_approved', 'category', 'article']
+        extra_kwargs = {
+            'category': {'required': False},
+            'article': {'required': False}
+        }
     
     def create(self, validated_data):
         category_slug = validated_data.pop('category_slug', None)
+        article_slug = validated_data.pop('article_slug', None)
+        
         if category_slug:
             from .models import Category
-            category = Category.objects.get(slug=category_slug)
-            validated_data['category'] = category
+            try:
+                category = Category.objects.get(slug=category_slug)
+                validated_data['category'] = category
+            except Category.DoesNotExist:
+                pass
+                
+        if article_slug:
+            from .models import Article
+            try:
+                article = Article.objects.get(slug=article_slug)
+                validated_data['article'] = article
+            except Article.DoesNotExist:
+                pass
+                
         return super().create(validated_data)
