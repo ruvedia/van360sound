@@ -18,10 +18,9 @@ function RecommendedSection({ currentArticleSlug }) {
                     allArticles = allArticles.filter(article => article.slug !== currentArticleSlug);
                 }
 
-                // Randomizar un poco o coger los 3 primeros (aquí cogeremos los primeros 3 después de ordenar/barajar si quisiéramos)
-                // Usaremos un método simple: tomar 3 al azar garantizando variedad visual
+                // Usaremos un método simple: tomar hasta 6 al azar garantizando variedad visual
                 const shuffled = [...allArticles].sort(() => 0.5 - Math.random());
-                const selected = shuffled.slice(0, 3);
+                const selected = shuffled.slice(0, 6);
 
                 setArticles(selected);
             } catch (error) {
@@ -45,22 +44,69 @@ function RecommendedSection({ currentArticleSlug }) {
             borderTop: '2px dashed #eaeaea',
             maxWidth: '1200px',
             marginLeft: 'auto',
-            marginRight: 'auto'
+            marginRight: 'auto',
+            overflow: 'hidden' // Evitar scrolleo falso por fuera
         }}>
             <h2 style={{
                 fontSize: '2rem',
                 marginBottom: '2rem',
-                textAlign: 'center',
+                textAlign: 'left', // Mejor alineado a la izquierda para un carrusel
                 color: '#1e3a8a',
-                fontFamily: 'var(--font-heading)'
+                fontFamily: 'var(--font-heading)',
+                paddingLeft: '1rem'
             }}>
                 🎵 Quizás también te interese...
             </h2>
 
-            {/* Reusamos la grilla de 3 columnas del blog para mantener consistencia */}
-            <div className="grid grid-3">
+            {/* Carrusel con scroll horizontal */}
+            <div className="recommended-carousel" style={{
+                display: 'flex',
+                gap: '1.5rem',
+                overflowX: 'auto',
+                padding: '1rem',
+                scrollSnapType: 'x mandatory',
+                WebkitOverflowScrolling: 'touch', // Scroll suave en iOS
+                scrollbarWidth: 'thin', // Firefox
+                scrollbarColor: '#ccc transparent',
+            }}>
+                {/* Scrollbar styles para Webkit insertados globalmente vía class o directamente aquí si lo soporta (preferible usar archivo externo o etiqueta style por compatibilidad) */}
+                <style>
+                    {`
+                    .recommended-carousel::-webkit-scrollbar {
+                        height: 8px;
+                    }
+                    .recommended-carousel::-webkit-scrollbar-track {
+                        background: transparent;
+                        border-radius: 10px;
+                    }
+                    .recommended-carousel::-webkit-scrollbar-thumb {
+                        background: #ccc;
+                        border-radius: 10px;
+                    }
+                    .recommended-carousel::-webkit-scrollbar-thumb:hover {
+                        background: #a8a8a8;
+                    }
+                    .recommended-carousel > * {
+                        scroll-snap-align: start;
+                        flex: 0 0 calc(85vw - 2rem); /* Muy ancho en móvil */
+                    }
+                    @media (min-width: 640px) {
+                        .recommended-carousel > * {
+                            flex: 0 0 calc(45vw - 2rem); /* 2 items en tablet */
+                        }
+                    }
+                    @media (min-width: 1024px) {
+                        .recommended-carousel > * {
+                            flex: 0 0 calc(30vw - 2rem); /* ~3 items en desktop */
+                            max-width: 350px;
+                        }
+                    }
+                    `}
+                </style>
                 {articles.map(article => (
-                    <ArticleCard key={article.id} article={article} />
+                    <div key={article.id} style={{ height: '100%' }}>
+                        <ArticleCard article={article} />
+                    </div>
                 ))}
             </div>
         </section>
