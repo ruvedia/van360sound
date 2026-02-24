@@ -8,5 +8,6 @@ gunicorn
 packaging
 pillow
 psycopg2-binary
+dj-database-url
 sqlparse
 whitenoise

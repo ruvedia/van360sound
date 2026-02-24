@@ -30,6 +30,24 @@ python -m pip install -r requirements.txt
 echo "COLLECTING STATIC..."
 python manage.py collectstatic --no-input
 
+echo "MIGRATING DATABASE..."
+python manage.py migrate
+
+echo "CHECKING IF DATABASE NEEDS DATA..."
+python <<END
+import os
+import django
+import subprocess
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'van360sound.settings')
+django.setup()
+from blog.models import Category
+if not Category.objects.exists():
+    print("La base de datos esta vacia. Cargando db_dump.json...")
+    subprocess.run(["python", "manage.py", "loaddata", "db_dump.json"])
+else:
+    print("La base de datos ya tiene datos. Omitiendo la carga.")
+END
+
 echo "BUILDING ADMIN..."
 # Check if build_admin.py exists before running
 if [ -f "build_admin.py" ]; then
