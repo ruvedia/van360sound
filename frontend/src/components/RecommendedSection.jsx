@@ -38,6 +38,20 @@ function RecommendedSection({ currentArticleSlug }) {
         fetchRecommended();
     }, [currentArticleSlug]);
 
+    useEffect(() => {
+        const handleGlobalMouseUp = () => {
+            setIsDragging(false);
+        };
+
+        if (isDragging) {
+            window.addEventListener('mouseup', handleGlobalMouseUp);
+        }
+
+        return () => {
+            window.removeEventListener('mouseup', handleGlobalMouseUp);
+        };
+    }, [isDragging]);
+
     const handleMouseDown = (e) => {
         setIsDragging(true);
         setDragged(false); // Reiniciamos estado dragged
@@ -51,6 +65,10 @@ function RecommendedSection({ currentArticleSlug }) {
 
     const handleMouseUp = () => {
         setIsDragging(false);
+    };
+
+    const handleDragStart = (e) => {
+        e.preventDefault();
     };
 
     const handleMouseMove = (e) => {
@@ -126,6 +144,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 onMouseLeave={handleMouseLeave}
                 onMouseUp={handleMouseUp}
                 onMouseMove={handleMouseMove}
+                onDragStart={handleDragStart}
                 onClickCapture={handleClickCapture}
                 style={{
                     display: 'flex',
