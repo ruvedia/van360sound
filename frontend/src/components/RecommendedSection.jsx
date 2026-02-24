@@ -88,10 +88,9 @@ function RecommendedSection({ currentArticleSlug }) {
             borderRadius: '24px', // Bordes redondeados
             border: '1px solid #eaeaea',
             boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-            width: '100%',
-            maxWidth: '1200px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            width: '95vw',
+            maxWidth: '1600px', // Ocupa mucho más ancho sin llegar a tocar los bordes del monitor
+            marginLeft: 'calc(-47.5vw + 50%)', // TRUCO CSS: Romper el contenedor pequeño del padre (el artículo tiene 800px de máximo) para expandirse al 95% de la pantalla
             overflow: 'hidden'
         }}>
             <h2 style={{
@@ -163,7 +162,14 @@ function RecommendedSection({ currentArticleSlug }) {
                     `}
                 </style>
                 {articles.map(article => (
-                    <div key={article.id} style={{ height: '100%' }}>
+                    <div key={article.id} style={{
+                        height: '100%',
+                        backgroundColor: '#ffffff', // Fondo blanco solicitado
+                        borderRadius: '20px', // Bordes redondeados
+                        padding: '1.2rem', // Padding para separar la tarjeta del borde
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.04)', // Sombra sutil para el recuadro blanco
+                        border: '1px solid #f0f0f0'
+                    }}>
                         <ArticleCard article={article} />
                     </div>
                 ))}
