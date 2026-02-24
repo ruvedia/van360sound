@@ -684,6 +684,27 @@ p {
   text-underline-offset: 4px;
 }
 
+/* Utils Text Classes */
+.texto-resaltado {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.texto-alerta {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.texto-exito {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.texto-discreto {
+  color: var(--color-text-light);
+  font-style: italic;
+}
+
 /* ========================================
    Responsive Design
    ======================================== */
