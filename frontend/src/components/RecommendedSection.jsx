@@ -101,36 +101,33 @@ function RecommendedSection({ currentArticleSlug }) {
     return (
         <section style={{
             marginTop: '5rem',
-            padding: '3rem 2rem', // Padding interno
-            backgroundColor: '#f8f9fa', // Fondo suave para hacer efecto caja
-            borderRadius: '24px', // Bordes redondeados
-            border: '1px solid #eaeaea',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-            width: '95vw',
-            maxWidth: '1600px', // Ocupa mucho más ancho sin llegar a tocar los bordes del monitor
-            marginLeft: 'calc(-47.5vw + 50%)', // TRUCO CSS: Romper el contenedor pequeño del padre (el artículo tiene 800px de máximo) para expandirse al 95% de la pantalla
-            overflow: 'hidden'
+            padding: '4rem 0',
+            borderTop: '1px solid #eee',
+            width: '100%',
+            maxWidth: '1280px', // Igual al max-width global de la Home
+            margin: '5rem auto 0 auto',
+            overflow: 'hidden',
+            backgroundColor: 'var(--color-surface)' // Mismo fondo que la sección de artículos de la Home
         }}>
             <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
                 <h2 className="recommended-title" style={{
-                    fontSize: '2rem',
-                    color: '#1e3a8a',
-                    fontFamily: 'var(--font-heading)',
-                    margin: '0 0 0.5rem 0',
-                    lineHeight: '1.2'
+                    fontSize: '2.2rem',
+                    color: 'var(--color-text-primary)',
+                    fontFamily: 'var(--font-family)',
+                    fontWeight: '800',
+                    textAlign: 'center',
+                    marginBottom: '2rem'
                 }}>
                     Quizás te interese...
                 </h2>
                 <div className="scroll-hint" style={{
-                    display: 'inline-flex',
+                    display: 'flex',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    color: '#64748b',
+                    color: '#666',
                     fontSize: '0.9rem',
-                    fontWeight: '500',
-                    backgroundColor: '#e2e8f0',
-                    padding: '0.4rem 1rem',
-                    borderRadius: '20px',
+                    marginBottom: '2.5rem'
                 }}>
                     <span className="scroll-arrows">← →</span>
                     <span>Desliza para ver más</span>
@@ -192,8 +189,9 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     .recommended-carousel > * {
                         scroll-snap-align: start;
-                        flex: 0 0 calc(85vw - 4rem); /* Ancho en móvil compensando el padding */
-                        display: flex; /* Para que todos los hijos midan lo mismo */
+                        flex: 0 0 calc(90vw - 3rem); /* Móvil: casi todo el ancho */
+                        min-width: 260px;
+                        display: flex;
                     }
 
                     @media (max-width: 600px) {
@@ -210,23 +208,13 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     @media (min-width: 1024px) {
                         .recommended-carousel > * {
-                            flex: 0 0 calc((100% / 3) - 1rem); /* Exactamente 3 artículos por pantalla */
+                            flex: 0 0 calc((100% / 3) - 1.5rem); /* 3 artículos por vista con espacio entre ellos */
                         }
                     }
                     `}
                 </style>
                 {articles.map(article => (
-                    <div key={article.id} style={{
-                        height: 'auto',
-                        minHeight: '100%',
-                        backgroundColor: '#ffffff', // Fondo blanco solicitado
-                        borderRadius: '20px', // Bordes redondeados
-                        padding: '1.2rem', // Padding para separar la tarjeta del borde
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.04)', // Sombra sutil para el recuadro blanco
-                        border: '1px solid #f0f0f0',
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
+                    <div key={article.id} className="carousel-item">
                         <ArticleCard article={article} />
                     </div>
                 ))}
