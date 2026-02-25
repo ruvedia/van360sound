@@ -22,7 +22,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }
 
                 const shuffled = [...allArticles].sort(() => 0.5 - Math.random());
-                const selected = shuffled.slice(0, 9);
+                const selected = shuffled.slice(0, 3);
 
                 setArticles(selected);
             } catch (error) {
@@ -106,17 +106,17 @@ function RecommendedSection({ currentArticleSlug }) {
             marginLeft: 'calc(-47.5vw + 50%)',
             overflow: 'hidden'
         }}>
-            <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
+            <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
                 <h2 className="recommended-title" style={{
                     fontSize: '2rem',
                     color: '#1e3a8a',
                     fontFamily: 'var(--font-heading)',
-                    margin: '0 0 0.5rem 0',
+                    margin: '0',
                     lineHeight: '1.2'
                 }}>
                     Quizás te interese...
                 </h2>
-                <div className="scroll-hint" style={{
+                <div className="scroll-hint mobile-only-hint" style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.5rem',
@@ -134,6 +134,11 @@ function RecommendedSection({ currentArticleSlug }) {
 
             <style>
                 {`
+                @media (min-width: 1024px) {
+                    .mobile-only-hint {
+                        display: none !important;
+                    }
+                }
                 /* Scrollbar personalizada */
                 .recommended-carousel::-webkit-scrollbar {
                     height: 12px;
