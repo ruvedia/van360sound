@@ -101,33 +101,36 @@ function RecommendedSection({ currentArticleSlug }) {
     return (
         <section style={{
             marginTop: '5rem',
-            padding: '4rem 0',
-            borderTop: '1px solid #eee',
-            width: '100%',
-            maxWidth: '1280px', // Igual al max-width global de la Home
-            margin: '5rem auto 0 auto',
-            overflow: 'hidden',
-            backgroundColor: 'var(--color-surface)' // Mismo fondo que la sección de artículos de la Home
+            padding: '3rem 2rem', // Padding interno
+            backgroundColor: '#f8f9fa', // Fondo suave para hacer efecto caja
+            borderRadius: '24px', // Bordes redondeados
+            border: '1px solid #eaeaea',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+            width: '95vw', // Ocupa casi todo el ancho de la pantalla
+            maxWidth: '1600px', // Ocupa mucho más ancho sin llegar a tocar los bordes del monitor
+            marginLeft: 'calc(-47.5vw + 50%)', // TRUCO CSS: Romper el contenedor pequeño del padre (el artículo tiene 800px de máximo) para expandirse al 95% de la pantalla
+            overflow: 'hidden'
         }}>
             <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
                 <h2 className="recommended-title" style={{
-                    fontSize: '2.2rem',
-                    color: 'var(--color-text-primary)',
-                    fontFamily: 'var(--font-family)',
-                    fontWeight: '800',
-                    textAlign: 'center',
-                    marginBottom: '2rem'
+                    fontSize: '2rem',
+                    color: '#1e3a8a',
+                    fontFamily: 'var(--font-heading)',
+                    margin: '0 0 0.5rem 0',
+                    lineHeight: '1.2'
                 }}>
                     Quizás te interese...
                 </h2>
                 <div className="scroll-hint" style={{
-                    display: 'flex',
-                    justifyContent: 'center',
+                    display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    color: '#666',
+                    color: '#64748b',
                     fontSize: '0.9rem',
-                    marginBottom: '2.5rem'
+                    fontWeight: '500',
+                    backgroundColor: '#e2e8f0',
+                    padding: '0.4rem 1rem',
+                    borderRadius: '20px',
                 }}>
                     <span className="scroll-arrows">← →</span>
                     <span>Desliza para ver más</span>
@@ -208,13 +211,23 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     @media (min-width: 1024px) {
                         .recommended-carousel > * {
-                            flex: 0 0 calc((100% / 3) - 1.5rem); /* 3 artículos por vista con espacio entre ellos */
+                            flex: 0 0 calc((100% / 4) - 1.5rem); /* 4 artículos por pantalla para que se vean más pequeños */
                         }
                     }
                     `}
                 </style>
                 {articles.map(article => (
-                    <div key={article.id} className="carousel-item">
+                    <div key={article.id} style={{
+                        height: 'auto',
+                        minHeight: '100%',
+                        backgroundColor: '#ffffff', // Fondo blanco para cada tarjeta
+                        borderRadius: '20px',
+                        padding: '1.2rem',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
+                        border: '1px solid #f0f0f0',
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
                         <ArticleCard article={article} />
                     </div>
                 ))}
