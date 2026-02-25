@@ -503,6 +503,8 @@ p {
 
 .category-tag {
   display: inline-block;
+  align-self: flex-start;
+  /* Asegura que no ocupe todo el ancho en contenedores flex */
   padding: var(--spacing-xs) var(--spacing-md);
   background-color: var(--color-surface);
   color: var(--color-text-secondary);
