@@ -1,3 +1,7 @@
+.ranking-item-title {
+    font-size: 2rem;
+}
+
 .ranking-grid {
     display: grid;
     grid-template-columns: 350px 1fr;
@@ -47,6 +51,11 @@
 
 /* Móvil */
 @media (max-width: 768px) {
+    .ranking-item-title {
+        font-size: 1.875rem;
+        /* Igual al H1 en móvil (var(--font-size-3xl)) */
+    }
+
     .ranking-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;

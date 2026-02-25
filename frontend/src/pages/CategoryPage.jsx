@@ -252,7 +252,7 @@ function CategoryPage() {
                             <div className="ranking-list">
                                 {headphones.map((headphone, index) => (
                                     <article key={headphone.id} className="ranking-item" style={{ marginBottom: '4rem', paddingBottom: '4rem', borderBottom: index < headphones.length - 1 ? '1px solid #eee' : 'none' }}>
-                                        <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>
+                                        <h2 className="ranking-item-title" style={{ marginBottom: '1.5rem' }}>
                                             {headphone.ranking_order}. {headphone.brand} {headphone.name}
                                         </h2>
 
