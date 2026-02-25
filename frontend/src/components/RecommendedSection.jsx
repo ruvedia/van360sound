@@ -246,7 +246,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }}>
                 {articles.map(article => (
                     <div key={article.id} className="article-card-wrapper">
-                        <ArticleCard article={article} />
+                        <ArticleCard article={article} showExcerpt={false} />
                     </div>
                 ))}
             </div>
