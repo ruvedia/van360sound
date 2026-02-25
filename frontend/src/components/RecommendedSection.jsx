@@ -112,11 +112,12 @@ function RecommendedSection({ currentArticleSlug }) {
             overflow: 'hidden'
         }}>
             <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
-                <h2 style={{
+                <h2 className="recommended-title" style={{
                     fontSize: '2rem',
                     color: '#1e3a8a',
                     fontFamily: 'var(--font-heading)',
-                    margin: '0 0 0.5rem 0'
+                    margin: '0 0 0.5rem 0',
+                    lineHeight: '1.2'
                 }}>
                     Quizás te interese...
                 </h2>
@@ -192,7 +193,16 @@ function RecommendedSection({ currentArticleSlug }) {
                     .recommended-carousel > * {
                         scroll-snap-align: start;
                         flex: 0 0 calc(85vw - 4rem); /* Ancho en móvil compensando el padding */
+                        display: flex; /* Para que todos los hijos midan lo mismo */
                     }
+
+                    @media (max-width: 600px) {
+                        .recommended-title {
+                            font-size: 1.5rem !important; /* Reducir para que quepa en una línea */
+                            white-space: nowrap;
+                        }
+                    }
+
                     @media (min-width: 640px) {
                         .recommended-carousel > * {
                             flex: 0 0 calc(45vw - 4rem);
@@ -200,19 +210,22 @@ function RecommendedSection({ currentArticleSlug }) {
                     }
                     @media (min-width: 1024px) {
                         .recommended-carousel > * {
-                            flex: 0 0 320px; /* Tamaño fijo en desktop para mantener homogeneidad */
+                            flex: 0 0 calc((100% / 3) - 1rem); /* Exactamente 3 artículos por pantalla */
                         }
                     }
                     `}
                 </style>
                 {articles.map(article => (
                     <div key={article.id} style={{
-                        height: '100%',
+                        height: 'auto',
+                        minHeight: '100%',
                         backgroundColor: '#ffffff', // Fondo blanco solicitado
                         borderRadius: '20px', // Bordes redondeados
                         padding: '1.2rem', // Padding para separar la tarjeta del borde
                         boxShadow: '0 4px 15px rgba(0,0,0,0.04)', // Sombra sutil para el recuadro blanco
-                        border: '1px solid #f0f0f0'
+                        border: '1px solid #f0f0f0',
+                        display: 'flex',
+                        flexDirection: 'column'
                     }}>
                         <ArticleCard article={article} />
                     </div>
