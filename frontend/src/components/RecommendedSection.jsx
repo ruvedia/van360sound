@@ -218,7 +218,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }
                 @media (min-width: 1024px) {
                     .recommended-carousel > * {
-                        flex: 0 0 calc((100% / 3) - 1.5rem);
+                        flex: 0 0 calc((100% - 3rem) / 3); /* 100% - (2 gaps de 1.5rem) dividido entre 3 */
                     }
                 }
                 `}
