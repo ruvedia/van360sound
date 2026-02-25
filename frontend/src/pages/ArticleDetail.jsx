@@ -18,7 +18,7 @@ const TableOfContents = ({ items, onOpenDrawer }) => {
             border: '1px solid #e2e8f0'
         }}>
             <h3 style={{ marginTop: 0, marginBottom: '1rem', color: '#1e3a8a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>📖</span> En este artículo:
+                En este artículo:
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {items.map((item, index) => (
