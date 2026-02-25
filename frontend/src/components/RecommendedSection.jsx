@@ -14,16 +14,13 @@ function RecommendedSection({ currentArticleSlug }) {
     useEffect(() => {
         const fetchRecommended = async () => {
             try {
-                // Pedir una lista general de artículos (idealmente una mezcla, aquí agarramos los más recientes)
                 const response = await articleService.getAll();
                 let allArticles = response.data.results || response.data || [];
 
-                // Excluir el artículo que se está leyendo actualmente
                 if (currentArticleSlug) {
                     allArticles = allArticles.filter(article => article.slug !== currentArticleSlug);
                 }
 
-                // Usaremos un método simple: tomar hasta 9 al azar garantizando variedad visual
                 const shuffled = [...allArticles].sort(() => 0.5 - Math.random());
                 const selected = shuffled.slice(0, 9);
 
@@ -54,7 +51,7 @@ function RecommendedSection({ currentArticleSlug }) {
 
     const handleMouseDown = (e) => {
         setIsDragging(true);
-        setDragged(false); // Reiniciamos estado dragged
+        setDragged(false);
         setStartX(e.pageX - scrollRef.current.offsetLeft);
         setScrollLeft(scrollRef.current.scrollLeft);
     };
@@ -75,9 +72,8 @@ function RecommendedSection({ currentArticleSlug }) {
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX - scrollRef.current.offsetLeft;
-        const walk = (x - startX) * 2; // Multiplicador para la velocidad de scroll
+        const walk = (x - startX) * 2;
 
-        // Si el usuario se ha movido más de 15 pixels, lo consideramos un drag y no un clic
         if (Math.abs(walk) > 15) {
             setDragged(true);
         }
@@ -85,7 +81,6 @@ function RecommendedSection({ currentArticleSlug }) {
         scrollRef.current.scrollLeft = scrollLeft - walk;
     };
 
-    // Interceptar el clic nativo. Si venimos de un arrastre, anulamos el clic de los links.
     const handleClickCapture = (e) => {
         if (dragged) {
             e.preventDefault();
@@ -95,20 +90,20 @@ function RecommendedSection({ currentArticleSlug }) {
     };
 
     if (loading || articles.length === 0) {
-        return null; // Si no hay recomendaciones o está cargando, no mostramos nada para no entorpecer visualmente
+        return null;
     }
 
     return (
         <section style={{
             marginTop: '5rem',
-            padding: '3rem 2rem', // Padding interno
-            backgroundColor: '#f8f9fa', // Fondo suave para hacer efecto caja
-            borderRadius: '24px', // Bordes redondeados
+            padding: '3rem 2rem',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '24px',
             border: '1px solid #eaeaea',
             boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-            width: '95vw', // Ocupa casi todo el ancho de la pantalla
-            maxWidth: '1600px', // Ocupa mucho más ancho sin llegar a tocar los bordes del monitor
-            marginLeft: 'calc(-47.5vw + 50%)', // TRUCO CSS: Romper el contenedor pequeño del padre (el artículo tiene 800px de máximo) para expandirse al 95% de la pantalla
+            width: '95vw',
+            maxWidth: '1600px',
+            marginLeft: 'calc(-47.5vw + 50%)',
             overflow: 'hidden'
         }}>
             <div style={{ marginBottom: '2rem', textAlign: 'left', paddingLeft: '5px' }}>
@@ -137,7 +132,65 @@ function RecommendedSection({ currentArticleSlug }) {
                 </div>
             </div>
 
-            {/* Carrusel con scroll horizontal */}
+            <style>
+                {`
+                /* Scrollbar personalizada */
+                .recommended-carousel::-webkit-scrollbar {
+                    height: 12px;
+                }
+                .recommended-carousel::-webkit-scrollbar-track {
+                    background: #e2e8f0;
+                    border-radius: 10px;
+                }
+                .recommended-carousel::-webkit-scrollbar-thumb {
+                    background: #94a3b8;
+                    border-radius: 10px;
+                    border: 2px solid #e2e8f0;
+                }
+                .recommended-carousel::-webkit-scrollbar-thumb:hover {
+                    background: #64748b;
+                }
+
+                @keyframes pulseArrows {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(3px); }
+                }
+                .scroll-arrows {
+                    display: inline-block;
+                    animation: pulseArrows 1.5s infinite ease-in-out;
+                    letter-spacing: -2px;
+                }
+
+                .recommended-carousel {
+                    user-select: none;
+                }
+                .recommended-carousel > * {
+                    scroll-snap-align: start;
+                    flex: 0 0 calc(90vw - 3rem);
+                    min-width: 260px;
+                    display: flex;
+                }
+
+                @media (max-width: 600px) {
+                    .recommended-title {
+                        font-size: 1.5rem !important;
+                        white-space: nowrap;
+                    }
+                }
+
+                @media (min-width: 640px) {
+                    .recommended-carousel > * {
+                        flex: 0 0 calc(45vw - 4rem);
+                    }
+                }
+                @media (min-width: 1024px) {
+                    .recommended-carousel > * {
+                        flex: 0 0 calc((100% / 4) - 1.5rem);
+                    }
+                }
+                `}
+            </style>
+
             <div
                 ref={scrollRef}
                 className={`recommended-carousel ${isDragging ? 'dragging' : ''}`}
@@ -151,76 +204,18 @@ function RecommendedSection({ currentArticleSlug }) {
                     display: 'flex',
                     gap: '1.5rem',
                     overflowX: 'auto',
-                    paddingBottom: '1.5rem', // Espacio para el scrollbar
+                    paddingBottom: '1.5rem',
                     scrollSnapType: isDragging ? 'none' : 'x mandatory',
                     WebkitOverflowScrolling: 'touch',
-                    scrollbarWidth: 'auto', // Firefox: auto para que sea visible
-                    scrollbarColor: '#94a3b8 #e2e8f0', // Firefox colors
+                    scrollbarWidth: 'auto',
+                    scrollbarColor: '#94a3b8 #e2e8f0',
                     cursor: isDragging ? 'grabbing' : 'grab',
                 }}>
-                <style>
-                    {`
-                    /* Scrollbar grande y cómoda para navegadores Webkit (Chrome, Safari, Edge) */
-                    .recommended-carousel::-webkit-scrollbar {
-                        height: 12px; /* Más gruesa */
-                    }
-                    .recommended-carousel::-webkit-scrollbar-track {
-                        background: #e2e8f0;
-                        border-radius: 10px;
-                    }
-                    .recommended-carousel::-webkit-scrollbar-thumb {
-                        background: #94a3b8;
-                        border-radius: 10px;
-                        border: 2px solid #e2e8f0; /* Espaciado interno visual */
-                    }
-                    .recommended-carousel::-webkit-scrollbar-thumb:hover {
-                        background: #64748b;
-                    }
-
-                    @keyframes pulseArrows {
-                        0%, 100% { transform: translateX(0); }
-                        50% { transform: translateX(3px); }
-                    }
-                    .scroll-arrows {
-                        display: inline-block;
-                        animation: pulseArrows 1.5s infinite ease-in-out;
-                        letter-spacing: -2px;
-                    }
-
-                    .recommended-carousel {
-                        user-select: none;
-                    }
-                    .recommended-carousel > * {
-                        scroll-snap-align: start;
-                        flex: 0 0 calc(90vw - 3rem); /* Móvil: casi todo el ancho */
-                        min-width: 260px;
-                        display: flex;
-                    }
-
-                    @media (max-width: 600px) {
-                        .recommended-title {
-                            font-size: 1.5rem !important; /* Reducir para que quepa en una línea */
-                            white-space: nowrap;
-                        }
-                    }
-
-                    @media (min-width: 640px) {
-                        .recommended-carousel > * {
-                            flex: 0 0 calc(45vw - 4rem);
-                        }
-                    }
-                    @media (min-width: 1024px) {
-                        .recommended-carousel > * {
-                            flex: 0 0 calc((100% / 4) - 1.5rem); /* 4 artículos por pantalla para que se vean más pequeños */
-                        }
-                    }
-                    `}
-                </style>
                 {articles.map(article => (
                     <div key={article.id} style={{
                         height: 'auto',
                         minHeight: '100%',
-                        backgroundColor: '#ffffff', // Fondo blanco para cada tarjeta
+                        backgroundColor: '#ffffff',
                         borderRadius: '20px',
                         padding: '1.2rem',
                         boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
