@@ -171,6 +171,38 @@ function RecommendedSection({ currentArticleSlug }) {
                     display: flex;
                 }
 
+                /* Forzar altura igualada y pie de autor al fondo */
+                .recommended-carousel .article-card-wrapper {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #ffffff;
+                    border-radius: 20px;
+                    padding: 1.2rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+                    border: 1px solid #f0f0f0;
+                    min-height: 100%;
+                }
+
+                .recommended-carousel .article-card {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                    border: none;
+                    box-shadow: none;
+                    background: transparent;
+                }
+
+                .recommended-carousel .card-content {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+
+                .recommended-carousel .card-meta {
+                    margin-top: auto; /* Alínea el autor al fondo */
+                }
+
                 @media (max-width: 600px) {
                     .recommended-title {
                         font-size: 1.5rem !important;
@@ -185,7 +217,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }
                 @media (min-width: 1024px) {
                     .recommended-carousel > * {
-                        flex: 0 0 calc((100% / 4) - 1.5rem);
+                        flex: 0 0 calc((100% / 3) - 1.5rem);
                     }
                 }
                 `}
@@ -212,17 +244,7 @@ function RecommendedSection({ currentArticleSlug }) {
                     cursor: isDragging ? 'grabbing' : 'grab',
                 }}>
                 {articles.map(article => (
-                    <div key={article.id} style={{
-                        height: 'auto',
-                        minHeight: '100%',
-                        backgroundColor: '#ffffff',
-                        borderRadius: '20px',
-                        padding: '1.2rem',
-                        boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
-                        border: '1px solid #f0f0f0',
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
+                    <div key={article.id} className="article-card-wrapper">
                         <ArticleCard article={article} />
                     </div>
                 ))}
