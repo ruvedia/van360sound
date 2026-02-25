@@ -22,7 +22,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }
 
                 const shuffled = [...allArticles].sort(() => 0.5 - Math.random());
-                const selected = shuffled.slice(0, 3);
+                const selected = shuffled.slice(0, 9);
 
                 setArticles(selected);
             } catch (error) {
@@ -116,7 +116,7 @@ function RecommendedSection({ currentArticleSlug }) {
                 }}>
                     Quizás te interese...
                 </h2>
-                <div className="scroll-hint mobile-only-hint" style={{
+                <div className="scroll-hint" style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '0.5rem',
@@ -134,11 +134,7 @@ function RecommendedSection({ currentArticleSlug }) {
 
             <style>
                 {`
-                @media (min-width: 1024px) {
-                    .mobile-only-hint {
-                        display: none !important;
-                    }
-                }
+
                 /* Scrollbar personalizada */
                 .recommended-carousel::-webkit-scrollbar {
                     height: 12px;
