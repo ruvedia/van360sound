@@ -155,6 +155,21 @@ function ArticleDetail() {
                         h2.style.scrollMarginTop = '100px'; // Para que el scroll no quede debajo del header
                     });
 
+                    // Procesar TABLAS para aplicar diseño Dark Tech y Responsividad automáticamente
+                    const tables = doc.querySelectorAll('table');
+                    tables.forEach(table => {
+                        // Añadir la clase de diseño
+                        table.classList.add('table-dark-tech');
+
+                        // Envolver en contenedor responsivo si no lo tiene
+                        if (!table.parentElement.classList.contains('table-responsive')) {
+                            const wrapper = doc.createElement('div');
+                            wrapper.className = 'table-responsive';
+                            table.parentNode.insertBefore(wrapper, table);
+                            wrapper.appendChild(table);
+                        }
+                    });
+
                     setToc(tocItems);
                     setProcessedContent(doc.body.innerHTML);
                 }
