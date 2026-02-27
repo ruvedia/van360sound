@@ -1311,3 +1311,64 @@ p {
     padding: 3px 8px;
   }
 }
+
+/* ========================================
+   Blog Tables - Dark Tech Style
+   ======================================== */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  margin: var(--spacing-lg) 0;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+.table-dark-tech {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.table-dark-tech th {
+  background-color: #1e3a8a;
+  /* Azul marino profundo */
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.table-dark-tech td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 1px solid #edf2f7;
+  background-color: white;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+}
+
+.table-dark-tech tr:nth-child(even) td {
+  background-color: #f8fafc;
+}
+
+.table-dark-tech tr:last-child td {
+  border-bottom: none;
+}
+
+.table-dark-tech td:first-child {
+  font-weight: 700;
+  color: #1a365d;
+  text-align: left;
+  background-color: #f8fafc;
+}
+
+.table-dark-tech tr:nth-child(even) td:first-child {
+  background-color: #f1f5f9;
+}
