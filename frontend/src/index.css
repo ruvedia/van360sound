@@ -669,8 +669,11 @@ p {
 }
 
 .article-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: var(--spacing-xl) auto;
   border-radius: 12px;
-  margin: var(--spacing-xl) 0;
   box-shadow: var(--shadow-md);
 }
 
