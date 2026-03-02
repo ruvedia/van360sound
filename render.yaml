@@ -5,7 +5,7 @@ services:
     region: oregon
     plan: free
     buildCommand: cd frontend && npm install && npm run build
-    startCommand: node frontend/server.js
+    startCommand: cd frontend && npm start
     envVars:
       - key: NODE_VERSION
         value: 18
