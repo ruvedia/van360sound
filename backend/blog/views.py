@@ -2,12 +2,20 @@ from rest_framework import viewsets, filters, status, permissions, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Brand
 from .serializers import (
     CategorySerializer, HeadphoneSerializer,
     ArticleSerializer, ArticleListSerializer, ContactMessageSerializer,
-    CommentSerializer
+    CommentSerializer, BrandSerializer
 )
+
+
+class BrandViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet para marcas de auriculares"""
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+    lookup_field = 'slug'
+
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     """ViewSet para categorías de auriculares"""

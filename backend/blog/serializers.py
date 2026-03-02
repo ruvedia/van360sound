@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Brand
+
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ['id', 'name', 'slug', 'logo', 'description', 'history', 'website', 'meta_title', 'meta_description', 'created_at', 'updated_at']
 
 class CategorySerializer(serializers.ModelSerializer):
     headphones_count = serializers.SerializerMethodField()

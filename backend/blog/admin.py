@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Brand
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
