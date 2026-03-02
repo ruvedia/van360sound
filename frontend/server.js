@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -14,6 +15,12 @@ app.use((req, res, next) => {
     console.log(`[Server] ${req.method} ${req.path}`);
     next();
 });
+
+const distPath = path.join(__dirname, 'dist');
+console.log(`[Server] Serving static files from: ${distPath}`);
+if (!fs.existsSync(distPath)) {
+    console.error(`[Server] CRITICAL: dist directory NOT found at ${distPath}`);
+}
 
 // Proxy para API, Media, Admin y Static files del backend
 // Proxy Configuration

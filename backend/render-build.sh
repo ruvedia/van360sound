@@ -34,7 +34,7 @@ echo "MIGRATING DATABASE..."
 python manage.py migrate
 
 echo "FORCING DATABASE RESTORE FROM db_dump.json..."
-python manage.py loaddata db_dump.json || echo "Warning: loaddata failed but continuing..."
+python manage.py loaddata db_dump.json -v 2
 
 echo "BUILDING ADMIN..."
 # Check if build_admin.py exists before running
