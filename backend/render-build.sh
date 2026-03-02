@@ -11,37 +11,15 @@ if [ -d "backend" ]; then
   cd backend
 fi
 
-echo "New directory: $(pwd)"
-ls -la
-
 echo "STARTING BUILD..."
-
-echo "UPGRADING PIP AND SETUPTOOLS..."
 python -m pip install --upgrade pip setuptools wheel
-
-echo "INSTALLING PSYCOPG2-BINARY..."
-# Install psycopg2-binary separately to ensure it has precedence
 python -m pip install psycopg2-binary
-
-echo "INSTALLING REQUIREMENTS..."
-# Remove || echo ... so it actually fails if installation fails
 python -m pip install -r requirements.txt
 
 echo "COLLECTING STATIC..."
 python manage.py collectstatic --no-input
 
 echo "MIGRATING DATABASE..."
-python manage.py migrate
-
-echo "FORCING DATABASE RESTORE FROM ../db_dump.json..."
-python manage.py loaddata ../db_dump.json -v 2
-
-echo "BUILDING ADMIN..."
-# Check if build_admin.py exists before running
-if [ -f "build_admin.py" ]; then
-    python build_admin.py
-else
-    echo "WARNING: build_admin.py not found, skipping."
-fi
+python manage.py migrate --no-input
 
 echo "BUILD FINISHED"
