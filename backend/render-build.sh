@@ -33,8 +33,8 @@ python manage.py collectstatic --no-input
 echo "MIGRATING DATABASE..."
 python manage.py migrate
 
-echo "FORCING DATABASE RESTORE FROM db_dump.json..."
-python manage.py loaddata db_dump.json -v 2
+echo "FORCING DATABASE RESTORE FROM ../db_dump.json..."
+python manage.py loaddata ../db_dump.json -v 2
 
 echo "BUILDING ADMIN..."
 # Check if build_admin.py exists before running
