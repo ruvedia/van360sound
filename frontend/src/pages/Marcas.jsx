@@ -11,7 +11,7 @@ function Marcas() {
         const fetchBrands = async () => {
             try {
                 const response = await brandService.getAll();
-                setBrands(response.data);
+                setBrands(response.data.results || response.data);
             } catch (error) {
                 console.error('Error fetching brands:', error);
             } finally {
