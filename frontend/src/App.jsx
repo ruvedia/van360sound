@@ -16,7 +16,6 @@ import ArticleDetail from './pages/ArticleDetail';
 import Comparativa from './pages/Comparativa';
 import Guia from './pages/Guia';
 import Marcas from './pages/Marcas';
-import BrandDetail from './pages/BrandDetail';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -35,7 +34,6 @@ function App() {
                             <Route path="/analisis" element={<Analisis />} />
                             <Route path="/guia" element={<Guia />} />
                             <Route path="/marcas" element={<Marcas />} />
-                            <Route path="/marcas/:slug" element={<BrandDetail />} />
                             <Route path="/comparativa" element={<Comparativa />} />
                             <Route path="/nuestro-top" element={<NuestroTop />} />
                             <Route path="/contacto" element={<Contacto />} />

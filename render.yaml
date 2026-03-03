@@ -39,3 +39,5 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 1
+      - key: LAST_DEPLOY_TIMESTAMP
+        value: "2026-03-03T15:55:00Z"

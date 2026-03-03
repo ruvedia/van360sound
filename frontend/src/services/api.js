@@ -45,10 +45,5 @@ export const commentService = {
     create: (data) => api.post('/comments/', data),
 };
 
-export const brandService = {
-    getAll: () => api.get('/brands/'),
-    getBySlug: (slug) => api.get(`/brands/${slug}/`),
-};
-
 
 export default api;

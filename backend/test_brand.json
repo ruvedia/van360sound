@@ -1,0 +1,21 @@
+[
+    {
+        "model": "blog.article",
+        "pk": 100,
+        "fields": {
+            "title": "Bowers & Wilkins",
+            "slug": "bowers-wilkins",
+            "article_type": "marcas",
+            "template": "marcas",
+            "excerpt": "Descubre el legado de sonido premium de una de las marcas más icónicas del mundo, desde Abbey Road hasta la actualidad.",
+            "content": "<p>Fundada en 1966 por John Bowers, Bowers & Wilkins es sinónimo de precisión sonora y diseño de vanguardia.</p><img src='/media/brands/bw_hero.png' alt='Bowers & Wilkins Heritage' /><p>Sus altavoces de la serie 800 son el estándar en los estudios de grabación más famosos del mundo, incluyendo Abbey Road.</p><img src='/media/brands/bw_studio.png' alt='B&W Studio' /><p>Hoy en día, aplican esa misma tecnología a sus auriculares premium, como los Px7 S2 y Px8, ofreciendo una experiencia audiófila sin compromisos.</p>",
+            "headphone": null,
+            "featured_image": "brands/bw_hero.png",
+            "author": "Van360Sound",
+            "published_date": "2026-03-03T08:00:00Z",
+            "updated_date": "2026-03-03T08:00:00Z",
+            "is_published": true,
+            "views": 0
+        }
+    }
+]

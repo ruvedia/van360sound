@@ -1,11 +1,6 @@
 from rest_framework import serializers
-from .models import Category, Headphone, Article, ContactMessage, Comment, Brand
+from .models import Category, Headphone, Article, ContactMessage, Comment
 
-
-class BrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Brand
-        fields = ['id', 'name', 'slug', 'logo', 'description', 'history', 'website', 'meta_title', 'meta_description', 'created_at', 'updated_at']
 
 class CategorySerializer(serializers.ModelSerializer):
     headphones_count = serializers.SerializerMethodField()
@@ -40,7 +35,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = [
-            'id', 'title', 'slug', 'article_type', 'excerpt', 'content',
+            'id', 'title', 'slug', 'article_type', 'template', 'excerpt', 'content',
             'headphone', 'headphone_name', 'featured_image', 'author',
             'published_date', 'updated_date', 'is_published', 'views'
         ]
@@ -52,7 +47,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = [
-            'id', 'title', 'slug', 'article_type', 'excerpt',
+            'id', 'title', 'slug', 'article_type', 'template', 'excerpt',
             'headphone_name', 'featured_image', 'author',
             'published_date', 'views'
         ]

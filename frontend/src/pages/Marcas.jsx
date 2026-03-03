@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { brandService } from '../services/api';
+import { articleService } from '../services/api';
 import SEO from '../components/SEO';
 
 function Marcas() {
@@ -10,7 +10,8 @@ function Marcas() {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const response = await brandService.getAll();
+                // Obtenemos los artículos filtrados por el tipo 'marcas'
+                const response = await articleService.getByType('marcas');
                 setBrands(response.data.results || response.data);
             } catch (error) {
                 console.error('Error fetching brands:', error);
@@ -52,10 +53,10 @@ function Marcas() {
                 gap: '2.5rem',
                 marginBottom: '4rem'
             }}>
-                {brands.map((brand) => (
+                {brands.map((article) => (
                     <Link
-                        key={brand.id}
-                        to={`/marcas/${brand.slug}`}
+                        key={article.id}
+                        to={`/articulo/${article.slug}`}
                         className="brand-card"
                         style={{
                             textDecoration: 'none',
@@ -84,17 +85,17 @@ function Marcas() {
                             borderRadius: '50%',
                             padding: '1rem'
                         }}>
-                            {brand.logo ? (
+                            {article.featured_image ? (
                                 <img
-                                    src={brand.logo}
-                                    alt={brand.name}
+                                    src={article.featured_image}
+                                    alt={article.title}
                                     style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
                                 />
                             ) : (
-                                <span style={{ fontSize: '2rem', fontWeight: 800, color: '#CBD5E1' }}>{brand.name[0]}</span>
+                                <span style={{ fontSize: '2rem', fontWeight: 800, color: '#CBD5E1' }}>{article.title[0]}</span>
                             )}
                         </div>
-                        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.8rem' }}>{brand.name}</h2>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.8rem' }}>{article.title}</h2>
                         <p style={{
                             fontSize: '0.95rem',
                             color: 'var(--color-text-secondary)',
@@ -104,7 +105,7 @@ function Marcas() {
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden'
                         }}>
-                            {brand.description || `Conoce la historia de innovación de ${brand.name}.`}
+                            {article.excerpt || `Conoce la historia de innovación de ${article.title}.`}
                         </p>
                         <span className="btn-small" style={{
                             marginTop: '1.5rem',

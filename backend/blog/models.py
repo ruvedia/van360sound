@@ -109,11 +109,18 @@ class Article(models.Model):
         ('novedad', 'Novedad'),
         ('guia', 'Guía'),
         ('comparativa', 'Comparativa'),
+        ('marcas', 'Marcas'),
+    ]
+
+    TEMPLATE_CHOICES = [
+        ('default', 'Por defecto'),
+        ('marcas', 'Plantilla Marcas (Imágenes centradas)'),
     ]
     
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     article_type = models.CharField(max_length=20, choices=ARTICLE_TYPES, default='analisis')
+    template = models.CharField(max_length=20, choices=TEMPLATE_CHOICES, default='default', verbose_name='Plantilla')
     excerpt = models.TextField(max_length=300, verbose_name='Resumen Breve', help_text="Breve introducción de 1-2 frases que aparecerá en el listado del blog.")
     content = RichTextUploadingField(verbose_name='Contenido')
     
@@ -144,34 +151,6 @@ class Article(models.Model):
         return self.title
 
 
-class Brand(models.Model):
-    """Marcas de auriculares y su historia"""
-    name = models.CharField(max_length=100, unique=True, verbose_name='Nombre de la Marca')
-    slug = models.SlugField(max_length=120, unique=True, blank=True)
-    logo = models.ImageField(upload_to='brands/', blank=True, null=True, verbose_name='Logo de la Marca')
-    description = models.TextField(blank=True, verbose_name='Descripción Corta', help_text="Pequeño resumen que aparecerá en el listado.")
-    history = RichTextUploadingField(verbose_name='Historia de la Marca', blank=True, null=True)
-    website = models.URLField(blank=True, null=True, verbose_name='Sitio Web Oficial')
-    
-    # SEO Fields
-    meta_title = models.CharField(max_length=200, blank=True, null=True, verbose_name='Meta Title')
-    meta_description = models.TextField(blank=True, null=True, verbose_name='Meta Description')
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = 'Marca'
-        verbose_name_plural = 'Marcas'
-        ordering = ['name']
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
 
 class ContactMessage(models.Model):

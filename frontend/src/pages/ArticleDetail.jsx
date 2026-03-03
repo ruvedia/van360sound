@@ -225,7 +225,10 @@ function ArticleDetail() {
     });
 
     return (
-        <article className="container" style={{ padding: '2rem 1rem', maxWidth: '800px' }}>
+        <article
+            className={`container ${article.template === 'marcas' ? 'template-marcas' : ''}`}
+            style={{ padding: '2rem 1rem', maxWidth: '800px' }}
+        >
             <SEO
                 title={article.title}
                 description={article.excerpt}
@@ -237,10 +240,16 @@ function ArticleDetail() {
                 <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>← Volver</Link>
             </div>
 
-            <header style={{ marginBottom: '2rem' }}>
+            <header style={{ marginBottom: '2rem', textAlign: article.template === 'marcas' ? 'center' : 'left' }}>
                 <span className="category-tag">{article.article_type}</span>
                 <h1 className="article-detail-title">{article.title}</h1>
-                <div style={{ color: '#666', fontSize: '0.9rem', display: 'flex', gap: '1.5rem' }}>
+                <div style={{
+                    color: '#666',
+                    fontSize: '0.9rem',
+                    display: 'flex',
+                    gap: '1.5rem',
+                    justifyContent: article.template === 'marcas' ? 'center' : 'flex-start'
+                }}>
                     <span>Por {article.author}</span>
                     <span>{date}</span>
                 </div>
@@ -250,7 +259,18 @@ function ArticleDetail() {
                 src={featuredImage}
                 alt={article.title}
                 className="card-image"
-                style={{ width: '100%', borderRadius: '12px', marginBottom: '2rem', height: 'auto', maxHeight: '600px', objectFit: 'contain', backgroundColor: 'transparent' }}
+                style={{
+                    width: '100%',
+                    borderRadius: '12px',
+                    marginBottom: '2rem',
+                    height: 'auto',
+                    maxHeight: '600px',
+                    objectFit: 'contain',
+                    backgroundColor: 'transparent',
+                    display: 'block',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
+                }}
             />
 
             {/* Índice de contenidos inicial */}
@@ -289,6 +309,28 @@ function ArticleDetail() {
                 }
                 .article-content h2 {
                     margin-top: 2.5rem;
+                }
+                
+                /* Estilos Plantilla Marcas */
+                .template-marcas .article-content {
+                    text-align: center;
+                }
+                .template-marcas .article-content p {
+                    max-width: 700px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .template-marcas .article-content img {
+                    display: block;
+                    margin: 2rem auto;
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                }
+                .template-marcas .article-content h2 {
+                    justify-content: center;
+                    text-align: center;
                 }
                 `}
             </style>

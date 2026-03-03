@@ -34,6 +34,7 @@ def sitemap_view(request):
         "/novedades",
         "/analisis",
         "/guia",
+        "/marcas",
         "/comparativa",
         "/sobre-nosotros",
         "/contacto",

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Headphone, Article, ContactMessage, Comment, Brand
+from .models import Category, Headphone, Article, ContactMessage, Comment
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -40,8 +40,8 @@ class HeadphoneAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'article_type', 'author', 'published_date', 'is_published', 'views']
-    list_filter = ['article_type', 'is_published', 'published_date']
+    list_display = ['title', 'article_type', 'template', 'author', 'published_date', 'is_published', 'views']
+    list_filter = ['article_type', 'template', 'is_published', 'published_date']
     search_fields = ['title', 'content']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_published']
