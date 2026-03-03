@@ -242,7 +242,10 @@ function ArticleDetail() {
 
             <header style={{ marginBottom: '2rem', textAlign: 'left' }}>
                 {article.template !== 'marcas' && <span className="category-tag">{article.article_type}</span>}
-                <h1 className="article-detail-title" style={{ fontSize: article.template === 'marcas' ? 'clamp(1.8rem, 5vw, 2.8rem)' : '', marginBottom: article.template === 'marcas' ? '0.5rem' : '' }}>
+                <h1 className="article-detail-title" style={{
+                    fontSize: article.template === 'marcas' ? 'clamp(1.3rem, 3.5vw, 1.8rem)' : '',
+                    marginBottom: article.template === 'marcas' ? '0.5rem' : ''
+                }}>
                     {article.title}
                 </h1>
                 {article.template === 'marcas' && (
@@ -344,7 +347,7 @@ function ArticleDetail() {
                 .template-marcas .article-content h2 {
                     justify-content: flex-start;
                     text-align: left;
-                    font-size: 2rem;
+                    font-size: clamp(1.4rem, 4vw, 1.6rem);
                     color: #0f172a;
                     margin-top: 3.5rem;
                     margin-bottom: 1.5rem;

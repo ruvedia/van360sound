@@ -39,7 +39,7 @@ function Marcas() {
             />
 
             <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                <h1 style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-primary)' }}>
+                <h1 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.8rem)', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-primary)' }}>
                     Marcas de Auriculares
                 </h1>
                 <p style={{ fontSize: '1.2rem', color: 'var(--color-text-secondary)', maxWidth: '700px', margin: '0 auto' }}>
@@ -47,154 +47,80 @@ function Marcas() {
                 </p>
             </header>
 
-            <div className="brands-list-premium">
+            <div className="brands-grid-minimal">
                 {brands.map((article) => (
                     <Link
                         key={article.id}
                         to={`/articulo/${article.slug}`}
-                        className="brand-card-premium"
+                        className="brand-card-minimal"
                     >
-                        <div className="brand-logo-container-premium">
+                        <div className="brand-logo-container-minimal">
                             {article.featured_image ? (
                                 <img
                                     src={article.featured_image}
                                     alt={article.title}
-                                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                                 />
                             ) : (
                                 <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#CBD5E1' }}>{article.title[0]}</span>
                             )}
                         </div>
-                        <div className="brand-content-premium">
-                            <h2 className="brand-title-premium">{article.title}</h2>
-                            <p className="brand-excerpt-premium">
-                                {article.excerpt || `Descubre el legado, la filosofía de sonido y la historia de innovación tecnológica detrás de ${article.title}.`}
-                            </p>
-                            <span className="btn-discover">
-                                Descubrir Legado <span style={{ fontFamily: 'sans-serif' }}>→</span>
-                            </span>
-                        </div>
+                        <h2 className="brand-title-minimal">{article.title}</h2>
                     </Link>
                 ))}
             </div>
 
             <style>
                 {`
-                .brands-list-premium {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 3rem;
+                .brands-grid-minimal {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                    gap: 2rem;
                     margin-bottom: 5rem;
                 }
 
-                .brand-card-premium {
+                .brand-card-minimal {
                     display: flex;
                     flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
                     text-decoration: none;
                     color: inherit;
                     background-color: white;
-                    border-radius: 24px;
-                    padding: 2.5rem;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+                    border-radius: 20px;
+                    padding: 2.5rem 1.5rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
                     border: 1px solid #f8fafc;
-                    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-                    position: relative;
-                    overflow: hidden;
-                }
-
-                @media (min-width: 768px) {
-                    .brand-card-premium {
-                        flex-direction: row;
-                        align-items: center;
-                        gap: 3.5rem;
-                        padding: 3.5rem;
-                    }
-                }
-
-                .brand-card-premium:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-                    border-color: #e2e8f0;
-                }
-
-                .brand-logo-container-premium {
-                    width: 100%;
-                    max-width: 200px;
-                    height: 100px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    background-color: transparent;
-                    margin: 0 auto 1.5rem;
-                    transition: transform 0.4s ease;
-                }
-
-                @media (min-width: 768px) {
-                    .brand-logo-container-premium {
-                        margin: 0;
-                        height: 120px;
-                        min-width: 180px;
-                        justify-content: center;
-                    }
-                }
-
-                .brand-card-premium:hover .brand-logo-container-premium {
-                    transform: scale(1.05);
-                }
-
-                .brand-content-premium {
-                    flex-grow: 1;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
+                    transition: all 0.3s ease;
                     text-align: center;
                 }
 
-                @media (min-width: 768px) {
-                    .brand-content-premium {
-                        align-items: flex-start;
-                        text-align: left;
-                    }
+                .brand-card-minimal:hover {
+                    transform: translateY(-8px);
+                    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+                    border-color: #e2e8f0;
                 }
 
-                .brand-title-premium {
-                    font-size: 1.5rem;
-                    font-weight: 800;
-                    margin-bottom: 0.8rem;
-                    color: #0f172a;
-                }
-
-                @media (min-width: 768px) {
-                    .brand-title-premium {
-                        font-size: 1.8rem;
-                    }
-                }
-
-                .brand-excerpt-premium {
-                    font-size: 1rem;
-                    color: #475569;
-                    line-height: 1.6;
-                    margin-bottom: 1.5rem;
-                    max-width: 650px;
-                }
-
-                .btn-discover {
-                    display: inline-flex;
+                .brand-logo-container-minimal {
+                    width: 100%;
+                    height: 120px;
+                    display: flex;
                     align-items: center;
-                    gap: 0.5rem;
-                    padding: 0.8rem 1.8rem;
-                    background-color: transparent;
-                    color: var(--color-accent);
-                    border: 2px solid var(--color-accent);
-                    border-radius: 30px;
-                    font-size: 0.95rem;
-                    font-weight: 700;
-                    transition: all 0.3s ease;
+                    justify-content: center;
+                    margin-bottom: 1.5rem;
+                    transition: transform 0.3s ease;
                 }
 
-                .brand-card-premium:hover .btn-discover {
-                    background-color: var(--color-accent);
-                    color: white;
+                .brand-card-minimal:hover .brand-logo-container-minimal {
+                    transform: scale(1.08);
+                }
+
+                .brand-title-minimal {
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: #0f172a;
+                    margin: 0;
+                    line-height: 1.3;
                 }
                 `}
             </style>
