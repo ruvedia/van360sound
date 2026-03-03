@@ -240,19 +240,27 @@ function ArticleDetail() {
                 <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>← Volver</Link>
             </div>
 
-            <header style={{ marginBottom: '2rem', textAlign: article.template === 'marcas' ? 'center' : 'left' }}>
-                <span className="category-tag">{article.article_type}</span>
-                <h1 className="article-detail-title">{article.title}</h1>
-                <div style={{
-                    color: '#666',
-                    fontSize: '0.9rem',
-                    display: 'flex',
-                    gap: '1.5rem',
-                    justifyContent: article.template === 'marcas' ? 'center' : 'flex-start'
-                }}>
-                    <span>Por {article.author}</span>
-                    <span>{date}</span>
-                </div>
+            <header style={{ marginBottom: '2rem', textAlign: 'left' }}>
+                {article.template !== 'marcas' && <span className="category-tag">{article.article_type}</span>}
+                <h1 className="article-detail-title" style={{ fontSize: article.template === 'marcas' ? '3rem' : '', marginBottom: article.template === 'marcas' ? '0.5rem' : '' }}>
+                    {article.title}
+                </h1>
+                {article.template === 'marcas' && (
+                    <p style={{ fontSize: '1.2rem', color: '#64748b', marginTop: 0, fontWeight: 500 }}>Perfil de Marca</p>
+                )}
+
+                {article.template !== 'marcas' && (
+                    <div style={{
+                        color: '#666',
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        gap: '1.5rem',
+                        justifyContent: 'flex-start'
+                    }}>
+                        <span>Por {article.author}</span>
+                        <span>{date}</span>
+                    </div>
+                )}
             </header>
 
             <img
@@ -311,26 +319,46 @@ function ArticleDetail() {
                     margin-top: 2.5rem;
                 }
                 
-                /* Estilos Plantilla Marcas */
+                /* Estilos Plantilla Marcas (Premium Editorial) */
                 .template-marcas .article-content {
-                    text-align: center;
+                    text-align: left;
+                    max-width: 750px;
+                    margin: 0 auto;
                 }
                 .template-marcas .article-content p {
-                    max-width: 700px;
-                    margin-left: auto;
-                    margin-right: auto;
+                    line-height: 1.8;
+                    color: #334155;
+                    font-size: 1.15rem;
+                    margin-bottom: 1.5rem;
                 }
                 .template-marcas .article-content img {
                     display: block;
-                    margin: 2rem auto;
+                    margin: 2.5rem 0;
                     max-width: 100%;
                     height: auto;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    border-radius: 8px;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                    border: 1px solid #f1f5f9;
                 }
                 .template-marcas .article-content h2 {
-                    justify-content: center;
-                    text-align: center;
+                    justify-content: flex-start;
+                    text-align: left;
+                    font-size: 2rem;
+                    color: #0f172a;
+                    margin-top: 3.5rem;
+                    margin-bottom: 1.5rem;
+                    padding-bottom: 0.8rem;
+                    border-bottom: 2px solid #e2e8f0;
+                    position: relative;
+                }
+                .template-marcas .article-content h2::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0;
+                    width: 60px;
+                    height: 2px;
+                    background-color: var(--color-accent);
                 }
                 `}
             </style>
