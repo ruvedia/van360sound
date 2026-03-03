@@ -242,7 +242,7 @@ function ArticleDetail() {
 
             <header style={{ marginBottom: '2rem', textAlign: 'left' }}>
                 {article.template !== 'marcas' && <span className="category-tag">{article.article_type}</span>}
-                <h1 className="article-detail-title" style={{ fontSize: article.template === 'marcas' ? '3rem' : '', marginBottom: article.template === 'marcas' ? '0.5rem' : '' }}>
+                <h1 className="article-detail-title" style={{ fontSize: article.template === 'marcas' ? 'clamp(1.8rem, 5vw, 2.8rem)' : '', marginBottom: article.template === 'marcas' ? '0.5rem' : '' }}>
                     {article.title}
                 </h1>
                 {article.template === 'marcas' && (
@@ -333,9 +333,10 @@ function ArticleDetail() {
                 }
                 .template-marcas .article-content img {
                     display: block;
-                    margin: 2.5rem 0;
+                    margin: 2.5rem auto;
                     max-width: 100%;
-                    height: auto;
+                    max-height: 450px;
+                    object-fit: contain;
                     border-radius: 8px;
                     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
                     border: 1px solid #f1f5f9;

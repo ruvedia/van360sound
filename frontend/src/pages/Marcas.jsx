@@ -38,8 +38,8 @@ function Marcas() {
                 description="Descubre la historia, el origen y la filosofía detrás de las mejores marcas de auriculares del mundo."
             />
 
-            <header style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-primary)' }}>
+            <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                <h1 style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-primary)' }}>
                     Marcas de Auriculares
                 </h1>
                 <p style={{ fontSize: '1.2rem', color: 'var(--color-text-secondary)', maxWidth: '700px', margin: '0 auto' }}>
@@ -118,30 +118,27 @@ function Marcas() {
                 }
 
                 .brand-logo-container-premium {
-                    width: 140px;
-                    height: 140px;
-                    min-width: 140px;
+                    width: 100%;
+                    max-width: 200px;
+                    height: 100px;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    background-color: #f8fafc;
-                    border-radius: 50%;
-                    padding: 1.5rem;
-                    margin: 0 auto 2rem;
-                    transition: transform 0.4s ease, background-color 0.4s ease;
+                    justify-content: flex-start;
+                    background-color: transparent;
+                    margin: 0 auto 1.5rem;
+                    transition: transform 0.4s ease;
                 }
 
                 @media (min-width: 768px) {
                     .brand-logo-container-premium {
                         margin: 0;
-                        width: 160px;
-                        height: 160px;
-                        min-width: 160px;
+                        height: 120px;
+                        min-width: 180px;
+                        justify-content: center;
                     }
                 }
 
                 .brand-card-premium:hover .brand-logo-container-premium {
-                    background-color: #fff;
                     transform: scale(1.05);
                 }
 
@@ -161,23 +158,23 @@ function Marcas() {
                 }
 
                 .brand-title-premium {
-                    font-size: 1.8rem;
+                    font-size: 1.5rem;
                     font-weight: 800;
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.8rem;
                     color: #0f172a;
                 }
 
                 @media (min-width: 768px) {
                     .brand-title-premium {
-                        font-size: 2.2rem;
+                        font-size: 1.8rem;
                     }
                 }
 
                 .brand-excerpt-premium {
-                    font-size: 1.05rem;
+                    font-size: 1rem;
                     color: #475569;
                     line-height: 1.6;
-                    margin-bottom: 2rem;
+                    margin-bottom: 1.5rem;
                     max-width: 650px;
                 }
 
