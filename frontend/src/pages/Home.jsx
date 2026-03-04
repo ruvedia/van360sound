@@ -88,13 +88,13 @@ function Home() {
                         {featuredBrands.slice(0, 6).map(brand => (
                             <Link key={brand.id} to={`/articulo/${brand.slug}`} className="home-brand-logo" style={{ textDecoration: 'none', color: '#0f172a' }}>
                                 <div style={{ width: '110px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                                    {brand.featured_image ? (
-                                        <img src={brand.featured_image} alt={brand.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                    {(brand.list_image || brand.featured_image) ? (
+                                        <img src={brand.list_image || brand.featured_image} alt={brand.list_title || brand.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                     ) : (
-                                        <span style={{ fontSize: '2rem', fontWeight: 800, color: '#CBD5E1' }}>{brand.title[0]}</span>
+                                        <span style={{ fontSize: '2rem', fontWeight: 800, color: '#CBD5E1' }}>{(brand.list_title || brand.title)[0]}</span>
                                     )}
                                 </div>
-                                <span style={{ fontWeight: 700, fontSize: '1rem' }}>{brand.title}</span>
+                                <span style={{ fontWeight: 700, fontSize: '1rem' }}>{brand.list_title || brand.title}</span>
                             </Link>
                         ))}
                     </div>

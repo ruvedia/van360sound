@@ -40,11 +40,27 @@ class HeadphoneAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'article_type', 'template', 'author', 'published_date', 'is_published', 'views']
+    list_display = ['title', 'list_title', 'article_type', 'template', 'author', 'published_date', 'is_published', 'views']
     list_filter = ['article_type', 'template', 'is_published', 'published_date']
-    search_fields = ['title', 'content']
+    search_fields = ['title', 'list_title', 'content']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['is_published']
+
+    fieldsets = (
+        ('Información Principal', {
+            'fields': ('title', 'slug', 'article_type', 'template', 'excerpt', 'content')
+        }),
+        ('Apariencia en Listados/Portadas', {
+            'fields': ('list_title', 'list_image'),
+            'description': 'Campos opcionales para personalizar cómo se ve la tarjeta de este artículo/marca desde fuera. Si los dejas vacíos, se usará el Título Principal y la Imagen Principal.'
+        }),
+        ('Relaciones y Multimedia', {
+            'fields': ('headphone', 'featured_image')
+        }),
+        ('Metadatos', {
+            'fields': ('author', 'is_published', 'views')
+        }),
+    )
 
     class Media:
         css = {

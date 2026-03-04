@@ -124,11 +124,15 @@ class Article(models.Model):
     excerpt = models.TextField(max_length=300, verbose_name='Resumen Breve', help_text="Breve introducción de 1-2 frases que aparecerá en el listado del blog.")
     content = RichTextUploadingField(verbose_name='Contenido')
     
+    # Campos Específicos para Portadas/Listados (Optativos)
+    list_title = models.CharField(max_length=200, blank=True, null=True, verbose_name='Título Corto (Portada)', help_text='Si se rellena, este título reemplazará al título principal únicamente en las cuadrículas y listados (útil para que solo ponga el nombre de la Marca).')
+    list_image = models.ImageField(upload_to='articles/list/', blank=True, null=True, verbose_name='Imagen/Logo (Portada)', help_text='Logo o imagen simplificada exclusiva para listados exteriores. Si se deja en blanco, usará la imagen principal.')
+    
     # Relación con auriculares
     headphone = models.ForeignKey(Headphone, on_delete=models.SET_NULL, null=True, blank=True, related_name='articles')
     
     # Imágenes
-    featured_image = models.ImageField(upload_to='articles/', blank=True, null=True)
+    featured_image = models.ImageField(upload_to='articles/', blank=True, null=True, verbose_name='Imagen Principal (Interior)')
     
     # Metadata
     author = models.CharField(max_length=100, default='Van360Sound')

@@ -55,17 +55,17 @@ function Marcas() {
                         className="brand-card-minimal"
                     >
                         <div className="brand-logo-container-minimal">
-                            {article.featured_image ? (
+                            {(article.list_image || article.featured_image) ? (
                                 <img
-                                    src={article.featured_image}
-                                    alt={article.title}
+                                    src={article.list_image || article.featured_image}
+                                    alt={article.list_title || article.title}
                                     style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                                 />
                             ) : (
-                                <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#CBD5E1' }}>{article.title[0]}</span>
+                                <span style={{ fontSize: '2.5rem', fontWeight: 800, color: '#CBD5E1' }}>{(article.list_title || article.title)[0]}</span>
                             )}
                         </div>
-                        <h2 className="brand-title-minimal">{article.title}</h2>
+                        <h2 className="brand-title-minimal">{article.list_title || article.title}</h2>
                     </Link>
                 ))}
             </div>
