@@ -21,11 +21,7 @@ python manage.py collectstatic --no-input
 echo "MIGRATING DATABASE..."
 python manage.py migrate --no-input
 
-echo "LOADING DATA FROM db_dump.json..."
-if [ -f "db_dump.json" ]; then
-    python manage.py loaddata db_dump.json -v 2
-else
-    echo "WARNING: db_dump.json NOT FOUND in $(pwd)"
-fi
+echo "SKIPPING AUTOMATIC LOADDATA (This should be done manually via API to avoid overwriting production data)"
+
 
 echo "BUILD FINISHED"
