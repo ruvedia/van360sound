@@ -24,7 +24,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/download-db/', views.download_database, name='download_db'),
     path('admin/restore-db/', views.restore_database, name='restore_db'),
-    path('admin/create-user/', views.create_emergency_user, name='create_emergency_user'),
     path('admin/download-media/', views.download_media, name='download_media'),
     path('admin/', admin.site.urls),
     path('api/', include('blog.urls')),
