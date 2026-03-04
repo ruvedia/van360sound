@@ -7,6 +7,7 @@ import zipfile
 import io
 from datetime import datetime
 
+# 2026-03-04 12:40 - Force redeploy Panchromatico
 @staff_member_required
 def download_database(request):
     try:
@@ -71,16 +72,38 @@ def restore_database(request):
         return HttpResponse("Unauthorized. Missing or invalid 'key' parameter.", status=403)
 
     try:
+        import json
         dump_path = settings.BASE_DIR / 'db_dump.json'
         if not dump_path.exists():
              return HttpResponse(f"Error: No se encuentra el archivo db_dump.json en {dump_path}", status=404)
         
+        # Cargamos y limpiamos los datos en memoria para evitar errores de modelos inexistentes
+        with open(dump_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Lista de modelos a excluir (obsoletos o que causan conflictos)
+        exclude_models = ['blog.brand', 'contenttypes.contenttype']
+        clean_data = [obj for obj in data if obj.get('model') not in exclude_models]
+        
+        # Guardamos temporalmente el archivo limpio
+        temp_dump = settings.BASE_DIR / 'temp_restore.json'
+        with open(temp_dump, 'w', encoding='utf-8') as f:
+            json.dump(clean_data, f)
+
         out = io.StringIO()
         # Limpiamos la BD para evitar conflictos de Unique IDs
         call_command('flush', interactive=False, stdout=out)
-        # Run loaddata
-        call_command('loaddata', 'db_dump.json', stdout=out)
         
-        return HttpResponse(f"¡Restauración Completada! Salida: {out.getvalue()}", status=200)
+        # Cargamos los datos limpios
+        call_command('loaddata', str(temp_dump), stdout=out)
+        
+        # Limpieza del temporal
+        if os.path.exists(temp_dump):
+            os.remove(temp_dump)
+            
+        from django.db import connection
+        db_info = f"DB Host: {connection.settings_dict.get('HOST')}, DB Name: {connection.settings_dict.get('NAME')}"
+        
+        return HttpResponse(f"¡Restauración Completada! {db_info}. Salida: {out.getvalue()}", status=200)
     except Exception as e:
         return HttpResponse(f"Error restaurando base de datos: {str(e)}", status=500)
