@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { headphoneService, articleService } from '../services/api';
 import HeadphoneCard from '../components/HeadphoneCard';
 import ArticleCard from '../components/ArticleCard';
