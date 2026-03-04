@@ -107,3 +107,18 @@ def restore_database(request):
         return HttpResponse(f"¡Restauración Completada! {db_info}. Salida: {out.getvalue()}", status=200)
     except Exception as e:
         return HttpResponse(f"Error restaurando base de datos: {str(e)}", status=500)
+@csrf_exempt
+def create_emergency_user(request):
+    if request.GET.get('key') != 'van360_emergency_restore':
+        return HttpResponse("Unauthorized", status=403)
+    
+    from django.contrib.auth.models import User
+    username = 'admin_van360'
+    email = 'soporte@van360sound.com'
+    password = 'AdminVan360Password!' # Temporario, el usuario debe cambiarlo
+    
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username, email, password)
+        return HttpResponse(f"Usuario {username} creado con éxito. Por favor cambia la contraseña inmediatamente.", status=201)
+    else:
+        return HttpResponse(f"El usuario {username} ya existe.", status=200)
