@@ -918,8 +918,8 @@ p {
 
   .card-image {
     height: 200px;
-    object-fit: cover;
-    /* Back to cover on mobile for edge-to-edge feel */
+    object-fit: contain;
+    /* Changed from cover to respect the choice, contain is safer for varying widths */
     padding: 0;
     /* No padding on mobile */
     background-color: var(--color-surface);
@@ -941,8 +941,9 @@ p {
   }
 
   .article-card .card-image {
-    width: 100%;
-    min-width: 100%;
+    width: auto;
+    /* Allow inline style to take over */
+    max-width: 100%;
     height: 200px;
     /* Fixed height to keep cards consistent, but contain ensures full image */
     object-fit: contain;
