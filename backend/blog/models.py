@@ -133,7 +133,8 @@ class Article(models.Model):
     list_title = models.CharField(max_length=200, blank=True, null=True, verbose_name='Título Corto (Portada)', help_text='Si se rellena, este título reemplazará al título principal únicamente en las cuadrículas y listados (útil para que solo ponga el nombre de la Marca).')
     list_image = models.ImageField(upload_to='articles/list/', blank=True, null=True, verbose_name='Imagen/Logo (Portada)', help_text='Logo o imagen simplificada exclusiva para listados exteriores. Si se deja en blanco, usará la imagen principal.')
     image_fit = models.CharField(max_length=20, choices=IMAGE_FIT_CHOICES, default='contain', verbose_name='Ajuste de Imagen (Portada)', help_text="Configura cómo se debe comportar la imagen en las tarjetas de la vista general.")
-    image_width = models.IntegerField(default=100, verbose_name='Ancho de la Imagen (%)', help_text='Porcentaje de ancho que ocupará la imagen (10-100). Útil para hacer más pequeños logos o recortar imágenes gigantes.')
+    image_width = models.IntegerField(default=100, verbose_name='Ancho de la Imagen (%) (Portada)', help_text='Porcentaje de ancho que ocupará la imagen en la PORTADA (10-100).')
+    image_width_detail = models.IntegerField(default=100, verbose_name='Ancho de la Imagen (%) (Interior)', help_text='Porcentaje de ancho que ocupará la imagen dentro del ARTÍCULO (10-100).')
     
     # Relación con auriculares
     headphone = models.ForeignKey(Headphone, on_delete=models.SET_NULL, null=True, blank=True, related_name='articles')

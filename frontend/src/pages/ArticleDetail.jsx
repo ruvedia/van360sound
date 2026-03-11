@@ -271,11 +271,11 @@ function ArticleDetail() {
                 alt={article.title}
                 className="card-image"
                 style={{
-                    width: '100%',
+                    width: article.image_width_detail ? `${article.image_width_detail}%` : '100%',
                     borderRadius: '12px',
                     marginBottom: '2rem',
                     height: 'auto',
-                    maxHeight: '600px',
+                    maxHeight: '700px',
                     objectFit: 'contain',
                     backgroundColor: 'transparent',
                     display: 'block',

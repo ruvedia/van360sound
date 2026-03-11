@@ -55,7 +55,7 @@ class ArticleAdmin(admin.ModelAdmin):
             'description': 'Campos opcionales para personalizar cómo se ve la tarjeta de este artículo/marca desde fuera. Si los dejas vacíos, se usará el Título Principal y la Imagen Principal.'
         }),
         ('Relaciones y Multimedia', {
-            'fields': ('headphone', 'featured_image')
+            'fields': ('headphone', 'featured_image', 'image_width_detail')
         }),
         ('Metadatos', {
             'fields': ('author', 'is_published', 'views')
