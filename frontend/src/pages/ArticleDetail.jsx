@@ -383,7 +383,7 @@ function ArticleDetail() {
                     font-size: 1.15rem;
                     margin-bottom: 1.5rem;
                 }
-                .template-marcas .article-content img {
+                .article-content img {
                     display: block;
                     margin: 2.5rem auto;
                     max-width: 100%;
