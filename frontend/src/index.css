@@ -170,6 +170,9 @@ p {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 1440px;
+  /* Increased from the default 1280px */
+  margin: 0 auto;
 }
 
 .header-top {
@@ -214,7 +217,8 @@ p {
 
 .nav {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  /* Changed from flex-start to center */
   width: 100%;
   padding: var(--spacing-sm) 0;
   border-top: 1px solid var(--color-border);
