@@ -19,7 +19,8 @@ function ArticleCard({ article, showExcerpt = true }) {
                         objectFit: article.image_fit || 'contain',
                         borderRadius: '12px',
                         width: article.image_width ? `${article.image_width}%` : '100%',
-                        height: '100%',
+                        height: 'auto',
+                        maxHeight: '100%',
                         padding: 0 // Remove extra padding to avoid unrounded borders
                     }}
                 />
