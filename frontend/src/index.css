@@ -163,16 +163,13 @@ p {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm) 0 0 0;
+  padding: var(--spacing-md) 0 0 0;
 }
 
 .header-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1440px;
-  /* Increased from the default 1280px */
-  margin: 0 auto;
 }
 
 .header-top {
@@ -180,7 +177,8 @@ p {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-bottom: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  padding-bottom: var(--spacing-md);
 }
 
 .top-nav-center {
@@ -220,7 +218,7 @@ p {
   justify-content: center;
   /* Changed from flex-start to center */
   width: 100%;
-  padding: var(--spacing-sm) 0;
+  padding: var(--spacing-lg) 0;
   border-top: 1px solid var(--color-border);
 }
 
