@@ -5,28 +5,29 @@ import HeadphoneCard from '../components/HeadphoneCard';
 import ArticleCard from '../components/ArticleCard';
 
 function Home() {
-    const [featuredHeadphones, setFeaturedHeadphones] = useState([]);
-    const [latestArticles, setLatestArticles] = useState([]);
+    const [novedades, setNovedades] = useState([]);
+    const [guias, setGuias] = useState([]);
+    const [analisis, setAnalisis] = useState([]);
     const [featuredBrands, setFeaturedBrands] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [headphonesRes, articlesRes, brandsRes] = await Promise.all([
-                    headphoneService.getFeatured(),
-                    articleService.getAll({ page_size: 15 }), // Extraer más para compensar el filtro
+                const [novedadesRes, guiasRes, analisisRes, brandsRes] = await Promise.all([
+                    articleService.getByType('novedades'),
+                    articleService.getByType('guia'),
+                    articleService.getByType('analisis'),
                     articleService.getByType('marcas')
                 ]);
 
-                setFeaturedHeadphones(headphonesRes.data.results || headphonesRes.data);
+                // Obtenemos los arrays de datos y tomamos los primeros 6 elementos para cada sección
+                const extractData = (res) => res.data.results || res.data || [];
 
-                // Filtrar para excluir cualquier artículo que sea marca
-                const allArticles = articlesRes.data.results || articlesRes.data;
-                const filteredArticles = allArticles.filter(a => a.template !== 'marcas' && a.article_type !== 'marcas');
-                setLatestArticles(filteredArticles.slice(0, 6));
-
-                setFeaturedBrands(brandsRes.data.results || brandsRes.data);
+                setNovedades(extractData(novedadesRes).slice(0, 6));
+                setGuias(extractData(guiasRes).slice(0, 6));
+                setAnalisis(extractData(analisisRes).slice(0, 6));
+                setFeaturedBrands(extractData(brandsRes));
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -56,29 +57,47 @@ function Home() {
                 </div>
             </section>
 
-            {/* Featured Headphones */}
-            <section className="section" id="featured">
-                <div className="container">
-                    <h2 className="section-title">Auriculares Destacados</h2>
-                    <div className="grid grid-3">
-                        {featuredHeadphones.map(headphone => (
-                            <HeadphoneCard key={headphone.id} headphone={headphone} />
-                        ))}
+            {/* Section Novedades */}
+            {novedades.length > 0 && (
+                <section className="section" id="novedades">
+                    <div className="container">
+                        <h2 className="section-title">Novedades</h2>
+                        <div className="grid grid-3">
+                            {novedades.map(article => (
+                                <ArticleCard key={article.id} article={article} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
-            {/* Latest Articles */}
-            <section className="section" style={{ backgroundColor: 'var(--color-surface)' }}>
-                <div className="container">
-                    <h2 className="section-title">Últimos Artículos</h2>
-                    <div className="grid grid-3">
-                        {latestArticles.map(article => (
-                            <ArticleCard key={article.id} article={article} />
-                        ))}
+            {/* Section Guía */}
+            {guias.length > 0 && (
+                <section className="section" id="guia" style={{ backgroundColor: 'var(--color-surface)' }}>
+                    <div className="container">
+                        <h2 className="section-title">Guía</h2>
+                        <div className="grid grid-3">
+                            {guias.map(article => (
+                                <ArticleCard key={article.id} article={article} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
+
+            {/* Section Análisis (Conditional) */}
+            {analisis.length > 0 && (
+                <section className="section" id="analisis">
+                    <div className="container">
+                        <h2 className="section-title">Análisis</h2>
+                        <div className="grid grid-3">
+                            {analisis.map(article => (
+                                <ArticleCard key={article.id} article={article} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Featured Brands */}
             <section className="section">
