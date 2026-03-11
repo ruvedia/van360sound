@@ -36,7 +36,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = [
             'id', 'title', 'list_title', 'slug', 'article_type', 'template', 'excerpt', 'content',
-            'headphone', 'headphone_name', 'featured_image', 'list_image', 'image_fit', 'author',
+            'headphone', 'headphone_name', 'featured_image', 'list_image', 'image_fit', 'image_width', 'author',
             'published_date', 'updated_date', 'is_published', 'views'
         ]
 
@@ -48,7 +48,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
         model = Article
         fields = [
             'id', 'title', 'list_title', 'slug', 'article_type', 'template', 'excerpt',
-            'headphone_name', 'featured_image', 'list_image', 'image_fit', 'author',
+            'headphone_name', 'featured_image', 'list_image', 'image_fit', 'image_width', 'author',
             'published_date', 'views'
         ]
 

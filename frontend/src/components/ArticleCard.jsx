@@ -10,7 +10,7 @@ function ArticleCard({ article, showExcerpt = true }) {
 
     return (
         <Link to={`/articulo/${article.slug}`} className="card article-card">
-            <div style={{ padding: 'var(--spacing-sm)', backgroundColor: 'white' }}>
+            <div style={{ padding: 'var(--spacing-sm)', backgroundColor: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '260px' }}>
                 <img
                     src={imageUrl}
                     alt={article.title}
@@ -18,8 +18,8 @@ function ArticleCard({ article, showExcerpt = true }) {
                     style={{
                         objectFit: article.image_fit || 'contain',
                         borderRadius: '12px',
-                        width: '100%',
-                        height: '260px',
+                        width: article.image_width ? `${article.image_width}%` : '100%',
+                        height: '100%',
                         padding: 0 // Remove extra padding to avoid unrounded borders
                     }}
                 />
