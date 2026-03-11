@@ -15,7 +15,7 @@ function Home() {
         const fetchData = async () => {
             try {
                 const [novedadesRes, guiasRes, analisisRes, brandsRes] = await Promise.all([
-                    articleService.getByType('novedades'),
+                    articleService.getByType('novedad'),
                     articleService.getByType('guia'),
                     articleService.getByType('analisis'),
                     articleService.getByType('marcas')
