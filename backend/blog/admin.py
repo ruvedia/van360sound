@@ -51,7 +51,7 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields': ('title', 'slug', 'article_type', 'template', 'excerpt', 'content')
         }),
         ('Apariencia en Listados/Portadas', {
-            'fields': ('list_title', 'list_image'),
+            'fields': ('list_title', 'list_image', 'image_fit', 'image_width'),
             'description': 'Campos opcionales para personalizar cómo se ve la tarjeta de este artículo/marca desde fuera. Si los dejas vacíos, se usará el Título Principal y la Imagen Principal.'
         }),
         ('Relaciones y Multimedia', {
