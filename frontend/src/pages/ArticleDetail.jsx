@@ -6,40 +6,89 @@ import CommentsSection from '../components/CommentsSection';
 import RecommendedSection from '../components/RecommendedSection';
 
 // Componente para el bloque de índice inicial
-const TableOfContents = ({ items, onOpenDrawer }) => {
+// Componente para el bloque de índice inicial estilo acordeón
+const TableOfContents = ({ items }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
     if (items.length === 0) return null;
 
     return (
         <div className="toc-box" style={{
-            backgroundColor: '#f1f5f9',
+            backgroundColor: '#f8fafc',
             borderRadius: '16px',
-            padding: '1.5rem',
+            padding: '1.2rem 1.5rem',
             marginBottom: '3rem',
-            border: '1px solid #e2e8f0'
+            border: '1px solid #e2e8f0',
+            transition: 'all 0.3s ease'
         }}>
-            <h3 style={{ marginTop: 0, marginBottom: '1rem', color: '#1e3a8a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                En este artículo:
-            </h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {items.map((item, index) => (
-                    <li key={item.id} style={{ marginBottom: '0.8rem' }}>
-                        <a href={`#${item.id}`} style={{
-                            color: '#475569',
-                            textDecoration: 'none',
-                            fontSize: '1.05rem',
-                            display: 'flex',
-                            gap: '0.5rem',
-                            transition: 'color 0.2s'
-                        }}
-                            onMouseEnter={(e) => e.target.style.color = '#1e3a8a'}
-                            onMouseLeave={(e) => e.target.style.color = '#475569'}
-                        >
-                            <span style={{ color: '#94a3b8' }}>{index + 1}.</span>
-                            {item.text}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+            <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    outline: 'none'
+                }}
+            >
+                <h3 style={{
+                    margin: 0,
+                    color: '#1e3a8a',
+                    fontSize: '1.2rem',
+                    fontWeight: '700',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                }}>
+                    En este artículo
+                </h3>
+                <span style={{
+                    fontSize: '1.2rem',
+                    color: '#64748b',
+                    transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.3s ease'
+                }}>
+                    ▼
+                </span>
+            </button>
+
+            <div style={{
+                maxHeight: isExpanded ? '1000px' : '0',
+                overflow: 'hidden',
+                transition: 'max-height 0.4s cubic-bezier(0, 1, 0, 1)',
+                marginTop: isExpanded ? '1.2rem' : '0'
+            }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {items.map((item, index) => (
+                        <li key={item.id} style={{ marginBottom: '0.8rem' }}>
+                            <a href={`#${item.id}`} style={{
+                                color: '#475569',
+                                textDecoration: 'none',
+                                fontSize: '1.05rem',
+                                display: 'flex',
+                                gap: '0.8rem',
+                                transition: 'all 0.2s',
+                                paddingLeft: '0.5rem'
+                            }}
+                                onMouseEnter={(e) => {
+                                    e.target.style.color = '#1e3a8a';
+                                    e.target.style.transform = 'translateX(5px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.color = '#475569';
+                                    e.target.style.transform = 'translateX(0)';
+                                }}
+                            >
+                                <span style={{ color: '#94a3b8', fontWeight: '600' }}>{index + 1}.</span>
+                                {item.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
@@ -284,8 +333,8 @@ function ArticleDetail() {
                 }}
             />
 
-            {/* Índice de contenidos inicial */}
-            <TableOfContents items={toc} onOpenDrawer={() => setIsTocOpen(true)} />
+            {/* Índice de contenidos inicial estilo desplegable */}
+            <TableOfContents items={toc} />
 
             <div
                 ref={contentRef}
