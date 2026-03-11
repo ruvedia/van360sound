@@ -51,9 +51,9 @@ function Home() {
                     <p className="hero-subtitle">
                         Análisis profesionales, reviews y las últimas novedades en auriculares.
                     </p>
-                    <a href="#featured" className="btn btn-primary">
-                        Explorar Auriculares
-                    </a>
+                    <Link to="/nuestro-top" className="btn btn-primary">
+                        Explorar Nuestro Top
+                    </Link>
                 </div>
             </section>
 
@@ -105,7 +105,7 @@ function Home() {
                     <h2 className="section-title">Marcas Recomendadas</h2>
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '4rem', marginTop: '3rem' }}>
                         {featuredBrands.slice(0, 6).map(brand => (
-                            <Link key={brand.id} to={`/articulo/${brand.slug}`} className="home-brand-logo" style={{ textDecoration: 'none', color: '#0f172a' }}>
+                            <Link key={brand.id} to={`/articulo/${brand.slug}`} className="home-brand-logo" style={{ textDecoration: 'none', color: '#0f172a', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <div style={{ width: '110px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                                     {(brand.list_image || brand.featured_image) ? (
                                         <img src={brand.list_image || brand.featured_image} alt={brand.list_title || brand.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -113,7 +113,7 @@ function Home() {
                                         <span style={{ fontSize: '2rem', fontWeight: 800, color: '#CBD5E1' }}>{(brand.list_title || brand.title)[0]}</span>
                                     )}
                                 </div>
-                                <span style={{ fontWeight: 700, fontSize: '1rem' }}>{brand.list_title || brand.title}</span>
+                                <span style={{ fontWeight: 700, fontSize: '1rem', textAlign: 'center' }}>{brand.list_title || brand.title}</span>
                             </Link>
                         ))}
                     </div>

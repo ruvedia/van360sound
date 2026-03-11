@@ -224,7 +224,8 @@ p {
 
 .nav-main-links {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-2xl);
+  /* Increased separation */
   align-items: center;
 }
 
