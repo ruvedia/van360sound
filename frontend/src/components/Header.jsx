@@ -57,52 +57,65 @@ function Header() {
                     top: 0;
                     z-index: 1000;
                     transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+                    background-color: var(--color-background);
+                    border-bottom: 1px solid var(--color-border);
                 }
                 .header-hidden {
                     transform: translateY(-100%);
                 }
                 `}
             </style>
-            <div className="top-bar">
-                <div className="container top-bar-container">
-                    <nav className="top-nav">
-                        <Link to="/sobre-nosotros" className="top-nav-link">Sobre Nosotros</Link>
-                        <Link to="/contacto" className="top-nav-link">Contacto</Link>
-                    </nav>
-                </div>
-            </div>
             <header className="header">
                 <div className="container header-container">
-                    <Link to="/" className="logo" onClick={closeMenu}>
-                        Van360Sound.com
-                    </Link>
+                    <div className="header-top">
+                        <Link to="/" className="logo" onClick={closeMenu}>
+                            Van360Sound.com
+                        </Link>
 
-                    <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
-                        {mobileMenuOpen ? '✕' : '☰'}
-                    </button>
+                        <nav className="top-nav-center">
+                            <Link to="/sobre-nosotros" className="top-nav-link">Sobre Nosotros</Link>
+                            <Link to="/contacto" className="top-nav-link">Contacto</Link>
+                        </nav>
+
+                        <div className="header-right">
+                            <Link to="/buscar" className="search-btn" onClick={closeMenu}>
+                                🔍 Buscar
+                            </Link>
+                            <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
+                                {mobileMenuOpen ? '✕' : '☰'}
+                            </button>
+                        </div>
+                    </div>
 
                     <nav className={`nav ${mobileMenuOpen ? 'nav-open' : ''}`}>
-                        <NavLink to="/nuestro-top" className="nav-link" onClick={closeMenu}>
-                            Nuestro Top
-                        </NavLink>
-                        <NavLink to="/novedades" className="nav-link" onClick={closeMenu}>
-                            Novedades
-                        </NavLink>
-                        <NavLink to="/analisis" className="nav-link" onClick={closeMenu}>
-                            Análisis
-                        </NavLink>
-                        <NavLink to="/guia" className="nav-link" onClick={closeMenu}>
-                            Guía
-                        </NavLink>
-                        <NavLink to="/marcas" className="nav-link" onClick={closeMenu}>
-                            Marcas
-                        </NavLink>
-                        <NavLink to="/comparativa" className="nav-link" onClick={closeMenu}>
-                            Comparativa
-                        </NavLink>
-                        <Link to="/buscar" className="search-btn" onClick={closeMenu}>
-                            🔍 Buscar
-                        </Link>
+                        <div className="mobile-top-links">
+                            <NavLink to="/sobre-nosotros" className="nav-link mobile-only" onClick={closeMenu}>
+                                Sobre Nosotros
+                            </NavLink>
+                            <NavLink to="/contacto" className="nav-link mobile-only" onClick={closeMenu}>
+                                Contacto
+                            </NavLink>
+                        </div>
+                        <div className="nav-main-links">
+                            <NavLink to="/nuestro-top" className="nav-link" onClick={closeMenu}>
+                                Nuestro Top
+                            </NavLink>
+                            <NavLink to="/novedades" className="nav-link" onClick={closeMenu}>
+                                Novedades
+                            </NavLink>
+                            <NavLink to="/analisis" className="nav-link" onClick={closeMenu}>
+                                Análisis
+                            </NavLink>
+                            <NavLink to="/guia" className="nav-link" onClick={closeMenu}>
+                                Guía
+                            </NavLink>
+                            <NavLink to="/marcas" className="nav-link" onClick={closeMenu}>
+                                Marcas
+                            </NavLink>
+                            <NavLink to="/comparativa" className="nav-link" onClick={closeMenu}>
+                                Comparativa
+                            </NavLink>
+                        </div>
                     </nav>
                 </div>
             </header>
