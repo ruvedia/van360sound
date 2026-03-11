@@ -62,7 +62,7 @@ function Home() {
                 <section className="section" id="novedades">
                     <div className="container">
                         <h2 className="section-title">Novedades</h2>
-                        <div className="grid grid-3">
+                        <div className="grid grid-4">
                             {novedades.map(article => (
                                 <ArticleCard key={article.id} article={article} />
                             ))}
@@ -76,7 +76,7 @@ function Home() {
                 <section className="section" id="guia" style={{ backgroundColor: 'var(--color-surface)' }}>
                     <div className="container">
                         <h2 className="section-title">Guía</h2>
-                        <div className="grid grid-3">
+                        <div className="grid grid-4">
                             {guias.map(article => (
                                 <ArticleCard key={article.id} article={article} />
                             ))}

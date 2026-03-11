@@ -116,6 +116,11 @@ class Article(models.Model):
         ('default', 'Por defecto'),
         ('marcas', 'Plantilla Marcas (Imágenes centradas)'),
     ]
+
+    IMAGE_FIT_CHOICES = [
+        ('contain', 'Mostrar entera (Sin recortes, puede dejar márgenes)'),
+        ('cover', 'Llenar espacio (Recortada para llenar todo el marco sin márgenes)'),
+    ]
     
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
@@ -127,6 +132,7 @@ class Article(models.Model):
     # Campos Específicos para Portadas/Listados (Optativos)
     list_title = models.CharField(max_length=200, blank=True, null=True, verbose_name='Título Corto (Portada)', help_text='Si se rellena, este título reemplazará al título principal únicamente en las cuadrículas y listados (útil para que solo ponga el nombre de la Marca).')
     list_image = models.ImageField(upload_to='articles/list/', blank=True, null=True, verbose_name='Imagen/Logo (Portada)', help_text='Logo o imagen simplificada exclusiva para listados exteriores. Si se deja en blanco, usará la imagen principal.')
+    image_fit = models.CharField(max_length=20, choices=IMAGE_FIT_CHOICES, default='contain', verbose_name='Ajuste de Imagen (Portada)', help_text="Configura cómo se debe comportar la imagen en las tarjetas de la vista general.")
     
     # Relación con auriculares
     headphone = models.ForeignKey(Headphone, on_delete=models.SET_NULL, null=True, blank=True, related_name='articles')
