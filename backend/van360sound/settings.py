@@ -33,17 +33,18 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']
 
 # CORS & CSRF Configuration
-# CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,https://www.van360sound.com,https://van360sound-frontend.onrender.com').split(',')
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://www.van360sound.com',
     'https://van360sound.com',
-    'https://van360sound-frontend.onrender.com',
-    'https://van360sound-backend.onrender.com',
-    'https://*.onrender.com',
 ]
+
+# Añadir orígenes adicionales desde variables de entorno
+additional_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+if additional_origins:
+    CSRF_TRUSTED_ORIGINS.extend(additional_origins.split(','))
 
 # Security Settings for Proxy/Render
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
