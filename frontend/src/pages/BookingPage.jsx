@@ -76,7 +76,7 @@ function BookingPage() {
             setSuccess(true);
             
             const message = `Hola, he solicitado una cita en Van360Sound.%0A%0ADatos:%0A- Nombre: ${formData.name}%0A- Fecha: ${formData.date}%0A- Hora: ${formData.time}%0A- Notas: ${formData.notes || 'Ninguna'}`;
-            const whatsappUrl = `https://wa.me/34680879684?text=${message}`;
+            const whatsappUrl = `https://wa.me/34622324177?text=${message}`;
             window.sessionStorage.setItem('whatsappUrl', whatsappUrl);
             
         } catch (err) {
