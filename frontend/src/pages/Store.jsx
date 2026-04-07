@@ -14,8 +14,10 @@ function Store() {
                 const response = await axios.get(`${API_BASE_URL}/products/`);
                 if (Array.isArray(response.data)) {
                     setProducts(response.data);
+                } else if (response.data && Array.isArray(response.data.results)) {
+                    setProducts(response.data.results);
                 } else {
-                    console.error('API response is not an array:', response.data);
+                    console.error('API response format not recognized:', response.data);
                     setError('Error en el formato de datos recibidos.');
                 }
             } catch (err) {
