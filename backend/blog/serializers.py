@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Product, Order, OrderItem, Booking
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -93,4 +93,31 @@ class CommentSerializer(serializers.ModelSerializer):
             except Article.DoesNotExist:
                 pass
                 
-        return super().create(validated_data)
+
+class ProductSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'slug', 'description', 'price', 'stock', 'category', 'category_name', 'main_image', 'is_active', 'created_at']
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name', read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'product', 'product_name', 'quantity', 'price_at_purchase']
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Order
+        fields = ['id', 'order_id', 'customer_name', 'customer_email', 'shipping_address', 'total_amount', 'status', 'items', 'created_at']
+        read_only_fields = ['order_id', 'total_amount', 'created_at']
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['id', 'name', 'email', 'phone', 'date', 'time', 'notes', 'status', 'created_at']
+        read_only_fields = ['created_at', 'status']

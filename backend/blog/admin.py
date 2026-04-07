@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Product, Order, OrderItem, Booking
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -75,26 +75,32 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_editable = ['is_read']
     readonly_fields = ['created_at']
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ['author_name', 'category', 'article', 'content_preview', 'created_at', 'is_approved']
-    list_filter = ['category', 'article', 'is_approved', 'created_at']
-    search_fields = ['author_name', 'author_email', 'content']
-    list_editable = ['is_approved']
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'price', 'stock', 'is_active', 'created_at']
+    list_filter = ['category', 'is_active']
+    search_fields = ['name', 'description']
+    prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['price', 'stock', 'is_active']
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    readonly_fields = ['product', 'quantity', 'price_at_purchase']
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['order_id', 'customer_name', 'total_amount', 'status', 'created_at']
+    list_filter = ['status', 'created_at']
+    search_fields = ['order_id', 'customer_name', 'customer_email']
+    readonly_fields = ['order_id', 'total_amount', 'created_at']
+    inlines = [OrderItemInline]
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ['name', 'date', 'time', 'phone', 'status', 'created_at']
+    list_filter = ['status', 'date']
+    search_fields = ['name', 'email', 'phone']
+    list_editable = ['status']
     readonly_fields = ['created_at']
-    actions = ['approve_comments', 'reject_comments']
-    
-    def content_preview(self, obj):
-        """Muestra los primeros 50 caracteres del comentario"""
-        return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
-    content_preview.short_description = 'Comentario'
-    
-    def approve_comments(self, request, queryset):
-        """Acción para aprobar comentarios seleccionados"""
-        queryset.update(is_approved=True)
-    approve_comments.short_description = 'Aprobar comentarios seleccionados'
-    
-    def reject_comments(self, request, queryset):
-        """Acción para rechazar comentarios seleccionados"""
-        queryset.update(is_approved=False)
-    reject_comments.short_description = 'Rechazar comentarios seleccionados'

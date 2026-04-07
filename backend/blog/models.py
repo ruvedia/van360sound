@@ -213,3 +213,89 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"{self.author_name} en {self.category.name} - {self.created_at.strftime('%d/%m/%Y')}"
+
+class Product(models.Model):
+    """Productos a la venta en la tienda"""
+    name = models.CharField(max_length=200, verbose_name='Nombre del Producto')
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    description = RichTextUploadingField(verbose_name='Descripción Detallada')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio')
+    stock = models.IntegerField(default=10, verbose_name='Stock Disponible')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
+    main_image = models.ImageField(upload_to='products/', verbose_name='Imagen Principal')
+    is_active = models.BooleanField(default=True, verbose_name='Activo')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    """Pedidos realizados en la tienda"""
+    STATUS_CHOICES = [
+        ('payment_pending', 'Pendiente de Pago'),
+        ('paid', 'Pagado'),
+        ('shipped', 'Enviado'),
+        ('delivered', 'Entregado'),
+        ('cancelled', 'Cancelado'),
+    ]
+    
+    order_id = models.CharField(max_length=100, unique=True, verbose_name='ID de Pedido')
+    customer_name = models.CharField(max_length=200, verbose_name='Nombre del Cliente')
+    customer_email = models.EmailField(verbose_name='Email del Cliente')
+    shipping_address = models.TextField(verbose_name='Dirección de Envío')
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Importe Total')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='payment_pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Pedido'
+        verbose_name_plural = 'Pedidos'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Pedido {self.order_id} - {self.customer_name}"
+
+class OrderItem(models.Model):
+    """Líneas de un pedido"""
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    quantity = models.PositiveIntegerField(default=1)
+    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name if self.product else 'Producto eliminado'}"
+
+class Booking(models.Model):
+    """Reservas de citas"""
+    STATUS_CHOICES = [
+        ('pending', 'Pendiente de Confirmación'),
+        ('confirmed', 'Confirmada'),
+        ('cancelled', 'Cancelada/No asistió'),
+        ('completed', 'Completada'),
+    ]
+    
+    name = models.CharField(max_length=100, verbose_name='Nombre Completo')
+    email = models.EmailField(verbose_name='Email')
+    phone = models.CharField(max_length=20, verbose_name='WhatsApp / Teléfono')
+    date = models.DateField(verbose_name='Fecha de la Cita')
+    time = models.TimeField(verbose_name='Hora de la Cita')
+    notes = models.TextField(blank=True, null=True, verbose_name='Notas adicionales')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='Estado')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Cita'
+        verbose_name_plural = 'Citas'
+        ordering = ['date', 'time']
+
+    def __str__(self):
+        return f"Cita {self.date} {self.time} - {self.name}"

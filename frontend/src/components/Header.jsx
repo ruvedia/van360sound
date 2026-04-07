@@ -115,6 +115,12 @@ function Header() {
                             <NavLink to="/comparativa" className="nav-link" onClick={closeMenu}>
                                 Comparativa
                             </NavLink>
+                            <NavLink to="/tienda" className="nav-link" onClick={closeMenu}>
+                                Tienda
+                            </NavLink>
+                            <NavLink to="/citas" className="nav-link" onClick={closeMenu}>
+                                Citas
+                            </NavLink>
                         </div>
                     </nav>
                 </div>

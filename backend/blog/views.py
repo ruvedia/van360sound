@@ -2,11 +2,11 @@ from rest_framework import viewsets, filters, status, permissions, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
-from .models import Category, Headphone, Article, ContactMessage, Comment
+from .models import Category, Headphone, Article, ContactMessage, Comment, Product, Order, OrderItem, Booking
 from .serializers import (
     CategorySerializer, HeadphoneSerializer,
     ArticleSerializer, ArticleListSerializer, ContactMessageSerializer,
-    CommentSerializer
+    CommentSerializer, ProductSerializer, OrderSerializer, BookingSerializer
 )
 
 
@@ -166,10 +166,108 @@ class CommentViewSet(viewsets.ModelViewSet):
         # comment = serializer.instance
         # send_comment_notification_email(comment)
         
+
+class ProductViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet para productos de la tienda"""
+    queryset = Product.objects.filter(is_active=True)
+    serializer_class = ProductSerializer
+    lookup_field = 'slug'
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'description']
+    ordering_fields = ['price', 'created_at']
+
+import uuid
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """ViewSet para pedidos (Solo POST)"""
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    http_method_names = ['post']
+    permission_classes = [permissions.AllowAny]
+    
+    def perform_create(self, serializer):
+        # Generar ID de pedido único
+        order_id = f"VAN-{uuid.uuid4().hex[:8].upper()}"
+        
+        # Obtener items del request
+        items_data = self.request.data.get('items', [])
+        total_amount = 0
+        
+        # Guardar pedido inicial para tener la instancia
+        order = serializer.save(order_id=order_id, total_amount=0)
+        
+        # Crear items y calcular total
+        for item in items_data:
+            try:
+                product = Product.objects.get(id=item['product'])
+                qty = int(item['quantity'])
+                price = product.price
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=qty,
+                    price_at_purchase=price
+                )
+                total_amount += price * qty
+                # Descontar stock
+                product.stock -= qty
+                product.save()
+            except Product.DoesNotExist:
+                continue
+        
+        # Actualizar total
+        order.total_amount = total_amount
+        order.save()
+
+class BookingViewSet(viewsets.ModelViewSet):
+    """ViewSet para citas"""
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    http_method_names = ['post']
+    permission_classes = [permissions.AllowAny]
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        
+        booking = serializer.instance
+        
+        # Enviar Email de Notificación al Admin
+        try:
+            subject = f"Nueva Cita Solicitada: {booking.name} - {booking.date}"
+            message = f"""
+            Has recibido una nueva solicitud de cita.
+            
+            Datos del cliente:
+            ------------------
+            Nombre: {booking.name}
+            Email: {booking.email}
+            WhatsApp: {booking.phone}
+            
+            Detalles de la cita:
+            --------------------
+            Fecha: {booking.date}
+            Hora: {booking.time}
+            Notas: {booking.notes or 'Ninguna'}
+            
+            Gestiona esta cita en: {settings.VITE_API_URL}/admin/blog/booking/{booking.id}/change/
+            """
+            
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.CONTACT_EMAIL_RECIPIENT],
+                fail_silently=True
+            )
+        except Exception as e:
+            print(f"Error enviando email de cita: {e}")
+
         return Response(
             {
-                'message': 'Comentario publicado correctamente',
-                'comment': serializer.data
+                'message': 'Cita solicitada correctamente',
+                'booking': serializer.data
             },
             status=status.HTTP_201_CREATED
         )

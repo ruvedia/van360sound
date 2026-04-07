@@ -16,6 +16,8 @@ import ArticleDetail from './pages/ArticleDetail';
 import Comparativa from './pages/Comparativa';
 import Guia from './pages/Guia';
 import Marcas from './pages/Marcas';
+import Store from './pages/Store';
+import BookingPage from './pages/BookingPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
                             <Route path="/buscar" element={<Buscar />} />
                             <Route path="/auricular/:slug" element={<HeadphoneDetail />} />
                             <Route path="/articulo/:slug" element={<ArticleDetail />} />
+                            <Route path="/tienda" element={<Store />} />
+                            <Route path="/citas" element={<BookingPage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </main>
