@@ -30,15 +30,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-++9#vs$_cmb5+q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'van360sound.com', 'www.van360sound.com', 'api.van360sound.com']
 
 # CORS & CSRF Configuration
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://www.van360sound.com',
     'https://van360sound.com',
+    'https://api.van360sound.com',
 ]
 
 # Añadir orígenes adicionales desde variables de entorno
