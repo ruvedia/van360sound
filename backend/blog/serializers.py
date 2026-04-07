@@ -121,3 +121,9 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id', 'name', 'email', 'phone', 'date', 'time', 'notes', 'status', 'created_at']
         read_only_fields = ['created_at', 'status']
+
+class BookingPublicSerializer(serializers.ModelSerializer):
+    """Serializer para mostrar solo los huecos ocupados al público"""
+    class Meta:
+        model = Booking
+        fields = ['date', 'time']

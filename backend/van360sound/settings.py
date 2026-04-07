@@ -204,4 +204,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 # Email donde llegarán los mensajes de contacto
-CONTACT_EMAIL_RECIPIENT = os.environ.get('CONTACT_EMAIL_RECIPIENT', 'soporte@van360sound.com')
+# WhatsApp API Configuration (Ultramsg)
+WHATSAPP_INSTANCE_ID = os.environ.get('WHATSAPP_INSTANCE_ID', '')
+WHATSAPP_TOKEN = os.environ.get('WHATSAPP_TOKEN', '')
+WHATSAPP_API_URL = f"https://api.ultramsg.com/{WHATSAPP_INSTANCE_ID}/messages/chat" if WHATSAPP_INSTANCE_ID else ""

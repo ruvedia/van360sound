@@ -3,10 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
 from .models import Category, Headphone, Article, ContactMessage, Comment, Product, Order, OrderItem, Booking
+from .utils import send_whatsapp_message
 from .serializers import (
     CategorySerializer, HeadphoneSerializer,
     ArticleSerializer, ArticleListSerializer, ContactMessageSerializer,
-    CommentSerializer, ProductSerializer, OrderSerializer, BookingSerializer
+    CommentSerializer, ProductSerializer, OrderSerializer, BookingSerializer,
+    BookingPublicSerializer
 )
 
 
@@ -223,9 +225,24 @@ class BookingViewSet(viewsets.ModelViewSet):
     """ViewSet para citas"""
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    http_method_names = ['post']
+    http_method_names = ['get', 'post']
     permission_classes = [permissions.AllowAny]
     
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BookingPublicSerializer
+        return BookingSerializer
+
+    def get_queryset(self):
+        queryset = Booking.objects.all()
+        date = self.request.query_params.get('date', None)
+        if self.action == 'list':
+            # Para el listado público, solo mostramos las que bloquean horario
+            queryset = queryset.filter(status__in=['pending', 'confirmed'])
+            if date:
+                queryset = queryset.filter(date=date)
+        return queryset
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -263,6 +280,19 @@ class BookingViewSet(viewsets.ModelViewSet):
             )
         except Exception as e:
             print(f"Error enviando email de cita: {e}")
+
+        # Enviar WhatsApp al Cliente
+        try:
+            wa_message = (
+                f"¡Hola {booking.name}! 🎧\n\n"
+                f"Hemos recibido tu solicitud de cita en *Van360Sound*.\n\n"
+                f"📅 *Fecha:* {booking.date.strftime('%d/%m/%Y')}\n"
+                f"⏰ *Hora:* {booking.time.strftime('%H:%M')}\n\n"
+                "Te confirmaremos la disponibilidad lo antes posible. ¡Gracias por confiar en nosotros!"
+            )
+            send_whatsapp_message(booking.phone, wa_message)
+        except Exception as e:
+            print(f"Error enviando WhatsApp de cita: {e}")
 
         return Response(
             {

@@ -13,9 +13,41 @@ function BookingPage() {
         notes: ''
     });
     const [selectedDate, setSelectedDate] = useState(null);
+    const [occupiedSlots, setOccupiedSlots] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [loadingSlots, setLoadingSlots] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
+
+    // Horarios disponibles (10:00 a 20:00)
+    const timeSlots = [
+        "10:00", "11:00", "12:00", "13:00", "14:00", 
+        "16:00", "17:00", "18:00", "19:00", "20:00"
+    ];
+
+    // Cargar horarios ocupados cuando cambia la fecha
+    useEffect(() => {
+        if (formData.date) {
+            fetchOccupiedSlots(formData.date);
+        }
+    }, [formData.date]);
+
+    const fetchOccupiedSlots = async (date) => {
+        setLoadingSlots(true);
+        try {
+            const response = await axios.get(`${API_BASE_URL}/bookings/?date=${date}`);
+            // Extraemos solo las horas y las normalizamos a HH:mm
+            const occupied = response.data.map(slot => {
+                const [h, m] = slot.time.split(':');
+                return `${h}:${m}`;
+            });
+            setOccupiedSlots(occupied);
+        } catch (err) {
+            console.error('Error fetching occupied slots:', err);
+        } finally {
+            setLoadingSlots(false);
+        }
+    };
 
     // Lógica para Calendario Personalizado
     const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -26,7 +58,11 @@ function BookingPage() {
         const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
         const dateString = date.toISOString().split('T')[0];
         setSelectedDate(day);
-        setFormData({ ...formData, date: dateString });
+        setFormData({ ...formData, date: dateString, time: '' }); // Reset time when date changes
+    };
+
+    const handleTimeSelect = (time) => {
+        setFormData({ ...formData, time });
     };
 
     const renderCalendar = () => {
@@ -40,13 +76,16 @@ function BookingPage() {
             days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
         }
         for (let d = 1; d <= totalDays; d++) {
-            const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
+            const dateObj = new Date(year, month, d);
+            const isToday = new Date().toDateString() === dateObj.toDateString();
+            const isPast = dateObj < new Date(new Date().setHours(0,0,0,0));
             const isSelected = selectedDate === d;
+            
             days.push(
                 <div 
                     key={d} 
-                    className={`calendar-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`}
-                    onClick={() => handleDateSelect(d)}
+                    className={`calendar-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${isPast ? 'past' : ''}`}
+                    onClick={() => !isPast && handleDateSelect(d)}
                 >
                     {d}
                 </div>
@@ -66,6 +105,10 @@ function BookingPage() {
         e.preventDefault();
         if (!formData.date) {
             setError('Por favor, selecciona una fecha en el calendario.');
+            return;
+        }
+        if (!formData.time) {
+            setError('Por favor, selecciona un horario disponible.');
             return;
         }
         setLoading(true);
@@ -141,15 +184,35 @@ function BookingPage() {
                                     {formData.date && <p className="selected-date-text">Seleccionado: <strong>{formData.date}</strong></p>}
                                 </div>
 
+                                <div className="form-group">
+                                    <label>2. Horarios disponibles</label>
+                                    {!formData.date ? (
+                                        <p className="hint-text">Selecciona primero un día para ver los horarios.</p>
+                                    ) : loadingSlots ? (
+                                        <p className="loading-text">Cargando disponibilidad...</p>
+                                    ) : (
+                                        <div className="time-grid">
+                                            {timeSlots.map(time => {
+                                                const isOccupied = occupiedSlots.includes(time);
+                                                const isSelected = formData.time === time;
+                                                return (
+                                                    <button
+                                                        key={time}
+                                                        type="button"
+                                                        className={`time-slot ${isOccupied ? 'occupied' : ''} ${isSelected ? 'selected' : ''}`}
+                                                        disabled={isOccupied}
+                                                        onClick={() => handleTimeSelect(time)}
+                                                    >
+                                                        {time}
+                                                        {isOccupied && <span className="occupied-badge">Ocupado</span>}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="time">2. Hora deseada</label>
-                                        <input 
-                                            type="time" id="time" name="time" 
-                                            value={formData.time} onChange={handleChange} 
-                                            required 
-                                        />
-                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="phone">3. Tu WhatsApp</label>
                                         <input 
@@ -158,9 +221,6 @@ function BookingPage() {
                                             required placeholder="+34 600 000 000" 
                                         />
                                     </div>
-                                </div>
-
-                                <div className="form-row">
                                     <div className="form-group">
                                         <label htmlFor="name">Nombre</label>
                                         <input 
@@ -275,10 +335,68 @@ function BookingPage() {
                     background: var(--color-primary);
                     color: white;
                 }
+                .calendar-day.past {
+                    color: #ddd;
+                    cursor: not-allowed;
+                    text-decoration: none;
+                }
                 .selected-date-text {
                     font-size: 0.9rem;
                     color: #666;
                     margin-bottom: 20px;
+                }
+                .time-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                    gap: 10px;
+                    margin-bottom: 20px;
+                }
+                .time-slot {
+                    padding: 12px 5px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    background: white;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: all 0.2s;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 4px;
+                }
+                .time-slot:hover:not(:disabled) {
+                    border-color: var(--color-primary);
+                    color: var(--color-primary);
+                    background: #fdf8f3;
+                }
+                .time-slot.selected {
+                    background: var(--color-primary);
+                    border-color: var(--color-primary);
+                    color: white;
+                }
+                .time-slot.occupied {
+                    background: #f5f5f5;
+                    border-color: #eee;
+                    color: #ccc;
+                    cursor: not-allowed;
+                    position: relative;
+                }
+                .occupied-badge {
+                    font-size: 0.65rem;
+                    text-transform: uppercase;
+                    background: #eee;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    color: #999;
+                }
+                .hint-text, .loading-text {
+                    font-size: 0.9rem;
+                    color: #888;
+                    padding: 20px;
+                    text-align: center;
+                    background: #fafafa;
+                    border-radius: 8px;
+                    border: 1px dashed #ddd;
                 }
                 .form-row {
                     display: grid;
