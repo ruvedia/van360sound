@@ -36,8 +36,15 @@ function BookingPage() {
         setLoadingSlots(true);
         try {
             const response = await axios.get(`${API_BASE_URL}/bookings/?date=${date}`);
+            // Manejar tanto respuesta paginada como array plano
+            const data = response.data.results || response.data;
+            if (!Array.isArray(data)) {
+                console.warn('Expected array or results array for bookings, got:', data);
+                setOccupiedSlots([]);
+                return;
+            }
             // Extraemos solo las horas y las normalizamos a HH:mm
-            const occupied = response.data.map(slot => {
+            const occupied = data.map(slot => {
                 const [h, m] = slot.time.split(':');
                 return `${h}:${m}`;
             });
@@ -269,7 +276,7 @@ function BookingPage() {
                 .booking-page .page-header {
                     background: #111;
                     color: white;
-                    padding: 60px 0;
+                    padding: 30px 0;
                     text-align: center;
                 }
                 .booking-container {
@@ -295,6 +302,7 @@ function BookingPage() {
                     align-items: center;
                     margin-bottom: 15px;
                     font-weight: 700;
+                    font-size: 1.1rem;
                 }
                 .calendar-header button {
                     background: #f5f5f5;
