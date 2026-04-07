@@ -44,7 +44,13 @@ CSRF_TRUSTED_ORIGINS = [
 # Añadir orígenes adicionales desde variables de entorno
 additional_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
 if additional_origins:
-    CSRF_TRUSTED_ORIGINS.extend(additional_origins.split(','))
+    for origin in additional_origins.split(','):
+        origin = origin.strip()
+        if origin:
+            # Aseguramos que el origen tenga el esquema (http:// o https://) exigido por Django 4.0+
+            if not origin.startswith(('http://', 'https://')):
+                origin = f'https://{origin}'
+            CSRF_TRUSTED_ORIGINS.append(origin)
 
 # Security Settings for Proxy/Render
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
