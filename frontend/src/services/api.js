@@ -3,7 +3,7 @@ import axios from 'axios';
 const ENV_URL = import.meta.env.VITE_API_URL;
 // Limpiamos la URL de barras finales si las hay para evitar dobles barras //api
 const cleanBaseUrl = ENV_URL ? ENV_URL.replace(/\/+$/, '') : '';
-const API_BASE_URL = cleanBaseUrl ? `${cleanBaseUrl}/api` : '/api';
+export const API_BASE_URL = cleanBaseUrl ? `${cleanBaseUrl}/api` : '/api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
@@ -44,6 +44,15 @@ export const commentService = {
     getByCategory: (categorySlug) => api.get('/comments/', { params: { category: categorySlug } }),
     getByArticle: (articleSlug) => api.get('/comments/', { params: { article: articleSlug } }),
     create: (data) => api.post('/comments/', data),
+};
+
+export const shopService = {
+    getProducts: () => api.get('/products/'),
+    createOrder: (data) => api.post('/orders/', data),
+};
+
+export const bookingService = {
+    create: (data) => api.post('/bookings/', data),
 };
 
 
