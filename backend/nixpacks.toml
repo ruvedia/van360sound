@@ -5,7 +5,7 @@ nixPkgs = ["python311"]
 cmds = ["pip install -r requirements.txt"]
 
 [phases.build]
-cmds = ["python manage.py collectstatic --no-input", "python manage.py migrate --no-input"]
+cmds = ["python manage.py collectstatic --no-input"]
 
 [start]
-cmd = "PYTHONPATH=. gunicorn van360sound.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
+cmd = "python manage.py migrate --no-input && PYTHONPATH=. gunicorn van360sound.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
