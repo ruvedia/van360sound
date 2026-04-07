@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://van360sound-production.up.railway.app/api/:path*"
+    },
+    {
       "source": "/((?!assets|favicon.svg|favicon.ico|robots.txt|_next).*)",
       "destination": "/index.html"
     }

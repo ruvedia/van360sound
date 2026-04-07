@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { API_BASE_URL } from '../services/api';
@@ -12,9 +12,48 @@ function BookingPage() {
         time: '',
         notes: ''
     });
+    const [selectedDate, setSelectedDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
+
+    // Lógica para Calendario Personalizado
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
+    const firstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
+
+    const handleDateSelect = (day) => {
+        const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+        const dateString = date.toISOString().split('T')[0];
+        setSelectedDate(day);
+        setFormData({ ...formData, date: dateString });
+    };
+
+    const renderCalendar = () => {
+        const month = currentMonth.getMonth();
+        const year = currentMonth.getFullYear();
+        const totalDays = daysInMonth(month, year);
+        const startDay = (firstDayOfMonth(month, year) + 6) % 7; // Ajuste para Lunes = 0
+        
+        const days = [];
+        for (let i = 0; i < startDay; i++) {
+            days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+        }
+        for (let d = 1; d <= totalDays; d++) {
+            const isToday = new Date().toDateString() === new Date(year, month, d).toDateString();
+            const isSelected = selectedDate === d;
+            days.push(
+                <div 
+                    key={d} 
+                    className={`calendar-day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`}
+                    onClick={() => handleDateSelect(d)}
+                >
+                    {d}
+                </div>
+            );
+        }
+        return days;
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -25,6 +64,10 @@ function BookingPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!formData.date) {
+            setError('Por favor, selecciona una fecha en el calendario.');
+            return;
+        }
         setLoading(true);
         setError(null);
 
@@ -32,11 +75,8 @@ function BookingPage() {
             await axios.post(`${API_BASE_URL}/bookings/`, formData);
             setSuccess(true);
             
-            // Generar enlace de WhatsApp
             const message = `Hola, he solicitado una cita en Van360Sound.%0A%0ADatos:%0A- Nombre: ${formData.name}%0A- Fecha: ${formData.date}%0A- Hora: ${formData.time}%0A- Notas: ${formData.notes || 'Ninguna'}`;
-            const whatsappUrl = `https://wa.me/34680879684?text=${message}`; // He puesto un número de ejemplo, el usuario debe cambiarlo
-            
-            // Redirigir opcionalmente o mostrar el botón
+            const whatsappUrl = `https://wa.me/34680879684?text=${message}`;
             window.sessionStorage.setItem('whatsappUrl', whatsappUrl);
             
         } catch (err) {
@@ -47,6 +87,8 @@ function BookingPage() {
         }
     };
 
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
     return (
         <div className="booking-page">
             <Helmet>
@@ -56,8 +98,8 @@ function BookingPage() {
 
             <header className="page-header">
                 <div className="container">
-                    <h1>Asesoramiento Personalizado</h1>
-                    <p>Reserva una sesión con nuestros expertos para encontrar tu sonido ideal.</p>
+                    <h1>Agenda tu Cita</h1>
+                    <p>Encuentra tu sonido ideal con la ayuda de nuestros especialistas.</p>
                 </div>
             </header>
 
@@ -66,31 +108,67 @@ function BookingPage() {
                     {success ? (
                         <div className="success-card">
                             <div className="success-icon">✅</div>
-                            <h2>¡Cita Solicitada con Éxito!</h2>
-                            <p>Hemos recibido tu solicitud. Te confirmaremos por email en breve.</p>
-                            <p>También puedes enviarnos un mensaje directo por WhatsApp para agilizar la confirmación:</p>
+                            <h2>¡Cita Solicitada!</h2>
+                            <p>Recibirás una confirmación por email en breve.</p>
                             <a 
                                 href={window.sessionStorage.getItem('whatsappUrl')} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="btn btn-whatsapp"
                             >
-                                Enviar Confirmación por WhatsApp
+                                Confirmar ahora por WhatsApp
                             </a>
-                            <button className="btn btn-secondary" onClick={() => setSuccess(false)}>Solicitar otra cita</button>
+                            <button className="btn btn-secondary" onClick={() => setSuccess(false)}>Solicitar otra</button>
                         </div>
                     ) : (
                         <div className="booking-form-wrapper">
                             <form onSubmit={handleSubmit} className="booking-form">
                                 <div className="form-group">
-                                    <label htmlFor="name">Nombre Completo</label>
-                                    <input 
-                                        type="text" id="name" name="name" 
-                                        value={formData.name} onChange={handleChange} 
-                                        required placeholder="Tu nombre" 
-                                    />
+                                    <label>1. Selecciona el día</label>
+                                    <div className="calendar-widget">
+                                        <div className="calendar-header">
+                                            <button type="button" onClick={() => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)))}>‹</button>
+                                            <span>{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
+                                            <button type="button" onClick={() => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)))}>›</button>
+                                        </div>
+                                        <div className="calendar-weekdays">
+                                            <div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
+                                        </div>
+                                        <div className="calendar-grid">
+                                            {renderCalendar()}
+                                        </div>
+                                    </div>
+                                    {formData.date && <p className="selected-date-text">Seleccionado: <strong>{formData.date}</strong></p>}
                                 </div>
+
                                 <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="time">2. Hora deseada</label>
+                                        <input 
+                                            type="time" id="time" name="time" 
+                                            value={formData.time} onChange={handleChange} 
+                                            required 
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="phone">3. Tu WhatsApp</label>
+                                        <input 
+                                            type="tel" id="phone" name="phone" 
+                                            value={formData.phone} onChange={handleChange} 
+                                            required placeholder="+34 600 000 000" 
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="name">Nombre</label>
+                                        <input 
+                                            type="text" id="name" name="name" 
+                                            value={formData.name} onChange={handleChange} 
+                                            required placeholder="Tu nombre" 
+                                        />
+                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <input 
@@ -99,47 +177,22 @@ function BookingPage() {
                                             required placeholder="tu@email.com" 
                                         />
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="phone">WhatsApp / Teléfono</label>
-                                        <input 
-                                            type="tel" id="phone" name="phone" 
-                                            value={formData.phone} onChange={handleChange} 
-                                            required placeholder="+34 600 000 000" 
-                                        />
-                                    </div>
                                 </div>
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="date">Fecha</label>
-                                        <input 
-                                            type="date" id="date" name="date" 
-                                            value={formData.date} onChange={handleChange} 
-                                            required 
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="time">Hora</label>
-                                        <input 
-                                            type="time" id="time" name="time" 
-                                            value={formData.time} onChange={handleChange} 
-                                            required 
-                                        />
-                                    </div>
-                                </div>
+
                                 <div className="form-group">
-                                    <label htmlFor="notes">Notas o Consultas</label>
+                                    <label htmlFor="notes">Notas (opcional)</label>
                                     <textarea 
                                         id="notes" name="notes" 
                                         value={formData.notes} onChange={handleChange} 
-                                        placeholder="¿En qué podemos ayudarte?"
-                                        rows="4"
+                                        placeholder="Cuéntanos qué necesitas..."
+                                        rows="3"
                                     ></textarea>
                                 </div>
                                 
                                 {error && <div className="error-message">{error}</div>}
                                 
                                 <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={loading}>
-                                    {loading ? 'Procesando...' : 'Solicitar Reserva'}
+                                    {loading ? 'Procesando...' : 'Confirmar Cita'}
                                 </button>
                             </form>
                         </div>
@@ -150,21 +203,82 @@ function BookingPage() {
             <style>
                 {`
                 .booking-page .page-header {
-                    background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
+                    background: #111;
                     color: white;
-                    padding: 80px 0;
+                    padding: 60px 0;
                     text-align: center;
                 }
                 .booking-container {
-                    max-width: 700px;
-                    margin: 0 auto;
+                    max-width: 800px;
+                    margin: -30px auto 0;
                 }
                 .booking-form-wrapper {
                     background: white;
-                    padding: 40px;
-                    border-radius: 15px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                    border: 1px solid var(--color-border);
+                    padding: 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                    border: 1px solid #eee;
+                }
+                .calendar-widget {
+                    border: 1px solid #eee;
+                    border-radius: 8px;
+                    padding: 15px;
+                    margin-bottom: 15px;
+                }
+                .calendar-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    font-weight: 700;
+                }
+                .calendar-header button {
+                    background: #f5f5f5;
+                    border: none;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                .calendar-weekdays {
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                    text-align: center;
+                    font-size: 0.8rem;
+                    color: #888;
+                    margin-bottom: 10px;
+                }
+                .calendar-grid {
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                    gap: 5px;
+                }
+                .calendar-day {
+                    aspect-ratio: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    font-size: 0.9rem;
+                    transition: all 0.2s;
+                }
+                .calendar-day:hover:not(.empty) {
+                    background: #f0f0f0;
+                }
+                .calendar-day.today {
+                    color: var(--color-primary);
+                    font-weight: 700;
+                    text-decoration: underline;
+                }
+                .calendar-day.selected {
+                    background: var(--color-primary);
+                    color: white;
+                }
+                .selected-date-text {
+                    font-size: 0.9rem;
+                    color: #666;
+                    margin-bottom: 20px;
                 }
                 .form-row {
                     display: grid;
@@ -178,40 +292,28 @@ function BookingPage() {
                     display: block;
                     margin-bottom: 8px;
                     font-weight: 600;
-                    color: var(--color-text);
                 }
                 .form-group input, .form-group textarea {
                     width: 100%;
-                    padding: 12px;
-                    border: 1px solid var(--color-border);
-                    border-radius: 8px;
-                    font-size: 1rem;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
                 }
                 .btn-whatsapp {
                     background: #25D366;
                     color: white;
-                    margin-bottom: 15px;
                     display: block;
-                    width: 100%;
-                    padding: 15px;
-                    border-radius: 10px;
+                    margin-bottom: 10px;
+                    padding: 12px;
+                    border-radius: 8px;
                     font-weight: 700;
-                    text-align: center;
-                }
-                .btn-whatsapp:hover {
-                    background: #128C7E;
-                    color: white;
                 }
                 .success-card {
-                    background: white;
-                    padding: 50px;
-                    border-radius: 15px;
                     text-align: center;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                }
-                .success-icon {
-                    font-size: 4rem;
-                    margin-bottom: 20px;
+                    padding: 40px;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
                 }
                 @media (max-width: 600px) {
                     .form-row {

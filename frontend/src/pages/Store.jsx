@@ -12,7 +12,12 @@ function Store() {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/products/`);
-                setProducts(response.data);
+                if (Array.isArray(response.data)) {
+                    setProducts(response.data);
+                } else {
+                    console.error('API response is not an array:', response.data);
+                    setError('Error en el formato de datos recibidos.');
+                }
             } catch (err) {
                 console.error('Error fetching products:', err);
                 setError('No se pudieron cargar los productos. Por favor, inténtalo más tarde.');
