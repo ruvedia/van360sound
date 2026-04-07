@@ -56,7 +56,11 @@ function BookingPage() {
 
     const handleDateSelect = (day) => {
         const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-        const dateString = date.toISOString().split('T')[0];
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const dayStr = String(date.getDate()).padStart(2, '0');
+        const dateString = `${year}-${month}-${dayStr}`;
+        
         setSelectedDate(day);
         setFormData({ ...formData, date: dateString, time: '' }); // Reset time when date changes
     };
